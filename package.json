@@ -1,0 +1,16 @@
+{
+	"name": "@jlbelanger/crudnick",
+	"version": "1.0.0",
+	"description": "React components for a CRUD admin backend CMS using a JSON API.",
+	"license": "GPL-3.0-only",
+	"author": {
+		"name": "Jenny Belanger",
+		"email": "mail@jennybelanger.com",
+		"url": "https://www.jennybelanger.com/"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jlbelanger/crudnick.git"
+	},
+	"main": "index.js"
+}
