@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
-import { ReactComponent as CheckIcon } from '../../svg/check.svg';
 import { capitalize } from '../Utilities/Helpers';
+import { ReactComponent as CheckIcon } from '../../svg/check.svg';
 import MetaTitle from '../MetaTitle';
 import MyForm from './MyForm';
 import PropTypes from 'prop-types';

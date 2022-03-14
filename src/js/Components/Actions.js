@@ -50,7 +50,7 @@ export default function Actions({
 					<button
 						className="formosa-button"
 						type="submit"
-						form="edit-form"
+						form="crudnick-edit-form"
 					>
 						{saveButtonText}
 					</button>
