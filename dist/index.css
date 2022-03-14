@@ -22,6 +22,16 @@
     .formosa-field__input--textarea:invalid:focus,
     .formosa-file-input-wrapper:invalid:focus {
       box-shadow: 0 0 0 4px #6cf; }
+  .formosa-field--has-error .formosa-field__input, .formosa-field--has-error
+  .formosa-field__input--select, .formosa-field--has-error
+  .formosa-field__input--textarea, .formosa-field--has-error
+  .formosa-file-input-wrapper {
+    border-color: #c66; }
+    .formosa-field--has-error .formosa-field__input:focus, .formosa-field--has-error
+    .formosa-field__input--select:focus, .formosa-field--has-error
+    .formosa-field__input--textarea:focus, .formosa-field--has-error
+    .formosa-file-input-wrapper:focus {
+      border-color: #3ad; }
 
 .formosa-button,
 .formosa-field__input,
@@ -256,7 +266,7 @@ input.formosa-field__input--checkbox {
   flex: 1 1 auto;
   position: relative; }
   .formosa-file-input-wrapper:focus-within {
-    border-color: #4ad;
+    border-color: #3ad;
     box-shadow: 0 0 0 4px #6cf; }
 
 .formosa-field__input--file {
@@ -279,7 +289,7 @@ input.formosa-field__input--checkbox {
   opacity: .5; }
 
 :focus {
-  border-color: #4ad;
+  border-color: #3ad;
   box-shadow: 0 0 0 4px #6cf;
   outline: none !important; }
 
@@ -333,6 +343,8 @@ input.formosa-field__input--checkbox {
   font-weight: bold; }
   .formosa-label[for] {
     cursor: pointer; }
+  .formosa-field--has-error .formosa-label {
+    color: #c66; }
 
 .formosa-radio__label {
   cursor: pointer; }
@@ -427,7 +439,7 @@ input.formosa-radio__input {
   input.formosa-radio__input:checked {
     background: #fff; }
   input.formosa-radio__input:focus {
-    box-shadow: 0 0 0 0 #4ad, 0 0 0 4px #6cf; }
+    box-shadow: 0 0 0 0 #3ad, 0 0 0 4px #6cf; }
 
 .formosa-search-wrapper {
   display: table;
@@ -747,6 +759,8 @@ a {
 .crudnick-list__button {
   display: block;
   margin: 0 1px; }
+  .crudnick-list__button:focus {
+    box-shadow: inset 0 0 0 4px #6cf; }
 
 .crudnick-list__text {
   height: 46px;
@@ -798,6 +812,8 @@ a {
   font-size: 0;
   height: 42px;
   width: 42px; }
+  #crudnick-menu-button:focus {
+    box-shadow: inset 0 0 0 4px #6cf; }
 
 @media screen and (min-width: 1025px) {
   #crudnick-nav .crudnick-list__item {

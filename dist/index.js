@@ -2,11 +2,11 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = require('react');
 var React__default = _interopDefault(React);
+var get = _interopDefault(require('get-value'));
 var PropTypes = _interopDefault(require('prop-types'));
 var formosa = require('@jlbelanger/formosa');
 var reactRouterDom = require('react-router-dom');
 var Cookies = _interopDefault(require('js-cookie'));
-var get = _interopDefault(require('get-value'));
 
 function _extends() {
   _extends = Object.assign || function (target) {
@@ -40,6 +40,104 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 
   return target;
 }
+
+var capitalize = function capitalize(s) {
+  return s.replace(/(?:^|\s)\S/g, function (a) {
+    return a.toUpperCase();
+  });
+};
+var cleanKey = function cleanKey(key) {
+  return key.replace(/^relationships\./, '');
+};
+
+var escapeRegExp = function escapeRegExp(string) {
+  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
+};
+
+var filterByKey = function filterByKey(records, key, value) {
+  value = value.toLowerCase();
+  var escapedValue = escapeRegExp(value);
+  records = records.filter(function (record) {
+    var recordValue = (get(record, key) || '').toString().toLowerCase();
+    return recordValue.match(new RegExp("(^|[^a-z])" + escapedValue));
+  });
+  records = records.sort(function (a, b) {
+    var aValue = get(a, key).toString().toLowerCase();
+    var bValue = get(b, key).toString().toLowerCase();
+    var aPos = aValue.indexOf(value) === 0;
+    var bPos = bValue.indexOf(value) === 0;
+
+    if (aPos && bPos || !aPos && !bPos) {
+      return 0;
+    }
+
+    if (aPos && !bPos) {
+      return -1;
+    }
+
+    return 1;
+  });
+  return records;
+};
+
+var filterByKeys = function filterByKeys(records, filters) {
+  Object.keys(filters).forEach(function (key) {
+    records = filterByKey(records, key, filters[key]);
+  });
+  return records;
+};
+var getErrorMessage = function getErrorMessage(response) {
+  if (response.message) {
+    return "Error: " + response.message;
+  }
+
+  if (response.errors) {
+    return "Error: " + response.errors.map(function (error) {
+      return error.title;
+    }).join(', ');
+  }
+
+  return 'Error loading data. Please try again later.';
+};
+var sortByKey = function sortByKey(records, key, dir) {
+  return records.sort(function (a, b) {
+    var aVal = get(a, key);
+
+    if (aVal === undefined || aVal === null) {
+      aVal = '';
+    }
+
+    var bVal = get(b, key);
+
+    if (bVal === undefined || bVal === null) {
+      bVal = '';
+    }
+
+    if (aVal === bVal) {
+      return 0;
+    }
+
+    if (aVal === '') {
+      return 1;
+    }
+
+    if (bVal === '') {
+      return -1;
+    }
+
+    if (typeof aVal === 'number' && typeof bVal === 'number') {
+      if (dir === 'asc') {
+        return aVal < bVal ? -1 : 1;
+      }
+
+      return aVal > bVal ? -1 : 1;
+    }
+
+    aVal = aVal.toString();
+    bVal = bVal.toString();
+    return dir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+  });
+};
 
 var _path;
 
@@ -105,15 +203,20 @@ function MyFormPrompt() {
   });
 }
 
-var _excluded = ["children"];
+var _excluded = ["children", "checkForUnsavedChanges"];
 function MyForm(_ref) {
   var children = _ref.children,
+      checkForUnsavedChanges = _ref.checkForUnsavedChanges,
       otherProps = _objectWithoutPropertiesLoose(_ref, _excluded);
 
-  return /*#__PURE__*/React__default.createElement(formosa.Form, otherProps, children, /*#__PURE__*/React__default.createElement(MyFormPrompt, null));
+  return /*#__PURE__*/React__default.createElement(formosa.Form, otherProps, children, checkForUnsavedChanges && /*#__PURE__*/React__default.createElement(MyFormPrompt, null));
 }
 MyForm.propTypes = {
+  checkForUnsavedChanges: PropTypes.bool,
   children: PropTypes.node.isRequired
+};
+MyForm.defaultProps = {
+  checkForUnsavedChanges: true
 };
 
 var _excluded$1 = ["addAnotherText", "apiPath", "component", "componentProps", "defaultRow", "extra", "filterBody", "filterValues", "path", "relationshipNames", "saveButtonText", "showAddAnother", "singular", "titlePrefixText"];
@@ -199,7 +302,7 @@ function AddForm(_ref) {
     relationshipNames: relationshipNames,
     row: row,
     setRow: setRow,
-    successToastText: singular + " added successfully."
+    successToastText: capitalize(singular) + " added successfully."
   }, otherProps), /*#__PURE__*/React__default.createElement(FormComponent, componentProps)), extra ? extra(row) : null);
 }
 AddForm.propTypes = {
@@ -256,7 +359,7 @@ var Auth = /*#__PURE__*/function () {
   Auth.logout = function logout() {
     Cookies.remove(process.env.REACT_APP_COOKIE_PREFIX + "_id");
     Cookies.remove(process.env.REACT_APP_COOKIE_PREFIX + "_token");
-    window.location.href = window.location.href.replace(window.location.hash, '');
+    window.location.href = window.location.origin + process.env.PUBLIC_URL;
   };
 
   Auth.id = function id() {
@@ -273,95 +376,6 @@ var Auth = /*#__PURE__*/function () {
 
   return Auth;
 }();
-
-var _path$1;
-
-function _extends$2() {
-  _extends$2 = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends$2.apply(this, arguments);
-}
-
-function SvgMenu(props) {
-  return /*#__PURE__*/React.createElement("svg", _extends$2({
-    xmlns: "http://www.w3.org/2000/svg",
-    viewBox: "0 0 8 8"
-  }, props), _path$1 || (_path$1 = /*#__PURE__*/React.createElement("path", {
-    d: "M0 0v1h8V0H0zm0 3v1h8V3H0zm0 3v1h8V6H0z"
-  })));
-}
-
-function Nav(_ref) {
-  var nav = _ref.nav;
-
-  var _useContext = React.useContext(formosa.FormosaContext),
-      formosaState = _useContext.formosaState;
-
-  var _useState = React.useState(false),
-      showMenu = _useState[0],
-      setShowMenu = _useState[1];
-
-  var logout = function logout() {
-    formosa.Api["delete"]('auth/logout').then(function () {
-      Auth.logout();
-    })["catch"](function (response) {
-      var text = response.message ? response.message : response.errors.map(function (err) {
-        return err.title;
-      }).join(' ');
-      formosaState.addToast(text, 'error', 10000);
-    });
-  };
-
-  var toggleMenu = function toggleMenu() {
-    setShowMenu(!showMenu);
-  };
-
-  var hideMenu = function hideMenu() {
-    setShowMenu(false);
-  };
-
-  return /*#__PURE__*/React__default.createElement("nav", {
-    id: "crudnick-nav"
-  }, /*#__PURE__*/React__default.createElement("ul", {
-    className: "crudnick-list" + (showMenu ? ' show' : ''),
-    id: "crudnick-nav__list"
-  }, nav.map(function (_ref2) {
-    var label = _ref2.label,
-        path = _ref2.path;
-    return /*#__PURE__*/React__default.createElement("li", {
-      className: "crudnick-list__item",
-      key: path
-    }, /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
-      activeClassName: "active",
-      className: "formosa-button crudnick-list__button",
-      onClick: hideMenu,
-      to: path
-    }, label));
-  }), /*#__PURE__*/React__default.createElement("li", {
-    className: "crudnick-list__item"
-  }, Auth.isLoggedIn() && /*#__PURE__*/React__default.createElement("button", {
-    className: "formosa-button crudnick-list__button",
-    onClick: logout,
-    type: "button"
-  }, "Logout"))), /*#__PURE__*/React__default.createElement("button", {
-    className: "formosa-button",
-    id: "crudnick-menu-button",
-    onClick: toggleMenu,
-    type: "button"
-  }, /*#__PURE__*/React__default.createElement(SvgMenu, null), "Menu"));
-}
 
 function ForgotPassword() {
   var _useState = React.useState({}),
@@ -441,11 +455,103 @@ function Login() {
   }));
 }
 
-function RedirectToHome() {
-  return /*#__PURE__*/React__default.createElement(reactRouterDom.Redirect, {
-    to: "/"
-  });
+var _path$1;
+
+function _extends$2() {
+  _extends$2 = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends$2.apply(this, arguments);
 }
+
+function SvgMenu(props) {
+  return /*#__PURE__*/React.createElement("svg", _extends$2({
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 8 8"
+  }, props), _path$1 || (_path$1 = /*#__PURE__*/React.createElement("path", {
+    d: "M0 0v1h8V0H0zm0 3v1h8V3H0zm0 3v1h8V6H0z"
+  })));
+}
+
+function Nav(_ref) {
+  var nav = _ref.nav;
+
+  var _useContext = React.useContext(formosa.FormosaContext),
+      formosaState = _useContext.formosaState;
+
+  var _useState = React.useState(false),
+      showMenu = _useState[0],
+      setShowMenu = _useState[1];
+
+  var logout = function logout() {
+    formosa.Api["delete"]('auth/logout').then(function () {
+      Auth.logout();
+    })["catch"](function (response) {
+      if (response.status === 401) {
+        Auth.logout();
+        return;
+      }
+
+      var text = response.message ? response.message : response.errors.map(function (err) {
+        return err.title;
+      }).join(' ');
+      formosaState.addToast(text, 'error', 10000);
+    });
+  };
+
+  var toggleMenu = function toggleMenu() {
+    setShowMenu(!showMenu);
+  };
+
+  var hideMenu = function hideMenu() {
+    setShowMenu(false);
+  };
+
+  return /*#__PURE__*/React__default.createElement("nav", {
+    id: "crudnick-nav"
+  }, /*#__PURE__*/React__default.createElement("ul", {
+    className: "crudnick-list" + (showMenu ? ' show' : ''),
+    id: "crudnick-nav__list"
+  }, nav.map(function (_ref2) {
+    var label = _ref2.label,
+        path = _ref2.path;
+    return /*#__PURE__*/React__default.createElement("li", {
+      className: "crudnick-list__item",
+      key: path
+    }, /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
+      activeClassName: "active",
+      className: "formosa-button crudnick-list__button",
+      onClick: hideMenu,
+      to: path
+    }, label));
+  }), /*#__PURE__*/React__default.createElement("li", {
+    className: "crudnick-list__item"
+  }, /*#__PURE__*/React__default.createElement("button", {
+    className: "formosa-button crudnick-list__button",
+    id: "crudnick-logout",
+    onClick: logout,
+    type: "button"
+  }, "Logout"))), /*#__PURE__*/React__default.createElement("button", {
+    className: "formosa-button",
+    id: "crudnick-menu-button",
+    onClick: toggleMenu,
+    type: "button"
+  }, /*#__PURE__*/React__default.createElement(SvgMenu, null), "Menu"));
+}
+Nav.propTypes = {
+  nav: PropTypes.array.isRequired
+};
 
 function ResetPassword() {
   var _useState = React.useState({}),
@@ -493,39 +599,47 @@ function ResetPassword() {
 }
 
 function App(_ref) {
-  var children = _ref.children,
-      nav = _ref.nav;
+  var articleProps = _ref.articleProps,
+      children = _ref.children,
+      nav = _ref.nav,
+      routerAttributes = _ref.routerAttributes;
 
   if (Auth.isLoggedIn() && !formosa.Api.getToken()) {
     formosa.Api.setToken(Auth.token());
   }
 
-  return /*#__PURE__*/React__default.createElement(reactRouterDom.BrowserRouter, {
-    basename: process.env.PUBLIC_URL
-  }, /*#__PURE__*/React__default.createElement(formosa.FormContainer, null, Auth.isLoggedIn() && /*#__PURE__*/React__default.createElement(Nav, {
+  return /*#__PURE__*/React__default.createElement(reactRouterDom.BrowserRouter, routerAttributes, /*#__PURE__*/React__default.createElement(formosa.FormContainer, null, Auth.isLoggedIn() && /*#__PURE__*/React__default.createElement(Nav, {
     nav: nav
-  }), /*#__PURE__*/React__default.createElement("article", {
+  }), /*#__PURE__*/React__default.createElement("article", _extends({
     id: "crudnick-article"
-  }, /*#__PURE__*/React__default.createElement(reactRouterDom.Switch, null, /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
+  }, articleProps), Auth.isLoggedIn() ? children : /*#__PURE__*/React__default.createElement(reactRouterDom.Switch, null, /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
     exact: true,
-    path: "/",
-    component: Auth.isLoggedIn() ? null : Login
-  }), Auth.isLoggedIn() ? children : /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
+    path: "/"
+  }, /*#__PURE__*/React__default.createElement(Login, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
     exact: true,
-    path: "/forgot-password",
-    component: ForgotPassword
-  }), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
+    path: "/forgot-password"
+  }, /*#__PURE__*/React__default.createElement(ForgotPassword, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
     exact: true,
-    path: "/reset-password/:token",
-    component: ResetPassword
-  })), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
-    component: RedirectToHome
-  })))));
+    path: "/reset-password/:token"
+  }, /*#__PURE__*/React__default.createElement(ResetPassword, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, null, /*#__PURE__*/React__default.createElement(reactRouterDom.Redirect, {
+    to: "/"
+  }))))));
 }
 App.propTypes = {
+  articleProps: PropTypes.object,
   children: PropTypes.node.isRequired,
-  nav: PropTypes.array.isRequired
+  nav: PropTypes.array.isRequired,
+  routerAttributes: PropTypes.object
 };
+App.defaultProps = {
+  articleProps: null,
+  routerAttributes: null
+};
+
+var CrudnickContext = /*#__PURE__*/React__default.createContext({
+  checkForUnsaveChanges: true,
+  setCheckForUnsavedChanges: null
+});
 
 function Actions(_ref) {
   var apiPath = _ref.apiPath,
@@ -536,27 +650,34 @@ function Actions(_ref) {
       saveButtonText = _ref.saveButtonText,
       setRow = _ref.setRow,
       showSave = _ref.showSave,
+      singular = _ref.singular,
       subpages = _ref.subpages;
   var history = reactRouterDom.useHistory();
 
   var _useContext = React.useContext(formosa.FormosaContext),
       formosaState = _useContext.formosaState;
 
+  var _useContext2 = React.useContext(CrudnickContext),
+      setCheckForUnsavedChanges = _useContext2.setCheckForUnsavedChanges;
+
   var onDelete = function onDelete(e) {
     e.preventDefault();
 
-    if (!confirm('Are you sure you want to delete this?')) {
+    if (!confirm("Are you sure you want to delete this " + singular + "?")) {
       return;
     }
 
+    setCheckForUnsavedChanges(false);
     formosa.Api["delete"](apiPath + "/" + row.id).then(function () {
-      formosaState.addToast('Record deleted successfully.', 'success');
+      formosaState.addToast(capitalize(singular) + " deleted successfully.", 'success');
       history.push("/" + path);
+      setCheckForUnsavedChanges(true);
     })["catch"](function (response) {
       var text = response.message ? response.message : response.errors.map(function (err) {
         return err.title;
       }).join(' ');
       formosaState.addToast(text, 'error', 10000);
+      setCheckForUnsavedChanges(true);
     });
   };
 
@@ -565,7 +686,7 @@ function Actions(_ref) {
   }, showSave && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement("button", {
     className: "formosa-button",
     type: "submit",
-    form: "edit-form"
+    form: "crudnick-edit-form"
   }, saveButtonText)), currentPage !== '/' && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
     className: "button",
     to: "/" + path + "/" + row.id
@@ -599,6 +720,7 @@ Actions.propTypes = {
   row: PropTypes.object,
   setRow: PropTypes.func.isRequired,
   showSave: PropTypes.bool,
+  singular: PropTypes.string.isRequired,
   subpages: PropTypes.array
 };
 Actions.defaultProps = {
@@ -607,97 +729,6 @@ Actions.defaultProps = {
   saveButtonText: 'Save',
   showSave: true,
   subpages: []
-};
-
-var cleanKey = function cleanKey(key) {
-  return key.replace(/^relationships\./, '');
-};
-
-var escapeRegExp = function escapeRegExp(string) {
-  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
-};
-
-var filterByKey = function filterByKey(records, key, value) {
-  value = value.toLowerCase();
-  var escapedValue = escapeRegExp(value);
-  records = records.filter(function (record) {
-    var recordValue = (get(record, key) || '').toString().toLowerCase();
-    return recordValue.match(new RegExp("(^|[^a-z])" + escapedValue));
-  });
-  records = records.sort(function (a, b) {
-    var aValue = get(a, key).toString().toLowerCase();
-    var bValue = get(b, key).toString().toLowerCase();
-    var aPos = aValue.indexOf(value) === 0;
-    var bPos = bValue.indexOf(value) === 0;
-
-    if (aPos && bPos || !aPos && !bPos) {
-      return aValue.localeCompare(bValue);
-    }
-
-    if (aPos && !bPos) {
-      return -1;
-    }
-
-    return 1;
-  });
-  return records;
-};
-
-var filterByKeys = function filterByKeys(records, filters) {
-  Object.keys(filters).forEach(function (key) {
-    records = filterByKey(records, key, filters[key]);
-  });
-  return records;
-};
-var getErrorMessage = function getErrorMessage(response) {
-  if (response.message) {
-    return "Error: " + response.message;
-  } else if (response.errors) {
-    return "Error: " + response.errors.map(function (error) {
-      return error.title;
-    }).join(', ');
-  }
-
-  return 'Error loading data. Please try again later.';
-};
-var sortByKey = function sortByKey(records, key, dir) {
-  return records.sort(function (a, b) {
-    var aVal = get(a, key);
-
-    if (aVal === undefined || aVal === null) {
-      aVal = '';
-    }
-
-    var bVal = get(b, key);
-
-    if (bVal === undefined || bVal === null) {
-      bVal = '';
-    }
-
-    if (aVal === bVal) {
-      return 0;
-    }
-
-    if (aVal === '') {
-      return 1;
-    }
-
-    if (bVal === '') {
-      return -1;
-    }
-
-    if (typeof aVal === 'number' && typeof bVal === 'number') {
-      if (dir === 'asc') {
-        return aVal < bVal ? -1 : 1;
-      }
-
-      return aVal > bVal ? -1 : 1;
-    }
-
-    aVal = aVal.toString();
-    bVal = bVal.toString();
-    return dir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
-  });
 };
 
 var _excluded$2 = ["actions", "apiPath", "component", "componentProps", "extra", "filterBody", "filterValues", "name", "path", "relationshipNames", "saveButtonText", "singular", "subpages", "titlePrefixText", "transform", "url"];
@@ -731,6 +762,16 @@ function EditForm(_ref) {
       error = _useState2[0],
       setError = _useState2[1];
 
+  var _useState3 = React.useState(true),
+      checkForUnsavedChanges = _useState3[0],
+      setCheckForUnsavedChanges = _useState3[1];
+
+  var crudnickState = React.useMemo(function () {
+    return {
+      checkForUnsavedChanges: checkForUnsavedChanges,
+      setCheckForUnsavedChanges: setCheckForUnsavedChanges
+    };
+  }, [checkForUnsavedChanges]);
   React.useEffect(function () {
     formosa.Api.get(url).then(function (response) {
       setError(null);
@@ -741,6 +782,11 @@ function EditForm(_ref) {
         setRow(response);
       }
     })["catch"](function (response) {
+      if (response.status === 401) {
+        document.getElementById('crudnick-logout').click();
+        return;
+      }
+
       setError(response);
       setRow(null);
     });
@@ -748,8 +794,10 @@ function EditForm(_ref) {
   }, [id]);
   var FormComponent = component;
   componentProps.formType = 'edit';
-  var metaTitle = row ? titlePrefixText + " " + get(row, name) : null;
-  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(MetaTitle, {
+  var metaTitle = row ? titlePrefixText + " " + get(row, name) : '';
+  return /*#__PURE__*/React__default.createElement(CrudnickContext.Provider, {
+    value: crudnickState
+  }, /*#__PURE__*/React__default.createElement(MetaTitle, {
     title: metaTitle
   }), /*#__PURE__*/React__default.createElement("header", {
     className: "crudnick-header"
@@ -760,10 +808,12 @@ function EditForm(_ref) {
     saveButtonText: saveButtonText,
     row: row,
     setRow: setRow,
+    singular: singular,
     subpages: subpages
   }, actions ? actions(row, setRow) : null)), error && /*#__PURE__*/React__default.createElement("div", {
     className: "formosa-message formosa-message--error"
   }, getErrorMessage(error)), row && /*#__PURE__*/React__default.createElement(MyForm, _extends({
+    checkForUnsavedChanges: checkForUnsavedChanges,
     filterBody: filterBody,
     filterValues: filterValues,
     htmlId: "crudnick-edit-form",
@@ -774,7 +824,7 @@ function EditForm(_ref) {
     relationshipNames: relationshipNames,
     row: row,
     setRow: setRow,
-    successToastText: singular + " saved successfully."
+    successToastText: capitalize(singular) + " saved successfully."
   }, otherProps), /*#__PURE__*/React__default.createElement(FormComponent, _extends({
     row: row,
     setRow: setRow
@@ -904,6 +954,11 @@ function IndexTable(_ref) {
       setRows(response);
       setFilteredRows(response);
     })["catch"](function (response) {
+      if (response.status === 401) {
+        document.getElementById('crudnick-logout').click();
+        return;
+      }
+
       setError(response);
       setRows(null);
       setFilteredRows([]);
@@ -1057,7 +1112,6 @@ var IndexTable$1 = IndexTable;
 var Login$1 = Login;
 var MetaTitle$1 = MetaTitle;
 var Nav$1 = Nav;
-var RedirectToHome$1 = RedirectToHome;
 var ResetPassword$1 = ResetPassword;
 
 exports.AddForm = AddForm$1;
@@ -1069,6 +1123,5 @@ exports.IndexTable = IndexTable$1;
 exports.Login = Login$1;
 exports.MetaTitle = MetaTitle$1;
 exports.Nav = Nav$1;
-exports.RedirectToHome = RedirectToHome$1;
 exports.ResetPassword = ResetPassword$1;
 //# sourceMappingURL=index.js.map
