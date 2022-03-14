@@ -8,7 +8,6 @@ import indexTable from './js/Components/IndexTable';
 import login from './js/Pages/Auth/Login';
 import metaTitle from './js/MetaTitle';
 import nav from './js/Nav';
-import redirectToHome from './js/RedirectToHome';
 import resetPassword from './js/Pages/Auth/ResetPassword';
 
 export const AddForm = addForm;
@@ -20,5 +19,4 @@ export const IndexTable = indexTable;
 export const Login = login;
 export const MetaTitle = metaTitle;
 export const Nav = nav;
-export const RedirectToHome = redirectToHome;
 export const ResetPassword = resetPassword;

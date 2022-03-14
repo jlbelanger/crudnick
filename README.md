@@ -43,18 +43,20 @@ ReactDOM.render(
 Create a new file `src/Routes.js` containing the following:
 
 ``` jsx
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import UserAdd from './Pages/Users/Add';
 import UserEdit from './Pages/Users/Edit';
 import UserIndex from './Pages/Users/Index';
 
 export default function Routes() {
 	return (
-		<>
-			<Route exact path="/users" component={UserIndex} />
-			<Route exact path="/users/add" component={UserAdd} />
-			<Route exact path="/users/:id(\d+)" component={UserEdit} />
-		</>
+		<Switch>
+			<Route exact path="/" />
+			<Route exact path="/users"><UserIndex /></Route>
+			<Route exact path="/users/add"><UserAdd /></Route>
+			<Route exact path="/users/:id(\d+)"><UserEdit /></Route>
+			<Route>Page not found.</Route>
+		</Switch>
 	);
 }
 ```
