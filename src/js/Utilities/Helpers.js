@@ -18,7 +18,7 @@ const filterByKey = (records, key, value) => {
 		const aPos = aValue.indexOf(value) === 0;
 		const bPos = bValue.indexOf(value) === 0;
 		if ((aPos && bPos) || (!aPos && !bPos)) {
-			return aValue.localeCompare(bValue);
+			return 0;
 		}
 		if (aPos && !bPos) {
 			return -1;
