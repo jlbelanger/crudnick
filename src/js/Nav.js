@@ -53,5 +53,5 @@ export default function Nav({ nav }) {
 }
 
 Nav.propTypes = {
-	nav: PropTypes.object.isRequired,
+	nav: PropTypes.array.isRequired,
 };
