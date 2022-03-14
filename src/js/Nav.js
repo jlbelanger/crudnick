@@ -14,6 +14,10 @@ export default function Nav({ nav }) {
 				Auth.logout();
 			})
 			.catch((response) => {
+				if (response.status === 401) {
+					Auth.logout();
+					return;
+				}
 				const text = response.message ? response.message : response.errors.map((err) => (err.title)).join(' ');
 				formosaState.addToast(text, 'error', 10000);
 			});
@@ -41,7 +45,7 @@ export default function Nav({ nav }) {
 					</li>
 				))}
 				<li className="crudnick-list__item">
-					{Auth.isLoggedIn() && <button className="formosa-button crudnick-list__button" onClick={logout} type="button">Logout</button>}
+					<button className="formosa-button crudnick-list__button" id="crudnick-logout" onClick={logout} type="button">Logout</button>
 				</li>
 			</ul>
 			<button className="formosa-button" id="crudnick-menu-button" onClick={toggleMenu} type="button">

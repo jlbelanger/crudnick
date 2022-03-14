@@ -28,6 +28,10 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 				setFilteredRows(response);
 			})
 			.catch((response) => {
+				if (response.status === 401) {
+					document.getElementById('crudnick-logout').click();
+					return;
+				}
 				setError(response);
 				setRows(null);
 				setFilteredRows([]);

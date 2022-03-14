@@ -45,6 +45,10 @@ export default function EditForm({
 				}
 			})
 			.catch((response) => {
+				if (response.status === 401) {
+					document.getElementById('crudnick-logout').click();
+					return;
+				}
 				setError(response);
 				setRow(null);
 			});
