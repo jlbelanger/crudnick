@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
 import { ReactComponent as CheckIcon } from '../../svg/check.svg';
 import MetaTitle from '../MetaTitle';
 import MyForm from './MyForm';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 
 export default function AddForm({
 	addAnotherText,

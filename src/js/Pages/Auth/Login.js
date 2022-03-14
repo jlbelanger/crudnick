@@ -1,8 +1,8 @@
 import { Field, Form, Message, Submit } from '@jlbelanger/formosa';
-import React, { useState } from 'react';
+import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
 import Auth from '../../Utilities/Auth';
 import MetaTitle from '../../MetaTitle';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 
 export default function Login() {
 	const [row, setRow] = useState({});

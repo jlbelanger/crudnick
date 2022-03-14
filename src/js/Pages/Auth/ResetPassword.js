@@ -1,6 +1,6 @@
 import { Field, Form, Message, Submit } from '@jlbelanger/formosa';
-import React, { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
+import { useHistory, useParams } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import MetaTitle from '../../MetaTitle';
 
 export default function ResetPassword() {

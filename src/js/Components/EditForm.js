@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import Actions from './Actions';
 import { Api } from '@jlbelanger/formosa';
 import get from 'get-value';
+import { getErrorMessage } from '../Utilities/Helpers';
 import MetaTitle from '../MetaTitle';
 import MyForm from './MyForm';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
-import { getErrorMessage } from '../Utilities/Helpers';
+import { useParams } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 
 export default function EditForm({
 	actions,
@@ -58,37 +58,41 @@ export default function EditForm({
 
 			<header className="crudnick-header">
 				<h1>{`${titlePrefixText} ${singular}`}</h1>
-				{row && <Actions
-					apiPath={apiPath}
-					currentPage="/"
-					path={path}
-					saveButtonText={saveButtonText}
-					row={row}
-					setRow={setRow}
-					subpages={subpages}
-				>
-					{actions ? actions(row, setRow) : null}
-				</Actions>}
+				{row && (
+					<Actions
+						apiPath={apiPath}
+						currentPage="/"
+						path={path}
+						saveButtonText={saveButtonText}
+						row={row}
+						setRow={setRow}
+						subpages={subpages}
+					>
+						{actions ? actions(row, setRow) : null}
+					</Actions>
+				)}
 			</header>
 
 			{error && <div className="formosa-message formosa-message--error">{getErrorMessage(error)}</div>}
 
-			{row && <MyForm
-				filterBody={filterBody}
-				filterValues={filterValues}
-				htmlId="crudnick-edit-form"
-				id={id}
-				method="PUT"
-				path={apiPath}
-				preventEmptyRequest
-				relationshipNames={relationshipNames}
-				row={row}
-				setRow={setRow}
-				successToastText={`${singular} saved successfully.`}
-				{...otherProps}
-			>
-				<FormComponent row={row} setRow={setRow} {...componentProps} />
-			</MyForm>}
+			{row && (
+				<MyForm
+					filterBody={filterBody}
+					filterValues={filterValues}
+					htmlId="crudnick-edit-form"
+					id={id}
+					method="PUT"
+					path={apiPath}
+					preventEmptyRequest
+					relationshipNames={relationshipNames}
+					row={row}
+					setRow={setRow}
+					successToastText={`${singular} saved successfully.`}
+					{...otherProps}
+				>
+					<FormComponent row={row} setRow={setRow} {...componentProps} />
+				</MyForm>
+			)}
 
 			{row && extra ? extra(row) : null}
 		</>

@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext } from 'react'; // eslint-disable-line import/no-unresolved
 import { FormContext } from '@jlbelanger/formosa';
-import { Prompt } from 'react-router-dom';
+import { Prompt } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 
 export default function MyFormPrompt() {
 	const { formState } = useContext(FormContext);

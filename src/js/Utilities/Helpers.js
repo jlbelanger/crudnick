@@ -38,7 +38,8 @@ export const filterByKeys = (records, filters) => {
 export const getErrorMessage = (response) => {
 	if (response.message) {
 		return `Error: ${response.message}`;
-	} else if (response.errors) {
+	}
+	if (response.errors) {
 		return `Error: ${response.errors.map((error) => (error.title)).join(', ')}`;
 	}
 	return 'Error loading data. Please try again later.';

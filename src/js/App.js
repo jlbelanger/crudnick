@@ -1,11 +1,11 @@
 import { Api, FormContainer } from '@jlbelanger/formosa';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import Auth from './Utilities/Auth';
-import Nav from './Nav';
-import PropTypes from 'prop-types';
-import React from 'react';
 import ForgotPassword from './Pages/Auth/ForgotPassword';
 import Login from './Pages/Auth/Login';
+import Nav from './Nav';
+import PropTypes from 'prop-types';
+import React from 'react'; // eslint-disable-line import/no-unresolved
 import RedirectToHome from './RedirectToHome';
 import ResetPassword from './Pages/Auth/ResetPassword';
 

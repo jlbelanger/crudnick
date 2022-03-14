@@ -1,11 +1,11 @@
 import { cleanKey, filterByKeys, getErrorMessage, sortByKey } from '../Utilities/Helpers';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import { Api } from '@jlbelanger/formosa';
 import { ReactComponent as ArrowIcon } from '../../svg/arrow.svg';
 import { ReactComponent as CheckIcon } from '../../svg/check.svg';
 import get from 'get-value';
 import MetaTitle from '../MetaTitle';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import PropTypes from 'prop-types';
 import { ReactComponent as SearchIcon } from '../../svg/search.svg';
 
@@ -144,17 +144,19 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 						<tr>
 							{columns.map(({ key, disableSearch, size }) => (
 								<td className="formosa-input-wrapper--search" key={key}>
-									{!disableSearch && (<div className="formosa-search-wrapper">
-										<input
-											className="formosa-field__input"
-											data-key={cleanKey(key)}
-											onChange={filter}
-											size={size}
-											type="search"
-											value={options.filters[cleanKey(key)] || ''}
-										/>
-										<SearchIcon className="formosa-icon--search" height={16} width={16} />
-									</div>)}
+									{!disableSearch && (
+										<div className="formosa-search-wrapper">
+											<input
+												className="formosa-field__input"
+												data-key={cleanKey(key)}
+												onChange={filter}
+												size={size}
+												type="search"
+												value={options.filters[cleanKey(key)] || ''}
+											/>
+											<SearchIcon className="formosa-icon--search" height={16} width={16} />
+										</div>
+									)}
 								</td>
 							))}
 						</tr>

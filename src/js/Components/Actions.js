@@ -1,6 +1,6 @@
 import { Api, Form, FormosaContext } from '@jlbelanger/formosa';
-import { NavLink, useHistory } from 'react-router-dom';
-import React, { useContext } from 'react';
+import { NavLink, useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
+import React, { useContext } from 'react'; // eslint-disable-line import/no-unresolved
 import PropTypes from 'prop-types';
 
 export default function Actions({
@@ -20,7 +20,7 @@ export default function Actions({
 	const onDelete = (e) => {
 		e.preventDefault();
 
-		if (!confirm('Are you sure you want to delete this?')) {
+		if (!confirm('Are you sure you want to delete this?')) { // eslint-disable-line  no-restricted-globals
 			return;
 		}
 

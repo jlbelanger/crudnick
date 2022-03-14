@@ -1,9 +1,9 @@
 import { Api, FormosaContext } from '@jlbelanger/formosa';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import Auth from './Utilities/Auth';
-import PropTypes from 'prop-types';
 import { ReactComponent as MenuIcon } from '../svg/menu.svg';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
+import PropTypes from 'prop-types';
 
 export default function Nav({ nav }) {
 	const { formosaState } = useContext(FormosaContext);
@@ -51,3 +51,7 @@ export default function Nav({ nav }) {
 		</nav>
 	);
 }
+
+Nav.propTypes = {
+	nav: PropTypes.object.isRequired,
+};

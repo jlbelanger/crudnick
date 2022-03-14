@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect } from 'react'; // eslint-disable-line import/no-unresolved
 
 export default function MetaTitle({ title }) {
 	useEffect(() => {

@@ -1,7 +1,7 @@
 import { Form } from '@jlbelanger/formosa';
 import MyFormPrompt from './MyFormPrompt';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React from 'react'; // eslint-disable-line import/no-unresolved
 
 export default function MyForm({ children, ...otherProps }) {
 	return (
