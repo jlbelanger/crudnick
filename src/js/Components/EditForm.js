@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import Actions from './Actions';
 import { Api } from '@jlbelanger/formosa';
+import { capitalize } from '../Utilities/Helpers';
 import get from 'get-value';
 import { getErrorMessage } from '../Utilities/Helpers';
 import MetaTitle from '../MetaTitle';
@@ -87,7 +88,7 @@ export default function EditForm({
 					relationshipNames={relationshipNames}
 					row={row}
 					setRow={setRow}
-					successToastText={`${singular} saved successfully.`}
+					successToastText={`${capitalize(singular)} saved successfully.`}
 					{...otherProps}
 				>
 					<FormComponent row={row} setRow={setRow} {...componentProps} />

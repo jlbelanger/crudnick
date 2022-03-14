@@ -1,5 +1,9 @@
 import get from 'get-value';
 
+export const capitalize = (s) => (
+	s.replace(/(?:^|\s)\S/g, (a) => (a.toUpperCase()))
+);
+
 export const cleanKey = (key) => (key.replace(/^relationships\./, ''));
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping

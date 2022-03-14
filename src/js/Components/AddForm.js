@@ -1,5 +1,6 @@
 import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
 import { ReactComponent as CheckIcon } from '../../svg/check.svg';
+import { capitalize } from '../Utilities/Helpers';
 import MetaTitle from '../MetaTitle';
 import MyForm from './MyForm';
 import PropTypes from 'prop-types';
@@ -90,7 +91,7 @@ export default function AddForm({
 				relationshipNames={relationshipNames}
 				row={row}
 				setRow={setRow}
-				successToastText={`${singular} added successfully.`}
+				successToastText={`${capitalize(singular)} added successfully.`}
 				{...otherProps}
 			>
 				<FormComponent {...componentProps} />
