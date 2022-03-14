@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'; // eslint-disable-line impor
 import Actions from './Actions';
 import { Api } from '@jlbelanger/formosa';
 import { capitalize } from '../Utilities/Helpers';
+import CrudnickContext from '../CrudnickContext';
 import get from 'get-value';
 import { getErrorMessage } from '../Utilities/Helpers';
 import MetaTitle from '../MetaTitle';
@@ -31,6 +32,7 @@ export default function EditForm({
 	const { id } = useParams();
 	const [row, setRow] = useState(null);
 	const [error, setError] = useState(false);
+	const [checkForUnsavedChanges, setCheckForUnsavedChanges] = useState(true);
 
 	useEffect(() => {
 		Api.get(url)
@@ -54,7 +56,7 @@ export default function EditForm({
 	const metaTitle = row ? `${titlePrefixText} ${get(row, name)}` : null;
 
 	return (
-		<>
+		<CrudnickContext.Provider value={{ checkForUnsavedChanges, setCheckForUnsavedChanges }}>
 			<MetaTitle title={metaTitle} />
 
 			<header className="crudnick-header">
@@ -78,6 +80,7 @@ export default function EditForm({
 
 			{row && (
 				<MyForm
+					checkForUnsavedChanges={checkForUnsavedChanges}
 					filterBody={filterBody}
 					filterValues={filterValues}
 					htmlId="crudnick-edit-form"
@@ -96,7 +99,7 @@ export default function EditForm({
 			)}
 
 			{row && extra ? extra(row) : null}
-		</>
+		</CrudnickContext.Provider>
 	);
 }
 
