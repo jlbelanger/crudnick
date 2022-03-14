@@ -69,6 +69,7 @@ export default function EditForm({
 						saveButtonText={saveButtonText}
 						row={row}
 						setRow={setRow}
+						singular={singular}
 						subpages={subpages}
 					>
 						{actions ? actions(row, setRow) : null}

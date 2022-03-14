@@ -1,6 +1,7 @@
 import { Api, Form, FormosaContext } from '@jlbelanger/formosa';
 import { NavLink, useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import React, { useContext } from 'react'; // eslint-disable-line import/no-unresolved
+import { capitalize } from '../Utilities/Helpers';
 import CrudnickContext from '../CrudnickContext';
 import PropTypes from 'prop-types';
 
@@ -13,6 +14,7 @@ export default function Actions({
 	saveButtonText,
 	setRow,
 	showSave,
+	singular,
 	subpages,
 }) {
 	const history = useHistory();
@@ -22,7 +24,7 @@ export default function Actions({
 	const onDelete = (e) => {
 		e.preventDefault();
 
-		if (!confirm('Are you sure you want to delete this?')) { // eslint-disable-line  no-restricted-globals
+		if (!confirm(`Are you sure you want to delete this ${singular}?`)) { // eslint-disable-line  no-restricted-globals
 			return;
 		}
 
@@ -30,7 +32,7 @@ export default function Actions({
 
 		Api.delete(`${apiPath}/${row.id}`)
 			.then(() => {
-				formosaState.addToast('Record deleted successfully.', 'success');
+				formosaState.addToast(`${capitalize(singular)} deleted successfully.`, 'success');
 				history.push(`/${path}`);
 				setCheckForUnsavedChanges(true);
 			})
@@ -104,6 +106,7 @@ Actions.propTypes = {
 	row: PropTypes.object,
 	setRow: PropTypes.func.isRequired,
 	showSave: PropTypes.bool,
+	singular: PropTypes.string.isRequired,
 	subpages: PropTypes.array,
 };
 
