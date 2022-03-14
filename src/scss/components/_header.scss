@@ -1,0 +1,13 @@
+.crudnick-header {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 0 0 $crudnick-margin;
+	max-width: 100%;
+
+	h1 {
+		margin: 0 8px 8px 0;
+		white-space: nowrap;
+	}
+}

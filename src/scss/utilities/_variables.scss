@@ -1,0 +1,91 @@
+$crudnick-primary: #259 !default;
+$crudnick-white: #fff !default;
+$crudnick-gray: #666 !default;
+
+$crudnick-dark-mode: 1 !default;
+
+$crudnick-lightest: scale-color($crudnick-primary, $lightness: 95% * $crudnick-dark-mode) !default;
+$crudnick-lighter: scale-color($crudnick-primary, $lightness: 70% * $crudnick-dark-mode) !default;
+$crudnick-light: scale-color($crudnick-primary, $lightness: 50% * $crudnick-dark-mode) !default;
+$crudnick-lightish: scale-color($crudnick-primary, $lightness: 30% * $crudnick-dark-mode) !default;
+
+$crudnick-dark: scale-color($crudnick-primary, $lightness: -50% * $crudnick-dark-mode) !default;
+$crudnick-darker: scale-color($crudnick-primary, $lightness: -70% * $crudnick-dark-mode) !default;
+$crudnick-darkerer: scale-color($crudnick-primary, $lightness: -85% * $crudnick-dark-mode) !default;
+$crudnick-darkest: scale-color($crudnick-primary, $lightness: -95% * $crudnick-dark-mode) !default;
+
+$crudnick-font-size: 18px !default;
+$crudnick-margin: 24px !default;
+$crudnick-padding: 12px !default;
+
+$crudnick-link-color: $crudnick-lightish !default;
+
+$crudnick-auth-form-width: 500px !default;
+
+$crudnick-body-background-color: $crudnick-darkest !default;
+$crudnick-body-color: $crudnick-lightest !default;
+
+$crudnick-button-height: ($crudnick-padding * 2) + $crudnick-font-size !default;
+
+$crudnick-button-secondary-background-color: $crudnick-darker !default;
+$crudnick-button-secondary-background-color-hover: scale-color($crudnick-button-secondary-background-color, $lightness: -15%) !default;
+$crudnick-button-secondary-border-color: transparent !default;
+$crudnick-button-secondary-color: $crudnick-lighter !default;
+
+$crudnick-button-link-background-color: transparent !default;
+$crudnick-button-link-background-color-hover: transparent !default;
+$crudnick-button-link-border-color: transparent !default;
+$crudnick-button-link-color: $crudnick-link-color !default;
+
+$crudnick-content-width: 2000px !default;
+
+$crudnick-disabled-opacity: .3 !default;
+
+$crudnick-font-family: 'Helvetica Neue', helvetica, arial, sans-serif !default;
+
+$crudnick-heading-margin: 16px 0 !default;
+$crudnick-heading-small-color: $crudnick-gray !default;
+$crudnick-heading-small-font-size: 18px !default;
+$crudnick-heading-small-font-weight: normal !default;
+$crudnick-heading-small-margin: 0 0 0 4px !default;
+
+$crudnick-icon-fill: $crudnick-white !default;
+
+$crudnick-input-background-color: $crudnick-darker !default;
+$crudnick-input-border-color: $crudnick-darker !default;
+$crudnick-input-border-width: 2px !default;
+$crudnick-input-padding: 12px !default;
+$crudnick-input-height: ($crudnick-input-padding + $crudnick-input-border-width) * 2 + $crudnick-font-size !default;
+
+$crudnick-placeholder-color: $crudnick-gray !default;
+
+$crudnick-nav-background-color: $crudnick-primary !default;
+$crudnick-nav-active-background-color: $crudnick-body-background-color !default;
+$crudnick-nav-active-color: $crudnick-body-color !default;
+$crudnick-nav-breakpoint: 1025px !default;
+$crudnick-nav-height: $crudnick-padding * 2 + $crudnick-font-size !default;
+
+$crudnick-note-color: $crudnick-gray !default;
+
+$crudnick-table-arrow-width: 12px !default;
+$crudnick-table-cell-padding: $crudnick-margin / 2 !default;
+$crudnick-table-link-background-color-hover: scale-color($crudnick-darkest, $lightness: 5%) !default;
+
+$crudnick-textarea-large-height: 60vh;
+$crudnick-textarea-medium-height: 30vh;
+
+$formosa-dark-mode: true !default;
+$formosa-button-link-color: $crudnick-light !default;
+$formosa-checkbox-padding: 20px !default;
+$formosa-checkbox-size: 43px !default;
+$formosa-focus-border-width: 4px !default;
+$formosa-input-background-color: $crudnick-input-background-color !default;
+$formosa-input-border-width: 0 !default;
+$formosa-input-font-family: $crudnick-font-family !default;
+$formosa-input-padding: 8px !default;
+$formosa-note-opacity: 1 !default;
+$formosa-primary-background-color: $crudnick-primary !default;
+$formosa-primary-color: $crudnick-white !default;
+$formosa-radio-size: 24px !default;
+$formosa-spinner-color: transparent !default;
+$formosa-spinner-color-alternate: $crudnick-primary !default;

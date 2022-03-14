@@ -1,0 +1,19 @@
+.formosa-horizontal {
+	margin-top: $crudnick-margin;
+}
+
+.formosa-search-wrapper {
+	input[size] {
+		min-width: 100%;
+	}
+}
+
+.formosa-icon--search {
+	path {
+		fill: $crudnick-dark;
+	}
+}
+
+.formosa-field__note {
+	color: $crudnick-note-color;
+}

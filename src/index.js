@@ -1,0 +1,24 @@
+import './style.scss';
+import addForm from './js/Components/AddForm';
+import app from './js/App';
+import auth from './js/Utilities/Auth';
+import editForm from './js/Components/EditForm';
+import forgotPassword from './js/Pages/Auth/ForgotPassword';
+import indexTable from './js/Components/IndexTable';
+import login from './js/Pages/Auth/Login';
+import metaTitle from './js/MetaTitle';
+import nav from './js/Nav';
+import redirectToHome from './js/RedirectToHome';
+import resetPassword from './js/Pages/Auth/ResetPassword';
+
+export const AddForm = addForm;
+export const App = app;
+export const Auth = auth;
+export const EditForm = editForm;
+export const ForgotPassword =forgotPassword;
+export const IndexTable = indexTable;
+export const Login = login;
+export const MetaTitle = metaTitle;
+export const Nav = nav;
+export const RedirectToHome = redirectToHome;
+export const ResetPassword = resetPassword;

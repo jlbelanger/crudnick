@@ -1,0 +1,90 @@
+#crudnick-nav {
+	background-color: $crudnick-nav-background-color;
+	display: flex;
+	justify-content: flex-end;
+	left: 0;
+	margin: 0 0 $crudnick-margin;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 9998;
+
+	.crudnick-list__item {
+		flex: 0 0 auto;
+	}
+
+	.active {
+		background-color: $crudnick-nav-active-background-color;
+		color: $crudnick-nav-active-color;
+	}
+}
+
+#crudnick-nav__list {
+	background-color: $crudnick-nav-background-color;
+	bottom: 0;
+	flex-direction: column;
+	margin: 0 auto;
+	max-width: $crudnick-content-width;
+	min-width: 200px;
+	overflow: auto;
+	position: fixed;
+	right: 0;
+	top: $crudnick-button-height;
+	transform: translateX(200%);
+	transition: transform 200ms ease-in-out;
+
+	a,
+	button {
+		margin: 0;
+		padding: $crudnick-padding;
+		text-align: left;
+		width: 100%;
+	}
+
+	& > li {
+		margin: 0;
+	}
+
+	&.show {
+		transform: translateX(0);
+	}
+}
+
+#crudnick-menu-button {
+	background-size: 50%;
+	display: block;
+	font-size: 0;
+	height: $crudnick-button-height;
+	width: $crudnick-button-height;
+}
+
+@media screen and (min-width: #{$crudnick-nav-breakpoint}) {
+	#crudnick-nav {
+		.crudnick-list__item {
+			flex: 1 1 auto;
+		}
+	}
+
+	#crudnick-nav__list {
+		display: flex;
+		flex-direction: row;
+		min-width: none;
+		padding: 0 $crudnick-margin;
+		position: static;
+		transform: none;
+		transition: none;
+		width: 100%;
+
+		a,
+		button {
+			display: block;
+			padding-left: 4px;
+			padding-right: 4px;
+			text-align: center;
+		}
+	}
+
+	#crudnick-menu-button {
+		display: none;
+	}
+}
