@@ -56,6 +56,10 @@
 	font-size: 0;
 	height: $crudnick-button-height;
 	width: $crudnick-button-height;
+
+	&:focus {
+		box-shadow: inset 0 0 0 $formosa-focus-border-width $formosa-focus-box-shadow-color;
+	}
 }
 
 @media screen and (min-width: #{$crudnick-nav-breakpoint}) {
