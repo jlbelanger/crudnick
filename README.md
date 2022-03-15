@@ -1,12 +1,20 @@
 # Crudnick
 
-Crudnick is a framework for creating an admin backend CMS with React and [Laravel JSON API](https://github.com/jlbelanger/laravel-json-api).
+Crudnick is a framework for creating an admin backend CMS with [React](https://www.npmjs.com/package/react) and [Laravel JSON API](https://github.com/jlbelanger/laravel-json-api).
 
-## Setup
+## Built-in features
+
+- login
+- request password reset
+- reset password
+- log out
+- list/add/edit/delete users
+
+## Install
 
 In the terminal, run the following commands:
 
-``` sh
+``` bash
 npx create-react-app my-app
 cd my-app
 
@@ -16,6 +24,8 @@ npm install @jlbelanger/crudnick react-router-dom@^5.3.0 --save
 # Or with yarn:
 yarn add @jlbelanger/crudnick react-router-dom@^5.3.0
 ```
+
+## Setup
 
 Replace the contents of `src/index.js` with the following:
 
@@ -189,7 +199,7 @@ export default function Index() {
 
 In the terminal, still in the `my-app` folder, run the following command:
 
-``` sh
+``` bash
 # With npm:
 npm start
 
@@ -197,10 +207,32 @@ npm start
 yarn start
 ```
 
-You should now have the following basic functionality:
+## Development
 
-- login
-- request password reset
-- reset password
-- log out
-- list/add/edit/delete users
+### Requirements
+
+- [Git](https://git-scm.com/)
+- [Yarn](https://classic.yarnpkg.com/en/docs/install)
+
+### Setup
+
+``` bash
+# Clone the repo
+git clone https://github.com/jlbelanger/crudnick.git
+cd crudnick
+
+# Install dependencies
+yarn install
+```
+
+### Run
+
+``` bash
+yarn start
+```
+
+### Lint
+
+``` bash
+yarn lint
+```
