@@ -5,7 +5,7 @@
 .formosa-field__input--select,
 .formosa-field__input--textarea,
 .formosa-file-input-wrapper {
-  background: #0a1a2e;
+  background-color: #0a1a2e;
   border: 0 solid #555;
   border-radius: 0;
   color: #fff;
@@ -79,7 +79,7 @@
   height: 34px; }
 
 input.formosa-autocomplete__input {
-  background: transparent;
+  background-color: transparent;
   border: 0;
   box-sizing: border-box;
   height: 42px;
@@ -275,7 +275,7 @@ input.formosa-field__input--checkbox {
     box-shadow: 0 0 0 4px #6cf; }
 
 .formosa-field__input--file {
-  background: transparent;
+  background-color: transparent;
   border: 0;
   bottom: 0;
   cursor: pointer;
@@ -379,11 +379,11 @@ input.formosa-field__input--checkbox {
     margin-top: 24px; }
 
 .formosa-message--error {
-  background: #c66;
+  background-color: #c66;
   color: #000; }
 
 .formosa-message--success {
-  background: #6c6;
+  background-color: #6c6;
   color: #000; }
 
 .formosa-field__note {
@@ -450,7 +450,7 @@ input.formosa-radio__input {
   input.formosa-radio__input.formosa-field__input {
     width: 24px; }
   input.formosa-radio__input:checked {
-    background: #fff; }
+    background-color: #fff; }
   input.formosa-radio__input:focus {
     box-shadow: 0 0 0 0 #4ad, 0 0 0 4px #6cf; }
 
@@ -576,7 +576,7 @@ input.formosa-field__input--search {
           animation-fill-mode: forwards;
   -webkit-animation-name: formosa-slide-in-out;
           animation-name: formosa-slide-in-out;
-  background: #259;
+  background-color: #259;
   color: #fff;
   display: flex;
   margin: 8px;
@@ -586,8 +586,9 @@ input.formosa-field__input--search {
   padding: 16px; }
 
 .formosa-toast__close {
-  background: transparent;
+  background-color: transparent;
   border: 0;
+  cursor: pointer;
   font-size: 0;
   height: 32px;
   margin: 0 8px 0 0;
@@ -595,16 +596,16 @@ input.formosa-field__input--search {
   .formosa-toast__close path {
     fill: #fff; }
   .formosa-toast__close:hover, .formosa-toast__close:active, .formosa-toast__close:focus {
-    background: transparent; }
+    background-color: transparent; }
 
 .formosa-toast--error {
-  background: #c66;
+  background-color: #c66;
   color: #000; }
   .formosa-toast--error .formosa-toast__close path {
     fill: #000; }
 
 .formosa-toast--success {
-  background: #6c6;
+  background-color: #6c6;
   color: #000; }
   .formosa-toast--success .formosa-toast__close path {
     fill: #000; }

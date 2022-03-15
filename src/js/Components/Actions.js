@@ -24,7 +24,7 @@ export default function Actions({
 	const onDelete = (e) => {
 		e.preventDefault();
 
-		if (!confirm(`Are you sure you want to delete this ${singular}?`)) { // eslint-disable-line  no-restricted-globals
+		if (!confirm(`Are you sure you want to delete this ${singular}?`)) { // eslint-disable-line no-restricted-globals
 			return;
 		}
 
