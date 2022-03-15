@@ -94,7 +94,7 @@ export default function AddForm({
 				successToastText={`${capitalize(singular)} added successfully.`}
 				{...otherProps}
 			>
-				<FormComponent {...componentProps} />
+				<FormComponent row={row} setRow={setRow} {...componentProps} />
 			</MyForm>
 
 			{extra ? extra(row) : null}

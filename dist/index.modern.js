@@ -248,7 +248,10 @@ function AddForm({
     row: row,
     setRow: setRow,
     successToastText: `${capitalize(singular)} added successfully.`
-  }, otherProps), /*#__PURE__*/React__default.createElement(FormComponent, componentProps)), extra ? extra(row) : null);
+  }, otherProps), /*#__PURE__*/React__default.createElement(FormComponent, Object.assign({
+    row: row,
+    setRow: setRow
+  }, componentProps))), extra ? extra(row) : null);
 }
 AddForm.propTypes = {
   addAnotherText: PropTypes.string,
