@@ -48,7 +48,7 @@ export default function Actions({
 			{showSave && (
 				<li>
 					<button
-						className="formosa-button"
+						className="crudnick-list__button formosa-button"
 						type="submit"
 						form="crudnick-edit-form"
 					>
@@ -57,7 +57,7 @@ export default function Actions({
 				</li>
 			)}
 			{currentPage !== '/' && (
-				<li><NavLink className="button" to={`/${path}/${row.id}`}>Edit</NavLink></li>
+				<li><NavLink className="crudnick-list__button button" to={`/${path}/${row.id}`}>Edit</NavLink></li>
 			)}
 			<li>
 				<Form
@@ -66,7 +66,7 @@ export default function Actions({
 					setRow={setRow}
 				>
 					<button
-						className="formosa-button formosa-button--danger"
+						className="crudnick-list__button formosa-button formosa-button--danger"
 						type="submit"
 					>
 						Delete
@@ -76,7 +76,7 @@ export default function Actions({
 			{process.env.REACT_APP_FRONTEND_URL && row.url && (
 				<li>
 					<a
-						className="formosa-button crudnick-button--secondary"
+						className="crudnick-list__button formosa-button crudnick-button--secondary"
 						href={`${process.env.REACT_APP_FRONTEND_URL}${row.url}`}
 						rel="noreferrer"
 						target="_blank"
@@ -87,7 +87,10 @@ export default function Actions({
 			)}
 			{subpages.map((page) => (
 				<li key={page}>
-					<NavLink className="formosa-button crudnick-button--secondary" to={`/${path}/${row.id}/${page.toLowerCase()}`}>
+					<NavLink
+						className="crudnick-list__button formosa-button crudnick-button--secondary"
+						to={`/${path}/${row.id}/${page.toLowerCase()}`}
+					>
 						{page}
 					</NavLink>
 				</li>

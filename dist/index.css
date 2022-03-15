@@ -31,7 +31,7 @@
     .formosa-field__input--select:focus, .formosa-field--has-error
     .formosa-field__input--textarea:focus, .formosa-field--has-error
     .formosa-file-input-wrapper:focus {
-      border-color: #3ad; }
+      border-color: #4ad; }
 
 .formosa-button,
 .formosa-field__input,
@@ -135,7 +135,8 @@ input.formosa-autocomplete__input {
   position: relative;
   text-overflow: ellipsis;
   white-space: nowrap; }
-  .formosa-autocomplete--disabled .formosa-autocomplete__value {
+  .formosa-field--disabled .formosa-autocomplete__value,
+  .formosa-field--read-only .formosa-autocomplete__value {
     padding-right: 8px; }
   .formosa-autocomplete__value.formosa-autocomplete__value--input {
     background-color: transparent;
@@ -148,6 +149,7 @@ input.formosa-autocomplete__input {
 .formosa-autocomplete__value__remove,
 .formosa-autocomplete__clear {
   border-color: transparent;
+  cursor: pointer;
   font-size: 0;
   padding: 0; }
   .formosa-autocomplete__value__remove path,
@@ -164,6 +166,9 @@ input.formosa-autocomplete__input {
     .formosa-autocomplete__clear:active path,
     .formosa-autocomplete__clear:focus path {
       fill: #fff; }
+  .formosa-field--disabled .formosa-autocomplete__value__remove, .formosa-field--disabled
+  .formosa-autocomplete__clear {
+    cursor: default; }
 
 .formosa-autocomplete__value__remove {
   background-color: transparent;
@@ -266,7 +271,7 @@ input.formosa-field__input--checkbox {
   flex: 1 1 auto;
   position: relative; }
   .formosa-file-input-wrapper:focus-within {
-    border-color: #3ad;
+    border-color: #4ad;
     box-shadow: 0 0 0 4px #6cf; }
 
 .formosa-field__input--file {
@@ -283,13 +288,14 @@ input.formosa-field__input--checkbox {
   top: 0; }
   .formosa-field--disabled .formosa-field__input--file {
     cursor: default;
-    opacity: 0; }
+    opacity: 0;
+    pointer-events: none; }
 
 .formosa-file-name--empty {
   opacity: .5; }
 
 :focus {
-  border-color: #3ad;
+  border-color: #4ad;
   box-shadow: 0 0 0 4px #6cf;
   outline: none !important; }
 
@@ -343,11 +349,15 @@ input.formosa-field__input--checkbox {
   font-weight: bold; }
   .formosa-label[for] {
     cursor: pointer; }
+    .formosa-field--disabled .formosa-label[for] {
+      cursor: default; }
   .formosa-field--has-error .formosa-label {
     color: #c66; }
 
 .formosa-radio__label {
   cursor: pointer; }
+  .formosa-field--disabled .formosa-radio__label {
+    cursor: default; }
 
 .formosa-label--required::after {
   content: ' *'; }
@@ -439,7 +449,7 @@ input.formosa-radio__input {
   input.formosa-radio__input:checked {
     background: #fff; }
   input.formosa-radio__input:focus {
-    box-shadow: 0 0 0 0 #3ad, 0 0 0 4px #6cf; }
+    box-shadow: 0 0 0 0 #4ad, 0 0 0 4px #6cf; }
 
 .formosa-search-wrapper {
   display: table;
@@ -759,8 +769,6 @@ a {
 .crudnick-list__button {
   display: block;
   margin: 0 1px; }
-  .crudnick-list__button:focus {
-    box-shadow: inset 0 0 0 4px #6cf; }
 
 .crudnick-list__text {
   height: 46px;
@@ -778,6 +786,8 @@ a {
   z-index: 9998; }
   #crudnick-nav .crudnick-list__item {
     flex: 0 0 auto; }
+  #crudnick-nav .crudnick-list__button:focus {
+    box-shadow: inset 0 0 0 4px #6cf; }
   #crudnick-nav .active {
     background-color: #020408;
     color: #f2f6fc; }

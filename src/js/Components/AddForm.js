@@ -129,5 +129,5 @@ AddForm.defaultProps = {
 	relationshipNames: [],
 	saveButtonText: 'Save',
 	showAddAnother: true,
-	titlePrefixText: 'Add ',
+	titlePrefixText: 'Add',
 };

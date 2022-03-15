@@ -102,7 +102,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 			<header className="crudnick-header">
 				<h1>
 					<span>{title}</span>
-					<small>{numResults}</small>
+					<small>{rows ? numResults : null}</small>
 				</h1>
 				<ul className="crudnick-list">
 					<li className="crudnick-list__item">

@@ -137,6 +137,6 @@ EditForm.defaultProps = {
 	relationshipNames: [],
 	saveButtonText: 'Save',
 	subpages: [],
-	titlePrefixText: 'Edit ',
+	titlePrefixText: 'Edit',
 	transform: null,
 };

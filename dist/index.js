@@ -331,7 +331,7 @@ AddForm.defaultProps = {
   relationshipNames: [],
   saveButtonText: 'Save',
   showAddAnother: true,
-  titlePrefixText: 'Add '
+  titlePrefixText: 'Add'
 };
 
 var Auth = /*#__PURE__*/function () {
@@ -684,21 +684,21 @@ function Actions(_ref) {
   return /*#__PURE__*/React__default.createElement("ul", {
     className: "crudnick-list"
   }, showSave && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement("button", {
-    className: "formosa-button",
+    className: "crudnick-list__button formosa-button",
     type: "submit",
     form: "crudnick-edit-form"
   }, saveButtonText)), currentPage !== '/' && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
-    className: "button",
+    className: "crudnick-list__button button",
     to: "/" + path + "/" + row.id
   }, "Edit")), /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement(formosa.Form, {
     onSubmit: onDelete,
     row: row,
     setRow: setRow
   }, /*#__PURE__*/React__default.createElement("button", {
-    className: "formosa-button formosa-button--danger",
+    className: "crudnick-list__button formosa-button formosa-button--danger",
     type: "submit"
   }, "Delete"))), process.env.REACT_APP_FRONTEND_URL && row.url && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement("a", {
-    className: "formosa-button crudnick-button--secondary",
+    className: "crudnick-list__button formosa-button crudnick-button--secondary",
     href: "" + process.env.REACT_APP_FRONTEND_URL + row.url,
     rel: "noreferrer",
     target: "_blank"
@@ -706,7 +706,7 @@ function Actions(_ref) {
     return /*#__PURE__*/React__default.createElement("li", {
       key: page
     }, /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
-      className: "formosa-button crudnick-button--secondary",
+      className: "crudnick-list__button formosa-button crudnick-button--secondary",
       to: "/" + path + "/" + row.id + "/" + page.toLowerCase()
     }, page));
   }), children);
@@ -858,7 +858,7 @@ EditForm.defaultProps = {
   relationshipNames: [],
   saveButtonText: 'Save',
   subpages: [],
-  titlePrefixText: 'Edit ',
+  titlePrefixText: 'Edit',
   transform: null
 };
 
@@ -1031,7 +1031,7 @@ function IndexTable(_ref) {
     title: title
   }), /*#__PURE__*/React__default.createElement("header", {
     className: "crudnick-header"
-  }, /*#__PURE__*/React__default.createElement("h1", null, /*#__PURE__*/React__default.createElement("span", null, title), /*#__PURE__*/React__default.createElement("small", null, numResults)), /*#__PURE__*/React__default.createElement("ul", {
+  }, /*#__PURE__*/React__default.createElement("h1", null, /*#__PURE__*/React__default.createElement("span", null, title), /*#__PURE__*/React__default.createElement("small", null, rows ? numResults : null)), /*#__PURE__*/React__default.createElement("ul", {
     className: "crudnick-list"
   }, /*#__PURE__*/React__default.createElement("li", {
     className: "crudnick-list__item"
