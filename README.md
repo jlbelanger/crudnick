@@ -207,6 +207,10 @@ npm start
 yarn start
 ```
 
+## Examples
+
+- https://github.com/jlbelanger/corrie-admin
+
 ## Development
 
 ### Requirements
