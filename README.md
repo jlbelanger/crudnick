@@ -1,6 +1,6 @@
 # Crudnick
 
-Crudnick is a framework for creating an admin backend CMS with [React](https://www.npmjs.com/package/react) and [Laravel JSON API](https://github.com/jlbelanger/laravel-json-api).
+Crudnick is a framework for creating an admin backend CMS with [React](https://www.npmjs.com/package/react) and [Tapioca](https://github.com/jlbelanger/tapioca).
 
 ## Built-in features
 
@@ -209,7 +209,7 @@ yarn start
 
 ## Examples
 
-- https://github.com/jlbelanger/corrie-admin
+- Corrieography: [React app](https://github.com/jlbelanger/corrie-admin) and [Laravel API](https://github.com/jlbelanger/corrie)
 
 ## Development
 
