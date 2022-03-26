@@ -122,18 +122,19 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 								key,
 								label,
 								shortLabel,
+								sortKey,
 								size,
 							}) => (
 								<th key={key} style={{ width: size ? 0 : null }}>
 									{disableSort ? (shortLabel || label) : (
 										<button
 											className="formosa-button"
-											data-key={key === 'name' ? 'slug' : cleanKey(key)}
+											data-key={sortKey || cleanKey(key)}
 											onClick={sort}
 											type="button"
 										>
 											{shortLabel || label}
-											{options.sortKey === (key === 'name' ? 'slug' : cleanKey(key)) ? (
+											{options.sortKey === (sortKey || cleanKey(key)) ? (
 												<ArrowIcon
 													className={`crudnick-icon--caret ${options.sortDir === 'desc' ? 'flip' : ''}`}
 													height={12}

@@ -1048,6 +1048,7 @@ function IndexTable(_ref) {
         key = _ref2.key,
         label = _ref2.label,
         shortLabel = _ref2.shortLabel,
+        sortKey = _ref2.sortKey,
         size = _ref2.size;
     return /*#__PURE__*/React__default.createElement("th", {
       key: key,
@@ -1056,10 +1057,10 @@ function IndexTable(_ref) {
       }
     }, disableSort ? shortLabel || label : /*#__PURE__*/React__default.createElement("button", {
       className: "formosa-button",
-      "data-key": key === 'name' ? 'slug' : cleanKey(key),
+      "data-key": sortKey || cleanKey(key),
       onClick: sort,
       type: "button"
-    }, shortLabel || label, options.sortKey === (key === 'name' ? 'slug' : cleanKey(key)) ? /*#__PURE__*/React__default.createElement(SvgArrow, {
+    }, shortLabel || label, options.sortKey === (sortKey || cleanKey(key)) ? /*#__PURE__*/React__default.createElement(SvgArrow, {
       className: "crudnick-icon--caret " + (options.sortDir === 'desc' ? 'flip' : ''),
       height: 12,
       width: 12
