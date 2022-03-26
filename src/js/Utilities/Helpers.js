@@ -17,8 +17,8 @@ const filterByKey = (records, key, value) => {
 		return recordValue.match(new RegExp(`(^|[^a-z])${escapedValue}`));
 	});
 	records = records.sort((a, b) => {
-		const aValue = get(a, key).toString().toLowerCase();
-		const bValue = get(b, key).toString().toLowerCase();
+		const aValue = (get(a, key) || '').toString().toLowerCase();
+		const bValue = (get(b, key) || '').toString().toLowerCase();
 		const aPos = aValue.indexOf(value) === 0;
 		const bPos = bValue.indexOf(value) === 0;
 		if ((aPos && bPos) || (!aPos && !bPos)) {

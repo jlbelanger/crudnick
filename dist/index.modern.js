@@ -59,8 +59,8 @@ var filterByKey = function filterByKey(records, key, value) {
     return recordValue.match(new RegExp("(^|[^a-z])" + escapedValue));
   });
   records = records.sort(function (a, b) {
-    var aValue = get(a, key).toString().toLowerCase();
-    var bValue = get(b, key).toString().toLowerCase();
+    var aValue = (get(a, key) || '').toString().toLowerCase();
+    var bValue = (get(b, key) || '').toString().toLowerCase();
     var aPos = aValue.indexOf(value) === 0;
     var bPos = bValue.indexOf(value) === 0;
 
