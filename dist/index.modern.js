@@ -2,7 +2,7 @@ import React__default, { createElement, useEffect, useContext, useState, useMemo
 import get from 'get-value';
 import PropTypes from 'prop-types';
 import { FormContext, Form, Message, Field, Submit, FormosaContext, Api, FormContainer } from '@jlbelanger/formosa';
-import { Prompt, useHistory, NavLink, useParams, BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Prompt, useHistory, Link, NavLink, useParams, BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 function _extends() {
@@ -401,7 +401,7 @@ function ForgotPassword() {
     type: "email"
   }), /*#__PURE__*/React__default.createElement(Submit, {
     label: "Send reset link",
-    postfix: /*#__PURE__*/React__default.createElement(NavLink, {
+    postfix: /*#__PURE__*/React__default.createElement(Link, {
       className: "formosa-button crudnick-button--link",
       to: "/"
     }, "Back to login")
@@ -448,7 +448,7 @@ function Login() {
     type: "checkbox"
   }), /*#__PURE__*/React__default.createElement(Submit, {
     label: "Log in",
-    postfix: /*#__PURE__*/React__default.createElement(NavLink, {
+    postfix: /*#__PURE__*/React__default.createElement(Link, {
       className: "formosa-button crudnick-button--link",
       to: "/forgot-password"
     }, "Forgot your password?")
@@ -1009,7 +1009,7 @@ function IndexTable(_ref) {
   columns = columns.map(function (column) {
     if (column.link) {
       column.fn = function (row, value) {
-        return /*#__PURE__*/React__default.createElement(NavLink, {
+        return /*#__PURE__*/React__default.createElement(Link, {
           className: "crudnick-link--table",
           to: "/" + path + "/" + row.id
         }, value);
@@ -1035,7 +1035,7 @@ function IndexTable(_ref) {
     className: "crudnick-list"
   }, /*#__PURE__*/React__default.createElement("li", {
     className: "crudnick-list__item"
-  }, /*#__PURE__*/React__default.createElement(NavLink, {
+  }, /*#__PURE__*/React__default.createElement(Link, {
     className: "formosa-button crudnick-list__button",
     to: "/" + path + "/add"
   }, "Add new")))), error ? /*#__PURE__*/React__default.createElement("div", {

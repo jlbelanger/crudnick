@@ -1,6 +1,6 @@
 {
 	"name": "@jlbelanger/crudnick",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "React components for a CRUD admin backend CMS using a JSON API.",
 	"license": "GPL-3.0-only",
 	"author": {

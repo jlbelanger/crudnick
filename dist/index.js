@@ -404,7 +404,7 @@ function ForgotPassword() {
     type: "email"
   }), /*#__PURE__*/React__default.createElement(formosa.Submit, {
     label: "Send reset link",
-    postfix: /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
+    postfix: /*#__PURE__*/React__default.createElement(reactRouterDom.Link, {
       className: "formosa-button crudnick-button--link",
       to: "/"
     }, "Back to login")
@@ -451,7 +451,7 @@ function Login() {
     type: "checkbox"
   }), /*#__PURE__*/React__default.createElement(formosa.Submit, {
     label: "Log in",
-    postfix: /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
+    postfix: /*#__PURE__*/React__default.createElement(reactRouterDom.Link, {
       className: "formosa-button crudnick-button--link",
       to: "/forgot-password"
     }, "Forgot your password?")
@@ -1012,7 +1012,7 @@ function IndexTable(_ref) {
   columns = columns.map(function (column) {
     if (column.link) {
       column.fn = function (row, value) {
-        return /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
+        return /*#__PURE__*/React__default.createElement(reactRouterDom.Link, {
           className: "crudnick-link--table",
           to: "/" + path + "/" + row.id
         }, value);
@@ -1038,7 +1038,7 @@ function IndexTable(_ref) {
     className: "crudnick-list"
   }, /*#__PURE__*/React__default.createElement("li", {
     className: "crudnick-list__item"
-  }, /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
+  }, /*#__PURE__*/React__default.createElement(reactRouterDom.Link, {
     className: "formosa-button crudnick-list__button",
     to: "/" + path + "/add"
   }, "Add new")))), error ? /*#__PURE__*/React__default.createElement("div", {
