@@ -1,8 +1,8 @@
 import { Field, Form, Message, Submit } from '@jlbelanger/formosa';
 import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
 import Auth from '../../Utilities/Auth';
+import { Link } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import MetaTitle from '../../MetaTitle';
-import { NavLink } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 
 export default function Login() {
 	const [row, setRow] = useState({});
@@ -55,7 +55,7 @@ export default function Login() {
 			<Submit
 				label="Log in"
 				postfix={(
-					<NavLink className="formosa-button crudnick-button--link" to="/forgot-password">Forgot your password?</NavLink>
+					<Link className="formosa-button crudnick-button--link" to="/forgot-password">Forgot your password?</Link>
 				)}
 			/>
 		</Form>

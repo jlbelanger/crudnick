@@ -4,8 +4,8 @@ import { Api } from '@jlbelanger/formosa';
 import { ReactComponent as ArrowIcon } from '../../svg/arrow.svg';
 import { ReactComponent as CheckIcon } from '../../svg/check.svg';
 import get from 'get-value';
+import { Link } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import MetaTitle from '../MetaTitle';
-import { NavLink } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import PropTypes from 'prop-types';
 import { ReactComponent as SearchIcon } from '../../svg/search.svg';
 
@@ -84,9 +84,9 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 	columns = columns.map((column) => {
 		if (column.link) {
 			column.fn = (row, value) => (
-				<NavLink className="crudnick-link--table" to={`/${path}/${row.id}`}>
+				<Link className="crudnick-link--table" to={`/${path}/${row.id}`}>
 					{value}
-				</NavLink>
+				</Link>
 			);
 		} else if (column.type === 'checkbox') {
 			column.fn = (_row, value) => (value ? (<CheckIcon height={16} width={16} />) : null);
@@ -106,7 +106,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 				</h1>
 				<ul className="crudnick-list">
 					<li className="crudnick-list__item">
-						<NavLink className="formosa-button crudnick-list__button" to={`/${path}/add`}>Add new</NavLink>
+						<Link className="formosa-button crudnick-list__button" to={`/${path}/add`}>Add new</Link>
 					</li>
 				</ul>
 			</header>
