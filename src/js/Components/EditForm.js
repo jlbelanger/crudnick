@@ -53,7 +53,7 @@ export default function EditForm({
 				setRow(null);
 			});
 		return () => {};
-	}, [id]);
+	}, [url]);
 
 	const FormComponent = component;
 	componentProps.formType = 'edit';
