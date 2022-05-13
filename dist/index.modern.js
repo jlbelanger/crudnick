@@ -791,7 +791,7 @@ function EditForm(_ref) {
       setRow(null);
     });
     return function () {};
-  }, [id]);
+  }, [url]);
   var FormComponent = component;
   componentProps.formType = 'edit';
   var metaTitle = row ? titlePrefixText + " " + get(row, name) : '';
