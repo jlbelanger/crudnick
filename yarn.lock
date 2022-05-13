@@ -1080,9 +1080,9 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@jlbelanger/formosa@jlbelanger/formosa#5251900e374845dc7f1d98205be6b4442c54e6bc":
+"@jlbelanger/formosa@jlbelanger/formosa#269dcc25b9e877721cbf1038d02027c45e47b10f":
   version "1.0.2"
-  resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/5251900e374845dc7f1d98205be6b4442c54e6bc"
+  resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/269dcc25b9e877721cbf1038d02027c45e47b10f"
   dependencies:
     get-value "^3.0.1"
     prop-types "^15.8.0"
