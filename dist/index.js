@@ -501,7 +501,7 @@ function Nav(_ref) {
     formosa.Api["delete"]('auth/logout').then(function () {
       Auth.logout();
     })["catch"](function (response) {
-      if (response.status === 401) {
+      if (response.status === 401 || response.status === 404) {
         Auth.logout();
         return;
       }
