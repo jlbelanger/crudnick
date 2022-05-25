@@ -210,6 +210,7 @@ yarn start
 ## Examples
 
 - Corrieography: [React app](https://github.com/jlbelanger/corrie-admin) and [Laravel API](https://github.com/jlbelanger/corrie)
+- Jenny's Wardrobe: [React app](https://github.com/jlbelanger/wardrobe-admin) and [Laravel API](https://github.com/jlbelanger/wardrobe)
 
 ## Development
 
