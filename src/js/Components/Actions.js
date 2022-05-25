@@ -57,7 +57,9 @@ export default function Actions({
 				</li>
 			)}
 			{currentPage !== '/' && (
-				<li><NavLink className="crudnick-list__button button" to={`/${path}/${row.id}`}>Edit</NavLink></li>
+				<li>
+					<NavLink className="crudnick-list__button formosa-button" to={`/${path}/${row.id}`}>Edit</NavLink>
+				</li>
 			)}
 			<li>
 				<Form
