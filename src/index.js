@@ -1,4 +1,5 @@
 import './style.scss';
+import actions from './js/Components/Actions';
 import addForm from './js/Components/AddForm';
 import app from './js/App';
 import auth from './js/Utilities/Auth';
@@ -7,9 +8,11 @@ import forgotPassword from './js/Pages/Auth/ForgotPassword';
 import indexTable from './js/Components/IndexTable';
 import login from './js/Pages/Auth/Login';
 import metaTitle from './js/MetaTitle';
+import myForm from './js/Components/MyForm';
 import nav from './js/Nav';
 import resetPassword from './js/Pages/Auth/ResetPassword';
 
+export const Actions = actions;
 export const AddForm = addForm;
 export const App = app;
 export const Auth = auth;
@@ -18,5 +21,6 @@ export const ForgotPassword = forgotPassword;
 export const IndexTable = indexTable;
 export const Login = login;
 export const MetaTitle = metaTitle;
+export const MyForm = myForm;
 export const Nav = nav;
 export const ResetPassword = resetPassword;
