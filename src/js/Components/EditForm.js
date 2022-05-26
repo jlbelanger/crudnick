@@ -1,8 +1,7 @@
+import { Api, FormContext } from '@jlbelanger/formosa';
 import { capitalize, getErrorMessage } from '../Utilities/Helpers';
-import React, { useEffect, useMemo, useState } from 'react'; // eslint-disable-line import/no-unresolved
+import React, { useContext, useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import Actions from './Actions';
-import { Api } from '@jlbelanger/formosa';
-import CrudnickContext from '../CrudnickContext';
 import get from 'get-value';
 import MetaTitle from '../MetaTitle';
 import MyForm from './MyForm';
@@ -31,8 +30,7 @@ export default function EditForm({
 	const { id } = useParams();
 	const [row, setRow] = useState(null);
 	const [error, setError] = useState(false);
-	const [checkForUnsavedChanges, setCheckForUnsavedChanges] = useState(true);
-	const crudnickState = useMemo(() => ({ checkForUnsavedChanges, setCheckForUnsavedChanges }), [checkForUnsavedChanges]);
+	const formState = useContext(FormContext);
 
 	useEffect(() => {
 		Api.get(url)
@@ -60,7 +58,7 @@ export default function EditForm({
 	const metaTitle = row ? `${titlePrefixText} ${get(row, name)}` : '';
 
 	return (
-		<CrudnickContext.Provider value={crudnickState}>
+		<>
 			<MetaTitle title={metaTitle} />
 
 			<header className="crudnick-header">
@@ -85,7 +83,6 @@ export default function EditForm({
 
 			{row && (
 				<MyForm
-					checkForUnsavedChanges={checkForUnsavedChanges}
 					filterBody={filterBody}
 					filterValues={filterValues}
 					htmlId="crudnick-edit-form"
@@ -104,7 +101,7 @@ export default function EditForm({
 			)}
 
 			{row && extra ? extra(row) : null}
-		</CrudnickContext.Provider>
+		</>
 	);
 }
 

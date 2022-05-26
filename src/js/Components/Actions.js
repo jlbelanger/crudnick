@@ -2,7 +2,6 @@ import { Api, Form, FormosaContext } from '@jlbelanger/formosa';
 import { NavLink, useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import React, { useContext } from 'react'; // eslint-disable-line import/no-unresolved
 import { capitalize } from '../Utilities/Helpers';
-import CrudnickContext from '../CrudnickContext';
 import PropTypes from 'prop-types';
 
 export default function Actions({
@@ -19,7 +18,6 @@ export default function Actions({
 }) {
 	const history = useHistory();
 	const { formosaState } = useContext(FormosaContext);
-	const { setCheckForUnsavedChanges } = useContext(CrudnickContext);
 
 	const onDelete = (e) => {
 		e.preventDefault();
@@ -28,18 +26,18 @@ export default function Actions({
 			return;
 		}
 
-		setCheckForUnsavedChanges(false);
+		formosaState.disableWarningPrompt();
 
 		Api.delete(`${apiPath}/${row.id}`)
 			.then(() => {
 				formosaState.addToast(`${capitalize(singular)} deleted successfully.`, 'success');
 				history.push(`/${path}`);
-				setCheckForUnsavedChanges(true);
+				formosaState.enableWarningPrompt();
 			})
 			.catch((response) => {
 				const text = response.message ? response.message : response.errors.map((err) => (err.title)).join(' ');
 				formosaState.addToast(text, 'error', 10000);
-				setCheckForUnsavedChanges(true);
+				formosaState.enableWarningPrompt();
 			});
 	};
 
