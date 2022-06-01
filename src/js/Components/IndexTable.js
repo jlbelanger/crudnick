@@ -35,7 +35,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 			setFilters(defaultOptions.filters);
 		}
 
-		Api.get(url)
+		Api.get(url, false)
 			.then((response) => {
 				setError(null);
 				setRows(response);
@@ -118,6 +118,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 										<button
 											className="formosa-button"
 											data-key={column.sortKey || cleanKey(column.key)}
+											disabled={rows === null}
 											onClick={sort}
 											type="button"
 										>
@@ -141,6 +142,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 									{!disableSearch && (
 										<Input
 											className="formosa-field__input"
+											disabled={rows === null}
 											setValue={(newValue) => {
 												const newFilters = {
 													...filters,
@@ -161,15 +163,22 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 						</tr>
 					</thead>
 					<tbody>
-						{filteredRows.map((row) => (
-							<tr key={row.id}>
-								{columns.map(({ fn, key }) => (
-									<td className={`crudnick-cell--${key}`} key={key}>
-										{fn ? fn(row, get(row, cleanKey(key)), key) : get(row, cleanKey(key))}
+						{rows === null
+							? (
+								<tr>
+									<td colSpan={columns.length}>
+										<div className="formosa-spinner" style={{ justifyContent: 'center', margin: '16px auto' }}>Loading...</div>
 									</td>
-								))}
-							</tr>
-						))}
+								</tr>
+							) : filteredRows.map((row) => (
+								<tr key={row.id}>
+									{columns.map(({ fn, key }) => (
+										<td className={`crudnick-cell--${key}`} key={key}>
+											{fn ? fn(row, get(row, cleanKey(key)), key) : get(row, cleanKey(key))}
+										</td>
+									))}
+								</tr>
+							))}
 					</tbody>
 				</table>
 			)}
