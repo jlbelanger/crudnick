@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
 import { capitalize } from '../Utilities/Helpers';
-import { ReactComponent as CheckIcon } from '../../svg/check.svg';
+import { Field } from '@jlbelanger/formosa';
 import MetaTitle from '../MetaTitle';
 import MyForm from './MyForm';
 import PropTypes from 'prop-types';
@@ -26,10 +26,6 @@ export default function AddForm({
 	const [row, setRow] = useState(defaultRow);
 	const [addAnother, setAddAnother] = useState(false);
 	const history = useHistory();
-
-	const onChange = (e) => {
-		setAddAnother(e.target.checked);
-	};
 
 	const afterSubmit = (response) => {
 		if (!addAnother) {
@@ -57,22 +53,15 @@ export default function AddForm({
 						</button>
 					</li>
 					{showAddAnother && (
-						<li className="formosa-field--label-after" id="crudnick-add-another-wrapper">
-							<div className="formosa-input-wrapper formosa-input-wrapper--checkbox">
-								<input
-									className="formosa-field__input formosa-field__input--checkbox"
-									checked={addAnother}
-									id="crudnick-add-another"
-									onChange={onChange}
-									type="checkbox"
-								/>
-								<CheckIcon className="formosa-icon--check" height={16} width={16} />
-								<div className="formosa-label-wrapper formosa-label-wrapper--checkbox">
-									<label className="formosa-label" htmlFor="crudnick-add-another">
-										{addAnotherText}
-									</label>
-								</div>
-							</div>
+						<li>
+							<Field
+								id="crudnick-add-another"
+								label={addAnotherText}
+								labelPosition="after"
+								setValue={setAddAnother}
+								type="checkbox"
+								value={addAnother}
+							/>
 						</li>
 					)}
 				</ul>
