@@ -1,26 +1,40 @@
+import { Api, Input } from '@jlbelanger/formosa';
 import { cleanKey, filterByKeys, getErrorMessage, sortByKey } from '../Utilities/Helpers';
 import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
-import { Api } from '@jlbelanger/formosa';
 import { ReactComponent as ArrowIcon } from '../../svg/arrow.svg';
 import { ReactComponent as CheckIcon } from '../../svg/check.svg';
 import get from 'get-value';
 import { Link } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import MetaTitle from '../MetaTitle';
 import PropTypes from 'prop-types';
-import { ReactComponent as SearchIcon } from '../../svg/search.svg';
 
 export default function IndexTable({ columns, defaultOptions, path, title, url }) {
 	const [rows, setRows] = useState(null);
 	const [filteredRows, setFilteredRows] = useState([]);
 	const [error, setError] = useState(false);
-	const [options, setOptions] = useState({
-		sortKey: 'name',
-		sortDir: 'asc',
-		filters: {},
+	const [sortKey, setSortKey] = useState('name');
+	const [sortDir, setSortDir] = useState('asc');
+	const [filters, setFilters] = useState(() => {
+		const output = {};
+		columns.forEach((column) => {
+			output[cleanKey(column.key)] = '';
+		});
+		return output;
 	});
 
 	useEffect(() => {
-		setOptions(defaultOptions);
+		if (Object.prototype.hasOwnProperty.call(defaultOptions, 'sortKey')) {
+			setSortKey(defaultOptions.sortKey);
+		}
+
+		if (Object.prototype.hasOwnProperty.call(defaultOptions, 'sortDir')) {
+			setSortDir(defaultOptions.sortDir);
+		}
+
+		if (Object.prototype.hasOwnProperty.call(defaultOptions, 'filters')) {
+			setFilters(defaultOptions.filters);
+		}
+
 		Api.get(url)
 			.then((response) => {
 				setError(null);
@@ -40,38 +54,19 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 	}, [url]);
 
 	const sort = (e) => {
-		const sortKey = e.target.getAttribute('data-key');
-		let sortDir;
-		if (options.sortKey === sortKey) {
-			sortDir = options.sortDir === 'asc' ? 'desc' : 'asc';
+		const newSortKey = e.target.getAttribute('data-key');
+		let newSortDir;
+		if (sortKey === newSortKey) {
+			newSortDir = sortDir === 'asc' ? 'desc' : 'asc';
 		} else {
-			sortDir = 'asc';
+			newSortDir = 'asc';
 		}
 
-		setOptions({
-			...options,
-			sortKey,
-			sortDir,
-		});
+		setSortKey(newSortKey);
+		setSortDir(newSortDir);
 
-		setRows(sortByKey(rows, sortKey, sortDir));
-		setFilteredRows(sortByKey(filteredRows, sortKey, sortDir));
-	};
-
-	const filter = (e) => {
-		const key = e.target.getAttribute('data-key');
-		const newFilters = {
-			...options.filters,
-			[key]: e.target.value,
-		};
-
-		setOptions({
-			...options,
-			filters: newFilters,
-		});
-
-		const newRows = filterByKeys(rows, newFilters);
-		setFilteredRows(newRows);
+		setRows(sortByKey(rows, newSortKey, newSortDir));
+		setFilteredRows(sortByKey(filteredRows, newSortKey, newSortDir));
 	};
 
 	const numRows = rows ? rows.length : 0;
@@ -89,7 +84,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 				</Link>
 			);
 		} else if (column.type === 'checkbox') {
-			column.fn = (_row, value) => (value ? (<CheckIcon height={16} width={16} />) : null);
+			column.fn = (_row, value) => (value ? (<CheckIcon aria-hidden="true" height={16} width={16} />) : null);
 			column.size = 4;
 		}
 		return column;
@@ -117,26 +112,20 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 				<table>
 					<thead>
 						<tr>
-							{columns.map(({
-								disableSort,
-								key,
-								label,
-								shortLabel,
-								sortKey,
-								size,
-							}) => (
-								<th key={key} style={{ width: size ? 0 : null }}>
-									{disableSort ? (shortLabel || label) : (
+							{columns.map((column) => (
+								<th key={column.key} style={{ width: column.size ? 0 : null }}>
+									{column.disableSort ? (column.shortLabel || column.label) : (
 										<button
 											className="formosa-button"
-											data-key={sortKey || cleanKey(key)}
+											data-key={column.sortKey || cleanKey(column.key)}
 											onClick={sort}
 											type="button"
 										>
-											{shortLabel || label}
-											{options.sortKey === (sortKey || cleanKey(key)) ? (
+											{column.shortLabel || column.label}
+											{sortKey === (column.sortKey || cleanKey(column.key)) ? (
 												<ArrowIcon
-													className={`crudnick-icon--caret ${options.sortDir === 'desc' ? 'flip' : ''}`}
+													aria-hidden="true"
+													className={`crudnick-icon--caret ${sortDir === 'desc' ? 'flip' : ''}`}
 													height={12}
 													width={12}
 												/>
@@ -150,17 +139,22 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 							{columns.map(({ key, disableSearch, size }) => (
 								<td className="formosa-input-wrapper--search" key={key}>
 									{!disableSearch && (
-										<div className="formosa-search-wrapper">
-											<input
-												className="formosa-field__input"
-												data-key={cleanKey(key)}
-												onChange={filter}
-												size={size}
-												type="search"
-												value={options.filters[cleanKey(key)] || ''}
-											/>
-											<SearchIcon className="formosa-icon--search" height={16} width={16} />
-										</div>
+										<Input
+											className="formosa-field__input"
+											setValue={(newValue) => {
+												const newFilters = {
+													...filters,
+													[cleanKey(key)]: newValue,
+												};
+												setFilters(newFilters);
+
+												const newRows = filterByKeys(rows, newFilters);
+												setFilteredRows(newRows);
+											}}
+											size={size}
+											type="search"
+											value={filters[cleanKey(key)]}
+										/>
 									)}
 								</td>
 							))}
