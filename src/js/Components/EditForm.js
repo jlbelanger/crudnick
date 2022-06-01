@@ -1,7 +1,7 @@
-import { Api, FormContext } from '@jlbelanger/formosa';
 import { capitalize, getErrorMessage } from '../Utilities/Helpers';
-import React, { useContext, useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
+import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import Actions from './Actions';
+import { Api } from '@jlbelanger/formosa';
 import get from 'get-value';
 import MetaTitle from '../MetaTitle';
 import MyForm from './MyForm';
@@ -30,7 +30,6 @@ export default function EditForm({
 	const { id } = useParams();
 	const [row, setRow] = useState(null);
 	const [error, setError] = useState(false);
-	const formState = useContext(FormContext);
 
 	useEffect(() => {
 		Api.get(url)
