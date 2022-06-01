@@ -49,7 +49,7 @@ export default function Nav({ nav }) {
 				</li>
 			</ul>
 			<button className="formosa-button" id="crudnick-menu-button" onClick={toggleMenu} type="button">
-				<MenuIcon />
+				<MenuIcon aria-hidden="true" />
 				Menu
 			</button>
 		</nav>
