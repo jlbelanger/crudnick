@@ -54,7 +54,7 @@ export default function EditForm({
 
 	const FormComponent = component;
 	componentProps.formType = 'edit';
-	const metaTitle = row ? `${titlePrefixText} ${get(row, name)}` : '';
+	const metaTitle = row ? `${titlePrefixText} ${typeof name === 'function' ? name(row) : get(row, name)}` : '';
 
 	return (
 		<>
@@ -112,7 +112,10 @@ EditForm.propTypes = {
 	extra: PropTypes.func,
 	filterBody: PropTypes.func,
 	filterValues: PropTypes.func,
-	name: PropTypes.string,
+	name: PropTypes.oneOfType([
+		PropTypes.func,
+		PropTypes.string,
+	]),
 	path: PropTypes.string.isRequired,
 	relationshipNames: PropTypes.array,
 	saveButtonText: PropTypes.string,
