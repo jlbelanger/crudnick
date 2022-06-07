@@ -20,7 +20,7 @@
 		"start": "microbundle-crl watch --no-compress --format modern,cjs --css-modules false --jsxFragment React.Fragment"
 	},
 	"dependencies": {
-		"@jlbelanger/formosa": "jlbelanger/formosa#061c94ac1fa3fcd072001dfddbe2f134f588a2ce",
+		"@jlbelanger/formosa": "jlbelanger/formosa#e41dd3870a57b7b39fd4eafa531e71aa83096170",
 		"get-value": "^3.0.1",
 		"js-cookie": "^3.0.1",
 		"prop-types": "^15.8.1"
