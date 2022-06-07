@@ -18,6 +18,10 @@ export default function App({
 		Api.setToken(Auth.token());
 	}
 
+	document.addEventListener('formosaApiRequest', () => {
+		Auth.refresh();
+	});
+
 	return (
 		<BrowserRouter {...routerAttributes}>
 			<FormContainer>
