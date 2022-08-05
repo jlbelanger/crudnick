@@ -12,6 +12,8 @@ Crudnick is a framework for creating an admin backend CMS with [React](https://w
 
 ## Install
 
+**Warning: This package is still a work-in-progress. Use at your own risk.**
+
 In the terminal, run the following commands:
 
 ``` bash
@@ -19,57 +21,13 @@ npx create-react-app my-app
 cd my-app
 
 # With npm:
-npm install @jlbelanger/crudnick react-router-dom@^5.3.0 --save
+npm install https://github.com/jlbelanger/crudnick react-router-dom@^5.3.0 --save
 
 # Or with yarn:
-yarn add @jlbelanger/crudnick react-router-dom@^5.3.0
+yarn add https://github.com/jlbelanger/crudnick react-router-dom@^5.3.0
 ```
 
 ## Setup
-
-Replace the contents of `src/index.js` with the following:
-
-``` jsx
-import '@jlbelanger/crudnick/dist/index.css';
-import { App } from '@jlbelanger/crudnick';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Routes from './Routes';
-
-ReactDOM.render(
-	<React.StrictMode>
-		<App
-			nav={[
-				{ label: 'Users', path: '/users' },
-			]}
-		>
-			<Routes />
-		</App>
-	</React.StrictMode>,
-	document.getElementById('root')
-);
-```
-
-Create a new file `src/Routes.js` containing the following:
-
-``` jsx
-import { Route, Switch } from 'react-router-dom';
-import UserAdd from './Pages/Users/Add';
-import UserEdit from './Pages/Users/Edit';
-import UserIndex from './Pages/Users/Index';
-
-export default function Routes() {
-	return (
-		<Switch>
-			<Route exact path="/" />
-			<Route exact path="/users"><UserIndex /></Route>
-			<Route exact path="/users/add"><UserAdd /></Route>
-			<Route exact path="/users/:id(\d+)"><UserEdit /></Route>
-			<Route>Page not found.</Route>
-		</Switch>
-	);
-}
-```
 
 Create a new file `.env` containing the following (but replace the values):
 
@@ -99,7 +57,7 @@ Create four new files in the `Users` subfolder:
 - `my-app/src/Pages/Users/Form.js`
 - `my-app/src/Pages/Users/Index.js`
 
-Add the following to `Add.js`:
+Add the following to `src/Pages/Users/Add.js`:
 
 ``` jsx
 import { AddForm } from '@jlbelanger/crudnick';
@@ -118,7 +76,7 @@ export default function Add() {
 }
 ```
 
-Add the following to `Edit.js`:
+Add the following to `src/Pages/Users/Edit.js`:
 
 ``` jsx
 import { EditForm } from '@jlbelanger/crudnick';
@@ -142,7 +100,7 @@ export default function Edit() {
 }
 ```
 
-Add the following to `Form.js`:
+Add the following to `src/Pages/Users/Form.js`:
 
 ``` jsx
 import { Field } from '@jlbelanger/formosa';
@@ -164,7 +122,7 @@ Form.propTypes = {
 };
 ```
 
-Add the following to `Index.js`:
+Add the following to `src/Pages/Users/Index.js`:
 
 ``` jsx
 import { IndexTable } from '@jlbelanger/crudnick';
@@ -194,6 +152,50 @@ export default function Index() {
 		/>
 	);
 }
+```
+
+Create a new file `src/Routes.js` containing the following:
+
+``` jsx
+import { Route, Switch } from 'react-router-dom';
+import UserAdd from './Pages/Users/Add';
+import UserEdit from './Pages/Users/Edit';
+import UserIndex from './Pages/Users/Index';
+
+export default function Routes() {
+	return (
+		<Switch>
+			<Route exact path="/" />
+			<Route exact path="/users"><UserIndex /></Route>
+			<Route exact path="/users/add"><UserAdd /></Route>
+			<Route exact path="/users/:id(\d+)"><UserEdit /></Route>
+			<Route>Page not found.</Route>
+		</Switch>
+	);
+}
+```
+
+Replace the contents of `src/index.js` with the following:
+
+``` jsx
+import '@jlbelanger/crudnick/dist/index.css';
+import { App } from '@jlbelanger/crudnick';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Routes from './Routes';
+
+ReactDOM.render(
+	<React.StrictMode>
+		<App
+			nav={[
+				{ label: 'Users', path: '/users' },
+			]}
+		>
+			<Routes />
+		</App>
+	</React.StrictMode>,
+	document.getElementById('root')
+);
 ```
 
 In the terminal, still in the `my-app` folder, run the following command:
