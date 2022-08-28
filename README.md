@@ -110,9 +110,9 @@ import React from 'react';
 export default function Form({ formType }) {
 	return (
 		<div className="formosa-horizontal">
-			<Field label="Username" name="username" required />
-			<Field label="Email" name="email" type="email" required />
-			<Field label="Password" name="password" type="password" required={formType === 'add'} />
+			<Field autoComplete="off" label="Username" name="username" required />
+			<Field autoComplete="off" label="Email" name="email" type="email" required />
+			<Field autoComplete="off" label="Password" name="password" type="password" required={formType === 'add'} />
 		</div>
 	);
 }
@@ -158,6 +158,7 @@ Create a new file `src/Routes.js` containing the following:
 
 ``` jsx
 import { Route, Switch } from 'react-router-dom';
+import React from 'react';
 import UserAdd from './Pages/Users/Add';
 import UserEdit from './Pages/Users/Edit';
 import UserIndex from './Pages/Users/Index';
@@ -166,9 +167,11 @@ export default function Routes() {
 	return (
 		<Switch>
 			<Route exact path="/" />
+
 			<Route exact path="/users"><UserIndex /></Route>
 			<Route exact path="/users/add"><UserAdd /></Route>
 			<Route exact path="/users/:id(\d+)"><UserEdit /></Route>
+
 			<Route>Page not found.</Route>
 		</Switch>
 	);
