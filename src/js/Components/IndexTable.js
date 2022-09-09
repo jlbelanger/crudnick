@@ -50,7 +50,6 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 				setRows(null);
 				setFilteredRows([]);
 			});
-		return () => {};
 	}, [url]);
 
 	const sort = (e) => {

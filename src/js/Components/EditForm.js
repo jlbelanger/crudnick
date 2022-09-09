@@ -49,7 +49,6 @@ export default function EditForm({
 				setError(response);
 				setRow(null);
 			});
-		return () => {};
 	}, [url]);
 
 	const FormComponent = component;
