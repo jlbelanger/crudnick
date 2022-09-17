@@ -66,5 +66,13 @@ thead {
 		&:focus {
 			background-color: transparent;
 		}
+
+		&[disabled] {
+			&:hover,
+			&:active,
+			&:focus {
+				background-color: transparent;
+			}
+		}
 	}
 }
