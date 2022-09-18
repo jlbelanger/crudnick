@@ -120,7 +120,9 @@ function Actions(_ref) {
   var history = reactRouterDom.useHistory();
 
   var _useContext = React.useContext(formosa.FormosaContext),
-      formosaState = _useContext.formosaState;
+      addToast = _useContext.addToast,
+      disableWarningPrompt = _useContext.disableWarningPrompt,
+      enableWarningPrompt = _useContext.enableWarningPrompt;
 
   var onDelete = function onDelete(e) {
     e.preventDefault();
@@ -129,17 +131,17 @@ function Actions(_ref) {
       return;
     }
 
-    formosaState.disableWarningPrompt();
+    disableWarningPrompt();
     formosa.Api["delete"](apiPath + "/" + row.id).then(function () {
-      formosaState.addToast(capitalize(singular) + " deleted successfully.", 'success');
+      addToast(capitalize(singular) + " deleted successfully.", 'success');
       history.push("/" + path);
-      formosaState.enableWarningPrompt();
+      enableWarningPrompt();
     })["catch"](function (response) {
       var text = response.message ? response.message : response.errors.map(function (err) {
         return err.title;
       }).join(' ');
-      formosaState.addToast(text, 'error', 10000);
-      formosaState.enableWarningPrompt();
+      addToast(text, 'error', 10000);
+      enableWarningPrompt();
     });
   };
 
@@ -240,7 +242,6 @@ function MetaTitle(_ref) {
     }
 
     document.querySelector('title').innerText = metaTitle;
-    return function () {};
   }, [title]);
   return null;
 }
@@ -253,31 +254,26 @@ MetaTitle.defaultProps = {
 
 function MyFormPrompt() {
   var _useContext = React.useContext(formosa.FormContext),
-      formState = _useContext.formState;
+      getDirtyKeys = _useContext.getDirtyKeys;
 
   return /*#__PURE__*/React__default.createElement(reactRouterDom.Prompt, {
-    when: formState.dirty.length > 0,
+    when: getDirtyKeys().length > 0,
     message: "You have unsaved changes. Are you sure you want to leave this page?"
   });
 }
 
-var _excluded = ["children", "showWarningPrompt"];
+var _excluded = ["children"];
 function MyForm(_ref) {
   var children = _ref.children,
-      showWarningPrompt = _ref.showWarningPrompt,
       otherProps = _objectWithoutPropertiesLoose(_ref, _excluded);
 
   var _useContext = React.useContext(formosa.FormosaContext),
-      formosaState = _useContext.formosaState;
+      showWarningPrompt = _useContext.showWarningPrompt;
 
-  return /*#__PURE__*/React__default.createElement(formosa.Form, otherProps, children, showWarningPrompt && formosaState.showWarningPrompt && /*#__PURE__*/React__default.createElement(MyFormPrompt, null));
+  return /*#__PURE__*/React__default.createElement(formosa.Form, otherProps, children, showWarningPrompt && /*#__PURE__*/React__default.createElement(MyFormPrompt, null));
 }
 MyForm.propTypes = {
-  children: PropTypes.node.isRequired,
-  showWarningPrompt: PropTypes.bool
-};
-MyForm.defaultProps = {
-  showWarningPrompt: true
+  children: PropTypes.node.isRequired
 };
 
 var _excluded$1 = ["addAnotherText", "apiPath", "component", "componentProps", "defaultRow", "extra", "filterBody", "filterValues", "path", "relationshipNames", "saveButtonText", "showAddAnother", "singular", "titlePrefixText"];
@@ -463,7 +459,7 @@ function ForgotPassword() {
     required: true,
     type: "email"
   }), /*#__PURE__*/React__default.createElement(formosa.Submit, {
-    label: "Send reset link",
+    label: "Send link",
     postfix: /*#__PURE__*/React__default.createElement(reactRouterDom.Link, {
       className: "formosa-button crudnick-button--link",
       to: "/"
@@ -514,7 +510,7 @@ function Login() {
     postfix: /*#__PURE__*/React__default.createElement(reactRouterDom.Link, {
       className: "formosa-button crudnick-button--link",
       to: "/forgot-password"
-    }, "Forgot your password?")
+    }, "Forgot password?")
   }));
 }
 
@@ -551,7 +547,7 @@ function Nav(_ref) {
   var nav = _ref.nav;
 
   var _useContext = React.useContext(formosa.FormosaContext),
-      formosaState = _useContext.formosaState;
+      addToast = _useContext.addToast;
 
   var _useState = React.useState(false),
       showMenu = _useState[0],
@@ -569,7 +565,7 @@ function Nav(_ref) {
       var text = response.message ? response.message : response.errors.map(function (err) {
         return err.title;
       }).join(' ');
-      formosaState.addToast(text, 'error', 10000);
+      addToast(text, 'error', 10000);
     });
   };
 
@@ -753,7 +749,6 @@ function EditForm(_ref) {
       setError(response);
       setRow(null);
     });
-    return function () {};
   }, [url]);
   var FormComponent = component;
   componentProps.formType = 'edit';
@@ -944,7 +939,6 @@ function IndexTable(_ref) {
       setRows(null);
       setFilteredRows([]);
     });
-    return function () {};
   }, [url]);
 
   var sort = function sort(e) {
@@ -1007,12 +1001,13 @@ function IndexTable(_ref) {
   }, "Add new")))), error ? /*#__PURE__*/React__default.createElement("div", {
     className: "formosa-message formosa-message--error"
   }, getErrorMessage(error)) : /*#__PURE__*/React__default.createElement("table", null, /*#__PURE__*/React__default.createElement("thead", null, /*#__PURE__*/React__default.createElement("tr", null, columns.map(function (column) {
-    return /*#__PURE__*/React__default.createElement("th", {
+    return /*#__PURE__*/React__default.createElement("th", _extends({
       key: column.key,
+      scope: "col",
       style: {
         width: column.size ? 0 : null
       }
-    }, column.disableSort ? column.shortLabel || column.label : /*#__PURE__*/React__default.createElement("button", {
+    }, column.thAttributes), column.disableSort ? column.shortLabel || column.label : /*#__PURE__*/React__default.createElement("button", {
       className: "formosa-button",
       "data-key": column.sortKey || cleanKey(column.key),
       disabled: rows === null,
