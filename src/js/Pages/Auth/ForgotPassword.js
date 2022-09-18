@@ -32,7 +32,7 @@ export default function ForgotPassword() {
 			/>
 
 			<Submit
-				label="Send reset link"
+				label="Send link"
 				postfix={(
 					<Link className="formosa-button crudnick-button--link" to="/">Back to login</Link>
 				)}

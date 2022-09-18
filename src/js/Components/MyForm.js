@@ -3,22 +3,17 @@ import React, { useContext } from 'react'; // eslint-disable-line import/no-unre
 import MyFormPrompt from './MyFormPrompt';
 import PropTypes from 'prop-types';
 
-export default function MyForm({ children, showWarningPrompt, ...otherProps }) {
-	const { formosaState } = useContext(FormosaContext);
+export default function MyForm({ children, ...otherProps }) {
+	const { showWarningPrompt } = useContext(FormosaContext);
 
 	return (
 		<Form {...otherProps}>
 			{children}
-			{showWarningPrompt && formosaState.showWarningPrompt && <MyFormPrompt />}
+			{showWarningPrompt && <MyFormPrompt />}
 		</Form>
 	);
 }
 
 MyForm.propTypes = {
 	children: PropTypes.node.isRequired,
-	showWarningPrompt: PropTypes.bool,
-};
-
-MyForm.defaultProps = {
-	showWarningPrompt: true,
 };

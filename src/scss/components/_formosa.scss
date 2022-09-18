@@ -17,3 +17,13 @@
 .formosa-field__note {
 	color: $crudnick-note-color;
 }
+
+.formosa-autocomplete__value {
+	margin: 4px;
+	padding-left: 0;
+	padding-right: #{$formosa-autocomplete-value-height - $formosa-autocomplete-value-padding-top};
+}
+
+.formosa-autocomplete__value--input {
+	margin: 0;
+}

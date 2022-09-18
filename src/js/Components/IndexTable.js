@@ -50,7 +50,6 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 				setRows(null);
 				setFilteredRows([]);
 			});
-		return () => {};
 	}, [url]);
 
 	const sort = (e) => {
@@ -113,7 +112,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 					<thead>
 						<tr>
 							{columns.map((column) => (
-								<th key={column.key} style={{ width: column.size ? 0 : null }}>
+								<th key={column.key} scope="col" style={{ width: column.size ? 0 : null }} {...column.thAttributes}>
 									{column.disableSort ? (column.shortLabel || column.label) : (
 										<button
 											className="formosa-button"

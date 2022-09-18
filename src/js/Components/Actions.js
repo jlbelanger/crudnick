@@ -17,7 +17,7 @@ export default function Actions({
 	subpages,
 }) {
 	const history = useHistory();
-	const { formosaState } = useContext(FormosaContext);
+	const { addToast, disableWarningPrompt, enableWarningPrompt } = useContext(FormosaContext);
 
 	const onDelete = (e) => {
 		e.preventDefault();
@@ -26,18 +26,18 @@ export default function Actions({
 			return;
 		}
 
-		formosaState.disableWarningPrompt();
+		disableWarningPrompt();
 
 		Api.delete(`${apiPath}/${row.id}`)
 			.then(() => {
-				formosaState.addToast(`${capitalize(singular)} deleted successfully.`, 'success');
+				addToast(`${capitalize(singular)} deleted successfully.`, 'success');
 				history.push(`/${path}`);
-				formosaState.enableWarningPrompt();
+				enableWarningPrompt();
 			})
 			.catch((response) => {
 				const text = response.message ? response.message : response.errors.map((err) => (err.title)).join(' ');
-				formosaState.addToast(text, 'error', 10000);
-				formosaState.enableWarningPrompt();
+				addToast(text, 'error', 10000);
+				enableWarningPrompt();
 			});
 	};
 

@@ -7,6 +7,14 @@
 	&:focus {
 		text-decoration: underline;
 	}
+
+	&[disabled] {
+		&:hover,
+		&:active,
+		&:focus {
+			text-decoration: none;
+		}
+	}
 }
 
 .crudnick-button--secondary,

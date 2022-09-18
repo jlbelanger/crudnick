@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'; // eslint-disable-line import/no-unr
 import PropTypes from 'prop-types';
 
 export default function Nav({ nav }) {
-	const { formosaState } = useContext(FormosaContext);
+	const { addToast } = useContext(FormosaContext);
 	const [showMenu, setShowMenu] = useState(false);
 	const logout = () => {
 		Api.delete('auth/logout')
@@ -19,7 +19,7 @@ export default function Nav({ nav }) {
 					return;
 				}
 				const text = response.message ? response.message : response.errors.map((err) => (err.title)).join(' ');
-				formosaState.addToast(text, 'error', 10000);
+				addToast(text, 'error', 10000);
 			});
 	};
 	const toggleMenu = () => {
