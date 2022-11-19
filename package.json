@@ -20,7 +20,7 @@
 		"start": "microbundle-crl watch --no-compress --format modern,cjs --css-modules false --jsxFragment React.Fragment"
 	},
 	"dependencies": {
-		"@jlbelanger/formosa": "jlbelanger/formosa#2338f15ad4bae575a00272127c9069d2fce55a62",
+		"@jlbelanger/formosa": "jlbelanger/formosa#e15158b097378023df12853267b4976bbb8e6c30",
 		"get-value": "^3.0.1",
 		"js-cookie": "^3.0.1",
 		"prop-types": "^15.8.1"
@@ -38,7 +38,7 @@
 		"eslint-plugin-react": "^7.28.0",
 		"eslint-plugin-react-hooks": "^4.3.0",
 		"microbundle-crl": "^0.13.11",
-		"node-sass": "^7.0.0",
+		"sass": "^1.55.0",
 		"postcss": "^8.4.8",
 		"stylelint": "^14.2.0",
 		"stylelint-config-standard-scss": "^3.0.0",

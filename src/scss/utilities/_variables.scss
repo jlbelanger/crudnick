@@ -68,7 +68,7 @@ $crudnick-nav-height: $crudnick-padding * 2 + $crudnick-font-size !default;
 $crudnick-note-color: $crudnick-gray !default;
 
 $crudnick-table-arrow-width: 12px !default;
-$crudnick-table-cell-padding: $crudnick-margin / 2 !default;
+$crudnick-table-cell-padding: $crudnick-margin * .5 !default;
 $crudnick-table-link-background-color-hover: scale-color($crudnick-darkest, $lightness: 5%) !default;
 
 $crudnick-textarea-large-height: 60vh;

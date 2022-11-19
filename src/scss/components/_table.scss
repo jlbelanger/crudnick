@@ -51,7 +51,7 @@ thead {
 		width: calc(100% + #{$crudnick-padding * 2});
 
 		svg {
-			margin-top: #{($crudnick-table-arrow-width / 2) * -1};
+			margin-top: #{($crudnick-table-arrow-width * .5) * -1};
 			position: absolute;
 			right: $crudnick-table-cell-padding;
 			top: 50%;
