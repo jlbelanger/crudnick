@@ -1012,6 +1012,51 @@ a:hover, a:active, a:focus {
   line-height: 46px;
 }
 
+.crudnick-modal-open {
+  overflow: hidden;
+}
+
+.crudnick-modal {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  padding: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 9999;
+}
+
+.crudnick-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.crudnick-modal__box {
+  background-color: #0a1a2e;
+  color: #f2f6fc;
+  max-width: 800px;
+  padding: 32px;
+  width: 100%;
+}
+
+.crudnick-modal__text {
+  margin: 0;
+}
+
+.crudnick-modal__options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 20px auto 0;
+}
+.crudnick-modal__options button + button {
+  margin-left: 8px;
+}
+
 #crudnick-nav {
   background-color: #259;
   display: flex;

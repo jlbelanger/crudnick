@@ -1,6 +1,6 @@
-import { FormosaContext, Form, Api, FormContext, Field, Message, Submit, FormContainer, Input } from '@jlbelanger/formosa';
+import { FormosaContext, Api, FormContext, Form, Field, Message, Submit, FormContainer, Input } from '@jlbelanger/formosa';
 import { useHistory, NavLink, Prompt, Link, useParams, BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import React__default, { useContext, useEffect, useState, createElement } from 'react';
+import React__default, { useRef, useEffect, useContext, useState, createElement } from 'react';
 import get from 'get-value';
 import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
@@ -19,10 +19,10 @@ var escapeRegExp = function escapeRegExp(string) {
 };
 
 var filterByKey = function filterByKey(records, key, value) {
-  value = value.toLowerCase();
+  value = value.trim().toLowerCase();
   var escapedValue = escapeRegExp(value);
   records = records.filter(function (record) {
-    var recordValue = (get(record, key) || '').toString().toLowerCase();
+    var recordValue = (get(record, key) || '').toString().replace(/<[^>]+?>/g, '').toLowerCase();
     return recordValue.match(new RegExp("(^|[^a-z])" + escapedValue));
   });
   records = records.sort(function (a, b) {
@@ -103,6 +103,104 @@ var sortByKey = function sortByKey(records, key, dir) {
   });
 };
 
+function Modal(_ref) {
+  var cancelable = _ref.cancelable,
+      cancelButtonClass = _ref.cancelButtonClass,
+      cancelButtonText = _ref.cancelButtonText,
+      children = _ref.children,
+      event = _ref.event,
+      okButtonClass = _ref.okButtonClass,
+      okButtonText = _ref.okButtonText,
+      onClickCancel = _ref.onClickCancel,
+      onClickOk = _ref.onClickOk,
+      text = _ref.text;
+  var dialogRef = useRef(null);
+
+  var onKeydown = function onKeydown(e) {
+    if (e.key === 'Escape' && onClickCancel) {
+      onClickCancel();
+    }
+  };
+
+  var onClickDialog = function onClickDialog(e) {
+    if (e.target.tagName === 'DIALOG' && onClickCancel) {
+      onClickCancel();
+    }
+  };
+
+  useEffect(function () {
+    document.body.classList.add('crudnick-modal-open');
+
+    if (cancelable) {
+      document.addEventListener('keydown', onKeydown);
+    }
+
+    return function () {
+      document.body.classList.remove('crudnick-modal-open');
+
+      if (cancelable) {
+        document.removeEventListener('keydown', onKeydown);
+      }
+
+      if (event.target) {
+        event.target.focus();
+      }
+    };
+  }, []);
+  useEffect(function () {
+    if (dialogRef && dialogRef.current && dialogRef.current.getAttribute('open') === null) {
+      dialogRef.current.showModal();
+      dialogRef.current.focus();
+
+      if (cancelable) {
+        dialogRef.current.addEventListener('click', onClickDialog);
+      }
+    }
+  }, [dialogRef]);
+  return /*#__PURE__*/React__default.createElement("dialog", {
+    className: "crudnick-modal",
+    ref: dialogRef,
+    tabIndex: -1
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: "crudnick-modal__box"
+  }, children || /*#__PURE__*/React__default.createElement("p", {
+    className: "crudnick-modal__text"
+  }, text), /*#__PURE__*/React__default.createElement("p", {
+    className: "crudnick-modal__options"
+  }, /*#__PURE__*/React__default.createElement("button", {
+    className: ("formosa-button " + okButtonClass).trim(),
+    onClick: onClickOk,
+    type: "button"
+  }, okButtonText), /*#__PURE__*/React__default.createElement("button", {
+    className: ("formosa-button " + cancelButtonClass).trim(),
+    onClick: onClickCancel,
+    type: "button"
+  }, cancelButtonText))));
+}
+Modal.propTypes = {
+  cancelable: PropTypes.bool,
+  cancelButtonClass: PropTypes.string,
+  cancelButtonText: PropTypes.string,
+  children: PropTypes.node,
+  event: PropTypes.object.isRequired,
+  okButtonClass: PropTypes.string,
+  okButtonText: PropTypes.string,
+  onClickCancel: PropTypes.func,
+  onClickOk: PropTypes.func,
+  text: PropTypes.string
+};
+Modal.defaultProps = {
+  cancelable: true,
+  cancelButtonClass: 'crudnick-button--secondary',
+  cancelButtonText: 'Cancel',
+  children: null,
+  okButtonClass: '',
+  okButtonText: 'OK',
+  onClickCancel: null,
+  onClickOk: null,
+  text: null
+};
+
 function Actions(_ref) {
   var apiPath = _ref.apiPath,
       children = _ref.children,
@@ -110,7 +208,6 @@ function Actions(_ref) {
       path = _ref.path,
       row = _ref.row,
       saveButtonText = _ref.saveButtonText,
-      setRow = _ref.setRow,
       showSave = _ref.showSave,
       singular = _ref.singular,
       subpages = _ref.subpages;
@@ -121,13 +218,12 @@ function Actions(_ref) {
       disableWarningPrompt = _useContext.disableWarningPrompt,
       enableWarningPrompt = _useContext.enableWarningPrompt;
 
-  var onDelete = function onDelete(e) {
-    e.preventDefault();
+  var _useState = useState(false),
+      showModal = _useState[0],
+      setShowModal = _useState[1];
 
-    if (!confirm("Are you sure you want to delete this " + singular + "?")) {
-      return;
-    }
-
+  var onDelete = function onDelete() {
+    setShowModal(false);
     disableWarningPrompt();
     Api["delete"](apiPath + "/" + row.id).then(function () {
       addToast(capitalize(singular) + " deleted successfully.", 'success');
@@ -151,14 +247,22 @@ function Actions(_ref) {
   }, saveButtonText)), currentPage !== '/' && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement(NavLink, {
     className: "crudnick-list__button formosa-button",
     to: "/" + path + "/" + row.id
-  }, "Edit")), /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement(Form, {
-    onSubmit: onDelete,
-    row: row,
-    setRow: setRow
-  }, /*#__PURE__*/React__default.createElement("button", {
+  }, "Edit")), /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement("button", {
     className: "crudnick-list__button formosa-button formosa-button--danger",
-    type: "submit"
-  }, "Delete"))), process.env.REACT_APP_FRONTEND_URL && row.url && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement("a", {
+    onClick: function onClick(e) {
+      setShowModal(e);
+    },
+    type: "button"
+  }, "Delete"), showModal && /*#__PURE__*/React__default.createElement(Modal, {
+    event: showModal,
+    okButtonClass: "formosa-button--danger",
+    okButtonText: "Delete",
+    onClickOk: onDelete,
+    onClickCancel: function onClickCancel() {
+      setShowModal(false);
+    },
+    text: "Are you sure you want to delete this " + singular + "?"
+  })), process.env.REACT_APP_FRONTEND_URL && row.url && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement("a", {
     className: "crudnick-list__button formosa-button crudnick-button--secondary",
     href: "" + process.env.REACT_APP_FRONTEND_URL + row.url,
     rel: "noreferrer",
@@ -179,7 +283,6 @@ Actions.propTypes = {
   path: PropTypes.string.isRequired,
   saveButtonText: PropTypes.string,
   row: PropTypes.object,
-  setRow: PropTypes.func.isRequired,
   showSave: PropTypes.bool,
   singular: PropTypes.string.isRequired,
   subpages: PropTypes.array
@@ -760,7 +863,6 @@ function EditForm(_ref) {
     path: path,
     saveButtonText: saveButtonText,
     row: row,
-    setRow: setRow,
     singular: singular,
     subpages: subpages
   }, actions ? actions(row, setRow) : null)), error && /*#__PURE__*/React__default.createElement("div", {
@@ -1078,8 +1180,9 @@ var IndexTable$1 = IndexTable;
 var Login$1 = Login;
 var MetaTitle$1 = MetaTitle;
 var MyForm$1 = MyForm;
+var Modal$1 = Modal;
 var Nav$1 = Nav;
 var ResetPassword$1 = ResetPassword;
 
-export { Actions$1 as Actions, AddForm$1 as AddForm, App$1 as App, Auth$1 as Auth, EditForm$1 as EditForm, ForgotPassword$1 as ForgotPassword, IndexTable$1 as IndexTable, Login$1 as Login, MetaTitle$1 as MetaTitle, MyForm$1 as MyForm, Nav$1 as Nav, ResetPassword$1 as ResetPassword };
+export { Actions$1 as Actions, AddForm$1 as AddForm, App$1 as App, Auth$1 as Auth, EditForm$1 as EditForm, ForgotPassword$1 as ForgotPassword, IndexTable$1 as IndexTable, Login$1 as Login, MetaTitle$1 as MetaTitle, Modal$1 as Modal, MyForm$1 as MyForm, Nav$1 as Nav, ResetPassword$1 as ResetPassword };
 //# sourceMappingURL=index.modern.js.map
