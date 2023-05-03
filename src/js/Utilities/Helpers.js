@@ -10,7 +10,7 @@ export const cleanKey = (key) => (key.replace(/^relationships\./, ''));
 const escapeRegExp = (string) => (string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'));
 
 const filterByKey = (records, key, value) => {
-	value = value.toLowerCase();
+	value = value.trim().toLowerCase();
 	const escapedValue = escapeRegExp(value);
 	records = records.filter((record) => {
 		const recordValue = (get(record, key) || '').toString().toLowerCase();
