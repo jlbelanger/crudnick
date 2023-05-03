@@ -13,7 +13,7 @@ const filterByKey = (records, key, value) => {
 	value = value.trim().toLowerCase();
 	const escapedValue = escapeRegExp(value);
 	records = records.filter((record) => {
-		const recordValue = (get(record, key) || '').toString().toLowerCase();
+		const recordValue = (get(record, key) || '').toString().replace(/<[^>]+?>/g, '').toLowerCase();
 		return recordValue.match(new RegExp(`(^|[^a-z])${escapedValue}`));
 	});
 	records = records.sort((a, b) => {
