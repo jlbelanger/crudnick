@@ -1,0 +1,45 @@
+.crudnick-modal-open {
+	overflow: hidden;
+}
+
+.crudnick-modal {
+	align-items: center;
+	background: transparent;
+	border: 0;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	left: 0;
+	padding: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: $crudnick-modal-zindex;
+}
+
+.crudnick-modal::backdrop {
+	background-color: $crudnick-modal-container-background-color;
+}
+
+.crudnick-modal__box {
+	background-color: $crudnick-modal-background-color;
+	color: $crudnick-modal-text-color;
+	max-width: $crudnick-modal-max-width;
+	padding: $crudnick-modal-padding;
+	width: 100%;
+}
+
+.crudnick-modal__text {
+	margin: 0;
+}
+
+.crudnick-modal__options {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: $crudnick-modal-button-margin-top auto 0;
+
+	button + button {
+		margin-left: $crudnick-modal-button-margin-side;
+	}
+}

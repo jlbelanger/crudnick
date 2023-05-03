@@ -1,7 +1,8 @@
-import { Api, Form, FormosaContext } from '@jlbelanger/formosa';
+import { Api, FormosaContext } from '@jlbelanger/formosa';
 import { NavLink, useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
-import React, { useContext } from 'react'; // eslint-disable-line import/no-unresolved
+import React, { useContext, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import { capitalize } from '../Utilities/Helpers';
+import Modal from './Modal';
 import PropTypes from 'prop-types';
 
 export default function Actions({
@@ -11,21 +12,16 @@ export default function Actions({
 	path,
 	row,
 	saveButtonText,
-	setRow,
 	showSave,
 	singular,
 	subpages,
 }) {
 	const history = useHistory();
 	const { addToast, disableWarningPrompt, enableWarningPrompt } = useContext(FormosaContext);
+	const [showModal, setShowModal] = useState(false);
 
-	const onDelete = (e) => {
-		e.preventDefault();
-
-		if (!confirm(`Are you sure you want to delete this ${singular}?`)) { // eslint-disable-line no-restricted-globals
-			return;
-		}
-
+	const onDelete = () => {
+		setShowModal(false);
 		disableWarningPrompt();
 
 		Api.delete(`${apiPath}/${row.id}`)
@@ -60,18 +56,27 @@ export default function Actions({
 				</li>
 			)}
 			<li>
-				<Form
-					onSubmit={onDelete}
-					row={row}
-					setRow={setRow}
+				<button
+					className="crudnick-list__button formosa-button formosa-button--danger"
+					onClick={(e) => {
+						setShowModal(e);
+					}}
+					type="button"
 				>
-					<button
-						className="crudnick-list__button formosa-button formosa-button--danger"
-						type="submit"
-					>
-						Delete
-					</button>
-				</Form>
+					Delete
+				</button>
+				{showModal && (
+					<Modal
+						event={showModal}
+						okButtonClass="formosa-button--danger"
+						okButtonText="Delete"
+						onClickOk={onDelete}
+						onClickCancel={() => {
+							setShowModal(false);
+						}}
+						text={`Are you sure you want to delete this ${singular}?`}
+					/>
+				)}
 			</li>
 			{process.env.REACT_APP_FRONTEND_URL && row.url && (
 				<li>
@@ -107,7 +112,6 @@ Actions.propTypes = {
 	path: PropTypes.string.isRequired,
 	saveButtonText: PropTypes.string,
 	row: PropTypes.object,
-	setRow: PropTypes.func.isRequired,
 	showSave: PropTypes.bool,
 	singular: PropTypes.string.isRequired,
 	subpages: PropTypes.array,

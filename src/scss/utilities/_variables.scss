@@ -1,6 +1,7 @@
 $crudnick-primary: #259 !default;
 $crudnick-white: #fff !default;
 $crudnick-gray: #666 !default;
+$crudnick-black: #000 !default;
 
 $crudnick-dark-mode: 1 !default;
 
@@ -58,6 +59,17 @@ $crudnick-input-padding: 12px !default;
 $crudnick-input-height: ($crudnick-input-padding + $crudnick-input-border-width) * 2 + $crudnick-font-size !default;
 
 $crudnick-placeholder-color: $crudnick-gray !default;
+
+$crudnick-modal-background-color: $crudnick-darker !default;
+$crudnick-modal-button-margin-side: 8px !default;
+$crudnick-modal-button-margin-top: 20px !default;
+$crudnick-modal-container-background-color: rgba($crudnick-black, .6) !default;
+$crudnick-modal-input-background-color: $crudnick-darkest !default;
+$crudnick-modal-margin: 32px !default;
+$crudnick-modal-max-width: 800px !default;
+$crudnick-modal-padding: 32px !default;
+$crudnick-modal-text-color: $crudnick-lightest !default;
+$crudnick-modal-zindex: 9999 !default;
 
 $crudnick-nav-background-color: $crudnick-primary !default;
 $crudnick-nav-active-background-color: $crudnick-body-background-color !default;

@@ -68,7 +68,6 @@ export default function EditForm({
 						path={path}
 						saveButtonText={saveButtonText}
 						row={row}
-						setRow={setRow}
 						singular={singular}
 						subpages={subpages}
 					>
