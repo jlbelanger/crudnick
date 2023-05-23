@@ -1,21 +1,33 @@
-import { Field, Form, Message, Submit } from '@jlbelanger/formosa';
-import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
+import { Alert, Field, Form, FormAlert, Submit } from '@jlbelanger/formosa';
+import { Link, useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
+import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import Auth from '../../Utilities/Auth';
-import { Link } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
+import { errorMessageText } from '../../Utilities/Helpers';
 import MetaTitle from '../../MetaTitle';
 
 export default function Login() {
+	const history = useHistory();
 	const [row, setRow] = useState({});
+	const [error, setError] = useState(false);
 
-	const afterSubmit = (response) => {
-		Auth.login(response.user, response.token, response.remember);
-		window.location.reload();
+	const afterSubmitSuccess = (response) => {
+		Auth.login(response.user, response.token, response.user.remember);
+		window.location.href = process.env.PUBLIC_URL || '/';
 	};
+
+	useEffect(() => {
+		const urlSearchParams = new URLSearchParams(history.location.search);
+		if (urlSearchParams.get('status') === '401') {
+			setError('Your session has expired. Please log in again.', 'warning');
+			history.replace({ search: '' });
+		}
+	}, []);
 
 	return (
 		<Form
-			afterSubmit={afterSubmit}
+			afterSubmitSuccess={afterSubmitSuccess}
 			className="crudnick-auth-form"
+			errorMessageText={(response) => (errorMessageText(response, false))}
 			method="POST"
 			path="auth/login"
 			row={row}
@@ -26,7 +38,9 @@ export default function Login() {
 
 			<h1>Login</h1>
 
-			<Message />
+			{error && (<Alert type="error">{error}</Alert>)}
+
+			<FormAlert />
 
 			<Field
 				autoCapitalize="none"

@@ -1928,14 +1928,15 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@jlbelanger/formosa@jlbelanger/formosa#ae07c4b577d7d8da73cf5a5b82acc8cfb2f02c9c":
+"@jlbelanger/formosa@jlbelanger/formosa#776ff33bf2241abd650abc2bfc190f469ebaf707":
   version "1.0.2"
-  resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/ae07c4b577d7d8da73cf5a5b82acc8cfb2f02c9c"
+  resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/776ff33bf2241abd650abc2bfc190f469ebaf707"
   dependencies:
     get-value "^3.0.1"
     prop-types "^15.8.1"
     react-promise-tracker "^2.1.1"
     set-value "^4.1.0"
+    uuid "^9.0.0"
 
 "@jridgewell/gen-mapping@^0.3.2":
   version "0.3.2"
@@ -6680,6 +6681,11 @@ util.promisify@~1.0.0:
     es-abstract "^1.17.2"
     has-symbols "^1.0.1"
     object.getownpropertydescriptors "^2.1.0"
+
+uuid@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 v8-compile-cache@^2.3.0:
   version "2.3.0"

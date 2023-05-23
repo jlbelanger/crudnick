@@ -1,4 +1,11 @@
+import Auth from './Auth';
 import get from 'get-value';
+
+export const afterSubmitFailure = (error) => {
+	if (error.status === 401) {
+		Auth.logout(error.status);
+	}
+};
 
 export const capitalize = (s) => (
 	s.replace(/(?:^|\s)\S/g, (a) => (a.toUpperCase()))
@@ -8,6 +15,13 @@ export const cleanKey = (key) => (key.replace(/^relationships\./, ''));
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping
 const escapeRegExp = (string) => (string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'));
+
+export const errorMessageText = (response, logout = true) => {
+	if (logout && response.status === 401) {
+		return Auth.logout(response.status);
+	}
+	return `Error: ${response.errors.map((e) => (e.title)).join(' ')}`;
+};
 
 const filterByKey = (records, key, value) => {
 	value = value.trim().toLowerCase();
@@ -37,16 +51,6 @@ export const filterByKeys = (records, filters) => {
 		records = filterByKey(records, key, filters[key]);
 	});
 	return records;
-};
-
-export const getErrorMessage = (response) => {
-	if (response.message) {
-		return `Error: ${response.message}`;
-	}
-	if (response.errors) {
-		return `Error: ${response.errors.map((error) => (error.title)).join(', ')}`;
-	}
-	return 'Error loading data. Please try again later.';
 };
 
 export const sortByKey = (records, key, dir) => (

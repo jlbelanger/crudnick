@@ -1,5 +1,6 @@
-import { Field, Form, Message, Submit } from '@jlbelanger/formosa';
+import { Field, Form, FormAlert, Submit } from '@jlbelanger/formosa';
 import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
+import { errorMessageText } from '../../Utilities/Helpers';
 import { Link } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import MetaTitle from '../../MetaTitle';
 
@@ -10,6 +11,7 @@ export default function ForgotPassword() {
 		<Form
 			className="crudnick-auth-form"
 			clearOnSubmit
+			errorMessageText={errorMessageText}
 			method="POST"
 			path="auth/forgot-password"
 			row={row}
@@ -21,7 +23,7 @@ export default function ForgotPassword() {
 
 			<h1>Forgot your password?</h1>
 
-			<Message />
+			<FormAlert />
 
 			<Field
 				autoComplete="email"

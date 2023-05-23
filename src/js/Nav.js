@@ -1,6 +1,7 @@
 import { Api, FormosaContext } from '@jlbelanger/formosa';
 import React, { useContext, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import Auth from './Utilities/Auth';
+import { errorMessageText } from './Utilities/Helpers';
 import { ReactComponent as MenuIcon } from '../svg/menu.svg';
 import { NavLink } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import PropTypes from 'prop-types';
@@ -8,23 +9,24 @@ import PropTypes from 'prop-types';
 export default function Nav({ nav }) {
 	const { addToast } = useContext(FormosaContext);
 	const [showMenu, setShowMenu] = useState(false);
+
 	const logout = () => {
 		Api.delete('auth/logout')
-			.then(() => {
-				Auth.logout();
-			})
 			.catch((response) => {
-				if (response.status === 401 || response.status === 404) {
-					Auth.logout();
+				if (response.status === 401) {
 					return;
 				}
-				const text = response.message ? response.message : response.errors.map((err) => (err.title)).join(' ');
-				addToast(text, 'error', 10000);
+				addToast(errorMessageText(response), 'error');
+			})
+			.then(() => {
+				Auth.logout();
 			});
 	};
+
 	const toggleMenu = () => {
 		setShowMenu(!showMenu);
 	};
+
 	const hideMenu = () => {
 		setShowMenu(false);
 	};

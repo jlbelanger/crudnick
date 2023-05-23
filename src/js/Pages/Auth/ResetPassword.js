@@ -1,6 +1,7 @@
-import { Field, Form, Message, Submit } from '@jlbelanger/formosa';
+import { Field, Form, FormAlert, Submit } from '@jlbelanger/formosa';
 import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
 import { useHistory, useParams } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
+import { errorMessageText } from '../../Utilities/Helpers';
 import MetaTitle from '../../MetaTitle';
 
 export default function ResetPassword() {
@@ -10,10 +11,11 @@ export default function ResetPassword() {
 
 	return (
 		<Form
-			afterSubmit={() => {
+			afterSubmitSuccess={() => {
 				history.push('/');
 			}}
 			className="crudnick-auth-form"
+			errorMessageText={errorMessageText}
 			method="PUT"
 			path={`auth/reset-password/${token}`}
 			row={row}
@@ -25,7 +27,7 @@ export default function ResetPassword() {
 
 			<h1>Reset password</h1>
 
-			<Message />
+			<FormAlert />
 
 			<Field
 				autoComplete="email"

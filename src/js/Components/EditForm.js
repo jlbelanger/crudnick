@@ -1,7 +1,8 @@
-import { capitalize, getErrorMessage } from '../Utilities/Helpers';
+import { Alert, Api } from '@jlbelanger/formosa';
+import { capitalize, errorMessageText } from '../Utilities/Helpers';
 import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import Actions from './Actions';
-import { Api } from '@jlbelanger/formosa';
+import Error from './Error';
 import get from 'get-value';
 import MetaTitle from '../MetaTitle';
 import MyForm from './MyForm';
@@ -30,26 +31,34 @@ export default function EditForm({
 	const { id } = useParams();
 	const [row, setRow] = useState(null);
 	const [error, setError] = useState(false);
+	const [actionError, setActionError] = useState(false);
 
 	useEffect(() => {
 		Api.get(url)
+			.catch((response) => {
+				setError(response);
+			})
 			.then((response) => {
-				setError(null);
+				if (!response) {
+					return;
+				}
 				if (transform) {
 					setRow(transform(response));
 				} else {
 					setRow(response);
 				}
-			})
-			.catch((response) => {
-				if (response.status === 401) {
-					document.getElementById('crudnick-logout').click();
-					return;
-				}
-				setError(response);
-				setRow(null);
 			});
 	}, [url]);
+
+	if (error) {
+		return (
+			<Error error={error} />
+		);
+	}
+
+	const afterSubmitFailure = (e) => {
+		setActionError(errorMessageText(e));
+	};
 
 	const FormComponent = component;
 	componentProps.formType = 'edit';
@@ -68,6 +77,7 @@ export default function EditForm({
 						path={path}
 						saveButtonText={saveButtonText}
 						row={row}
+						setActionError={setActionError}
 						singular={singular}
 						subpages={subpages}
 					>
@@ -76,10 +86,12 @@ export default function EditForm({
 				)}
 			</header>
 
-			{error && <div className="formosa-message formosa-message--error">{getErrorMessage(error)}</div>}
+			{actionError && (<Alert type="error">{actionError}</Alert>)}
 
 			{row && (
 				<MyForm
+					afterSubmitFailure={afterSubmitFailure}
+					beforeSubmit={() => { setActionError(false); return true; }}
 					filterBody={filterBody}
 					filterValues={filterValues}
 					htmlId="crudnick-edit-form"

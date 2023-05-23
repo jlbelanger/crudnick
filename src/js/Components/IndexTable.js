@@ -1,5 +1,5 @@
-import { Api, Input } from '@jlbelanger/formosa';
-import { cleanKey, filterByKeys, getErrorMessage, sortByKey } from '../Utilities/Helpers';
+import { Alert, Api, Input } from '@jlbelanger/formosa';
+import { cleanKey, errorMessageText, filterByKeys, sortByKey } from '../Utilities/Helpers';
 import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import { ReactComponent as ArrowIcon } from '../../svg/arrow.svg';
 import { ReactComponent as CheckIcon } from '../../svg/check.svg';
@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 export default function IndexTable({ columns, defaultOptions, path, title, url }) {
 	const [rows, setRows] = useState(null);
 	const [filteredRows, setFilteredRows] = useState([]);
-	const [error, setError] = useState(false);
+	const [rowsError, setRowsError] = useState(false);
 	const [sortKey, setSortKey] = useState('name');
 	const [sortDir, setSortDir] = useState('asc');
 	const [filters, setFilters] = useState(() => {
@@ -36,19 +36,17 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 		}
 
 		Api.get(url, false)
-			.then((response) => {
-				setError(null);
-				setRows(response);
-				setFilteredRows(response);
-			})
 			.catch((response) => {
-				if (response.status === 401) {
-					document.getElementById('crudnick-logout').click();
-					return;
-				}
-				setError(response);
+				setRowsError(errorMessageText(response));
 				setRows(null);
 				setFilteredRows([]);
+			})
+			.then((response) => {
+				if (!response) {
+					return;
+				}
+				setRows(response);
+				setFilteredRows(response);
 			});
 	}, [url]);
 
@@ -105,8 +103,8 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 				</ul>
 			</header>
 
-			{error ? (
-				<div className="formosa-message formosa-message--error">{getErrorMessage(error)}</div>
+			{rowsError ? (
+				<Alert type="error">{rowsError}</Alert>
 			) : (
 				<table>
 					<thead>

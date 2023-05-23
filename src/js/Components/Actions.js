@@ -1,7 +1,7 @@
 import { Api, FormosaContext } from '@jlbelanger/formosa';
+import { capitalize, errorMessageText } from '../Utilities/Helpers';
 import { NavLink, useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import React, { useContext, useState } from 'react'; // eslint-disable-line import/no-unresolved
-import { capitalize } from '../Utilities/Helpers';
 import Modal from './Modal';
 import PropTypes from 'prop-types';
 
@@ -12,6 +12,7 @@ export default function Actions({
 	path,
 	row,
 	saveButtonText,
+	setActionError,
 	showSave,
 	singular,
 	subpages,
@@ -25,14 +26,20 @@ export default function Actions({
 		disableWarningPrompt();
 
 		Api.delete(`${apiPath}/${row.id}`)
-			.then(() => {
-				addToast(`${capitalize(singular)} deleted successfully.`, 'success');
-				history.push(`/${path}`);
+			.catch((response) => {
+				if (setActionError) {
+					setActionError(errorMessageText(response));
+				} else {
+					addToast(errorMessageText(response), 'error', 10000);
+				}
 				enableWarningPrompt();
 			})
-			.catch((response) => {
-				const text = response.message ? response.message : response.errors.map((err) => (err.title)).join(' ');
-				addToast(text, 'error', 10000);
+			.then((response) => {
+				if (!response) {
+					return;
+				}
+				addToast(`${capitalize(singular)} deleted successfully.`, 'success');
+				history.push(`/${path}`);
 				enableWarningPrompt();
 			});
 	};
@@ -59,6 +66,9 @@ export default function Actions({
 				<button
 					className="crudnick-list__button formosa-button formosa-button--danger"
 					onClick={(e) => {
+						if (setActionError) {
+							setActionError(false);
+						}
 						setShowModal(e);
 					}}
 					type="button"
@@ -71,9 +81,7 @@ export default function Actions({
 						okButtonClass="formosa-button--danger"
 						okButtonText="Delete"
 						onClickOk={onDelete}
-						onClickCancel={() => {
-							setShowModal(false);
-						}}
+						onClickCancel={() => { setShowModal(false); }}
 						text={`Are you sure you want to delete this ${singular}?`}
 					/>
 				)}
@@ -111,6 +119,7 @@ Actions.propTypes = {
 	currentPage: PropTypes.string.isRequired,
 	path: PropTypes.string.isRequired,
 	saveButtonText: PropTypes.string,
+	setActionError: PropTypes.func,
 	row: PropTypes.object,
 	showSave: PropTypes.bool,
 	singular: PropTypes.string.isRequired,
@@ -121,6 +130,7 @@ Actions.defaultProps = {
 	children: null,
 	row: null,
 	saveButtonText: 'Save',
+	setActionError: null,
 	showSave: true,
 	subpages: [],
 };

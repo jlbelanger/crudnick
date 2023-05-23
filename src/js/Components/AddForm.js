@@ -1,5 +1,5 @@
+import { capitalize, errorMessageText } from '../Utilities/Helpers';
 import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
-import { capitalize } from '../Utilities/Helpers';
 import { Field } from '@jlbelanger/formosa';
 import MetaTitle from '../MetaTitle';
 import MyForm from './MyForm';
@@ -27,7 +27,7 @@ export default function AddForm({
 	const [addAnother, setAddAnother] = useState(false);
 	const history = useHistory();
 
-	const afterSubmit = (response) => {
+	const afterSubmitSuccess = (response) => {
 		if (!addAnother) {
 			history.push(`/${path}/${response.id}`);
 		}
@@ -68,9 +68,10 @@ export default function AddForm({
 			</header>
 
 			<MyForm
-				afterSubmit={afterSubmit}
+				afterSubmitSuccess={afterSubmitSuccess}
 				clearOnSubmit
 				defaultRow={defaultRow}
+				errorMessageText={errorMessageText}
 				filterBody={filterBody}
 				filterValues={filterValues}
 				htmlId="crudnick-add-form"
