@@ -1,7 +1,8 @@
 import { Api, FormosaContext } from '@jlbelanger/formosa';
-import { capitalize, errorMessageText } from '../Utilities/Helpers';
 import { NavLink, useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import React, { useContext, useState } from 'react'; // eslint-disable-line import/no-unresolved
+import { capitalize } from '../Utilities/String';
+import { errorMessageText } from '../Utilities/Errors';
 import Modal from './Modal';
 import PropTypes from 'prop-types';
 

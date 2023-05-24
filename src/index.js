@@ -5,14 +5,14 @@ import app from './js/App';
 import auth from './js/Utilities/Auth';
 import editForm from './js/Components/EditForm';
 import error from './js/Components/Error';
-import { errorMessageText as ErrorMessageText } from './js/Utilities/Helpers';
+import { errorMessageText as ErrorMessageText } from './js/Utilities/Errors';
 import forgotPassword from './js/Pages/Auth/ForgotPassword';
 import indexTable from './js/Components/IndexTable';
 import login from './js/Pages/Auth/Login';
-import metaTitle from './js/MetaTitle';
+import metaTitle from './js/Components/MetaTitle';
 import modal from './js/Components/Modal';
 import myForm from './js/Components/MyForm';
-import nav from './js/Nav';
+import nav from './js/Components/Nav';
 import resetPassword from './js/Pages/Auth/ResetPassword';
 
 export const Actions = actions;

@@ -1,10 +1,11 @@
 import { Alert, Api } from '@jlbelanger/formosa';
-import { capitalize, errorMessageText } from '../Utilities/Helpers';
 import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import Actions from './Actions';
+import { capitalize } from '../Utilities/String';
 import Error from './Error';
+import { errorMessageText } from '../Utilities/Errors';
 import get from 'get-value';
-import MetaTitle from '../MetaTitle';
+import MetaTitle from './MetaTitle';
 import MyForm from './MyForm';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom'; // eslint-disable-line import/no-unresolved

@@ -2,8 +2,8 @@ import { Alert, Field, Form, FormAlert, Submit } from '@jlbelanger/formosa';
 import { Link, useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import Auth from '../../Utilities/Auth';
-import { errorMessageText } from '../../Utilities/Helpers';
-import MetaTitle from '../../MetaTitle';
+import { errorMessageText } from '../../Utilities/Errors';
+import MetaTitle from '../../Components/MetaTitle';
 
 export default function Login() {
 	const history = useHistory();

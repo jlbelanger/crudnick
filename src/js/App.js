@@ -3,7 +3,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'; // es
 import Auth from './Utilities/Auth';
 import ForgotPassword from './Pages/Auth/ForgotPassword';
 import Login from './Pages/Auth/Login';
-import Nav from './Nav';
+import Nav from './Components/Nav';
 import PropTypes from 'prop-types';
 import React from 'react'; // eslint-disable-line import/no-unresolved
 import ResetPassword from './Pages/Auth/ResetPassword';

@@ -1,7 +1,8 @@
-import { capitalize, errorMessageText } from '../Utilities/Helpers';
 import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
+import { capitalize } from '../Utilities/String';
+import { errorMessageText } from '../Utilities/Errors';
 import { Field } from '@jlbelanger/formosa';
-import MetaTitle from '../MetaTitle';
+import MetaTitle from './MetaTitle';
 import MyForm from './MyForm';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved

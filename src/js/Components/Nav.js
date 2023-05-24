@@ -1,8 +1,8 @@
 import { Api, FormosaContext } from '@jlbelanger/formosa';
 import React, { useContext, useState } from 'react'; // eslint-disable-line import/no-unresolved
-import Auth from './Utilities/Auth';
-import { errorMessageText } from './Utilities/Helpers';
-import { ReactComponent as MenuIcon } from '../svg/menu.svg';
+import Auth from '../Utilities/Auth';
+import { errorMessageText } from '../Utilities/Errors';
+import { ReactComponent as MenuIcon } from '../../svg/menu.svg';
 import { NavLink } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import PropTypes from 'prop-types';
 

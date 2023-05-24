@@ -1,9 +1,18 @@
 import { FormosaContext, Api, FormContext, Form, Field, FormAlert, Submit, Alert, FormContainer, Input } from '@jlbelanger/formosa';
-import Cookies from 'js-cookie';
-import get from 'get-value';
 import { useHistory, NavLink, Prompt, Link, useParams, BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import React__default, { useRef, useEffect, useContext, useState, createElement } from 'react';
+import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
+import get from 'get-value';
+
+var capitalize = function capitalize(s) {
+  return s.replace(/(?:^|\s)\S/g, function (a) {
+    return a.toUpperCase();
+  });
+};
+var cleanKey = function cleanKey(key) {
+  return key.replace(/^relationships\./, '');
+};
 
 var Auth = /*#__PURE__*/function () {
   function Auth() {}
@@ -68,19 +77,6 @@ var Auth = /*#__PURE__*/function () {
   return Auth;
 }();
 
-var capitalize = function capitalize(s) {
-  return s.replace(/(?:^|\s)\S/g, function (a) {
-    return a.toUpperCase();
-  });
-};
-var cleanKey = function cleanKey(key) {
-  return key.replace(/^relationships\./, '');
-};
-
-var escapeRegExp = function escapeRegExp(string) {
-  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
-};
-
 var errorMessageText = function errorMessageText(response, logout) {
   if (logout === void 0) {
     logout = true;
@@ -93,78 +89,6 @@ var errorMessageText = function errorMessageText(response, logout) {
   return "Error: " + response.errors.map(function (e) {
     return e.title;
   }).join(' ');
-};
-
-var filterByKey = function filterByKey(records, key, value) {
-  value = value.trim().toLowerCase();
-  var escapedValue = escapeRegExp(value);
-  records = records.filter(function (record) {
-    var recordValue = (get(record, key) || '').toString().replace(/<[^>]+?>/g, '').toLowerCase();
-    return recordValue.match(new RegExp("(^|[^a-z])" + escapedValue));
-  });
-  records = records.sort(function (a, b) {
-    var aValue = (get(a, key) || '').toString().toLowerCase();
-    var bValue = (get(b, key) || '').toString().toLowerCase();
-    var aPos = aValue.indexOf(value) === 0;
-    var bPos = bValue.indexOf(value) === 0;
-
-    if (aPos && bPos || !aPos && !bPos) {
-      return 0;
-    }
-
-    if (aPos && !bPos) {
-      return -1;
-    }
-
-    return 1;
-  });
-  return records;
-};
-
-var filterByKeys = function filterByKeys(records, filters) {
-  Object.keys(filters).forEach(function (key) {
-    records = filterByKey(records, key, filters[key]);
-  });
-  return records;
-};
-var sortByKey = function sortByKey(records, key, dir) {
-  return records.sort(function (a, b) {
-    var aVal = get(a, key);
-
-    if (aVal === undefined || aVal === null) {
-      aVal = '';
-    }
-
-    var bVal = get(b, key);
-
-    if (bVal === undefined || bVal === null) {
-      bVal = '';
-    }
-
-    if (aVal === bVal) {
-      return 0;
-    }
-
-    if (aVal === '') {
-      return 1;
-    }
-
-    if (bVal === '') {
-      return -1;
-    }
-
-    if (typeof aVal === 'number' && typeof bVal === 'number') {
-      if (dir === 'asc') {
-        return aVal < bVal ? -1 : 1;
-      }
-
-      return aVal > bVal ? -1 : 1;
-    }
-
-    aVal = aVal.toString();
-    bVal = bVal.toString();
-    return dir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
-  });
 };
 
 function Modal(_ref) {
@@ -1052,6 +976,83 @@ function SvgCheck(props) {
     d: "M6.41 1l-.69.72L2.94 4.5l-.81-.78L1.41 3 0 4.41l.72.72 1.5 1.5.69.72.72-.72 3.5-3.5.72-.72L6.41 1z"
   })));
 }
+
+var escapeRegExp = function escapeRegExp(string) {
+  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
+};
+
+var filterByKey = function filterByKey(records, key, value) {
+  value = value.trim().toLowerCase();
+  var escapedValue = escapeRegExp(value);
+  records = records.filter(function (record) {
+    var recordValue = (get(record, key) || '').toString().replace(/<[^>]+?>/g, '').toLowerCase();
+    return recordValue.match(new RegExp("(^|[^a-z])" + escapedValue));
+  });
+  records = records.sort(function (a, b) {
+    var aValue = (get(a, key) || '').toString().toLowerCase();
+    var bValue = (get(b, key) || '').toString().toLowerCase();
+    var aPos = aValue.indexOf(value) === 0;
+    var bPos = bValue.indexOf(value) === 0;
+
+    if (aPos && bPos || !aPos && !bPos) {
+      return 0;
+    }
+
+    if (aPos && !bPos) {
+      return -1;
+    }
+
+    return 1;
+  });
+  return records;
+};
+
+var filterByKeys = function filterByKeys(records, filters) {
+  Object.keys(filters).forEach(function (key) {
+    records = filterByKey(records, key, filters[key]);
+  });
+  return records;
+};
+
+var sortByKey = function sortByKey(records, key, dir) {
+  return records.sort(function (a, b) {
+    var aVal = get(a, key);
+
+    if (aVal === undefined || aVal === null) {
+      aVal = '';
+    }
+
+    var bVal = get(b, key);
+
+    if (bVal === undefined || bVal === null) {
+      bVal = '';
+    }
+
+    if (aVal === bVal) {
+      return 0;
+    }
+
+    if (aVal === '') {
+      return 1;
+    }
+
+    if (bVal === '') {
+      return -1;
+    }
+
+    if (typeof aVal === 'number' && typeof bVal === 'number') {
+      if (dir === 'asc') {
+        return aVal < bVal ? -1 : 1;
+      }
+
+      return aVal > bVal ? -1 : 1;
+    }
+
+    aVal = aVal.toString();
+    bVal = bVal.toString();
+    return dir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+  });
+};
 
 function IndexTable(_ref) {
   var columns = _ref.columns,

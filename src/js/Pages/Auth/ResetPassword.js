@@ -1,8 +1,8 @@
 import { Field, Form, FormAlert, Submit } from '@jlbelanger/formosa';
 import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
 import { useHistory, useParams } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
-import { errorMessageText } from '../../Utilities/Helpers';
-import MetaTitle from '../../MetaTitle';
+import { errorMessageText } from '../../Utilities/Errors';
+import MetaTitle from '../../Components/MetaTitle';
 
 export default function ResetPassword() {
 	const [row, setRow] = useState({});
