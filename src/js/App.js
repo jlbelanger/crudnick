@@ -22,8 +22,21 @@ export default function App({
 		Auth.refresh();
 	});
 
+	// Accessibility: skip to content (https://www.bignerdranch.com/blog/web-accessibility-skip-navigation-links/).
+	const onClick = (e) => {
+		e.preventDefault();
+		const id = e.target.getAttribute('href').split('#')[1];
+		const elem = document.getElementById(id);
+		elem.setAttribute('tabindex', -1);
+		elem.addEventListener('blur', () => {
+			elem.removeAttribute('tabindex');
+		});
+		elem.focus();
+	};
+
 	return (
 		<BrowserRouter {...routerAttributes}>
+			<a href="#crudnick-article" id="crudnick-skip" onClick={onClick}>Skip to content</a>
 			<FormContainer>
 				{Auth.isLoggedIn() && <Nav nav={nav} />}
 				<article id="crudnick-article" {...articleProps}>

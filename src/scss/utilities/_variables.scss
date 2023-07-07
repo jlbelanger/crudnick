@@ -26,7 +26,7 @@ $crudnick-auth-form-width: 500px !default;
 $crudnick-body-background-color: $crudnick-darkest !default;
 $crudnick-body-color: $crudnick-lightest !default;
 
-$crudnick-button-height: ($crudnick-padding * 2) + $crudnick-font-size !default;
+$crudnick-button-height: 44px !default;
 
 $crudnick-button-secondary-background-color: $crudnick-darker !default;
 $crudnick-button-secondary-background-color-hover: scale-color($crudnick-button-secondary-background-color, $lightness: -15%) !default;
@@ -78,6 +78,14 @@ $crudnick-nav-breakpoint: 1025px !default;
 $crudnick-nav-height: $crudnick-padding * 2 + $crudnick-font-size !default;
 
 $crudnick-note-color: $crudnick-gray !default;
+
+$crudnick-skip-background-color: #6cf !default;
+$crudnick-skip-box-shadow: 0 0 10px 5px rgba($crudnick-black, .2) !default;
+$crudnick-skip-color: $crudnick-black !default;
+$crudnick-skip-font-size: 20px !default;
+$crudnick-skip-font-weight: bold !default;
+$crudnick-skip-height: $crudnick-button-height !default;
+$crudnick-skip-width: 200px !default;
 
 $crudnick-table-arrow-width: 12px !default;
 $crudnick-table-cell-padding: $crudnick-margin * .5 !default;

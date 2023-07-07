@@ -1,0 +1,27 @@
+#crudnick-skip {
+	background: $crudnick-skip-background-color;
+	border: 0;
+	border-radius: 0;
+	color: $crudnick-skip-color;
+	font-size: $crudnick-skip-font-size;
+	font-weight: $crudnick-skip-font-weight;
+	height: $crudnick-skip-height;
+	left: 50%;
+	line-height: $crudnick-skip-height;
+	margin-left: #{$crudnick-skip-width * -.5};
+	opacity: 0;
+	padding: 0;
+	position: absolute;
+	text-align: center;
+	text-decoration: none;
+	top: -$crudnick-skip-height;
+	width: $crudnick-skip-width;
+	z-index: 99999;
+
+	&:active,
+	&:focus {
+		box-shadow: $crudnick-skip-box-shadow, 0 0 0 $formosa-focus-border-width $formosa-focus-box-shadow-color ;
+		opacity: 1;
+		top: 0;
+	}
+}
