@@ -482,6 +482,195 @@ AddForm.defaultProps = {
   titlePrefixText: 'Add'
 };
 
+var _path;
+
+function _extends$1() {
+  _extends$1 = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends$1.apply(this, arguments);
+}
+
+function SvgMenu(props) {
+  return /*#__PURE__*/React.createElement("svg", _extends$1({
+    viewBox: "0 0 20 20",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, props), _path || (_path = /*#__PURE__*/React.createElement("path", {
+    d: "M0 2v2h20V2zm0 7v2h20V9zm0 7v2h20v-2z"
+  })));
+}
+
+var _path$1;
+
+function _extends$2() {
+  _extends$2 = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends$2.apply(this, arguments);
+}
+
+function SvgX(props) {
+  return /*#__PURE__*/React.createElement("svg", _extends$2({
+    viewBox: "0 0 8 8",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, props), _path$1 || (_path$1 = /*#__PURE__*/React.createElement("path", {
+    d: "M1.485.43L.431 1.486l.543.543 1.953 1.989L.97 5.974l-.54.517L1.488 7.57l.541-.54 1.988-1.99 1.957 1.99.515.537L7.567 6.49l-.537-.515-1.99-1.957 1.988-1.989.541-.54L6.491.43l-.517.54-1.957 1.957L2.028.974z"
+  })));
+}
+
+function Nav(_ref) {
+  var nav = _ref.nav;
+
+  var _useContext = React.useContext(formosa.FormosaContext),
+      addToast = _useContext.addToast;
+
+  var dialogRef = React.useRef(null);
+  var breakpoint = 1025;
+
+  var _useState = React.useState(window.innerWidth >= breakpoint),
+      showInlineNav = _useState[0],
+      setShowInlineNav = _useState[1];
+
+  var onTransitionEnd = function onTransitionEnd() {
+    document.body.classList.remove('show-nav');
+
+    if (dialogRef.current.tagName === 'DIALOG') {
+      dialogRef.current.close();
+    }
+
+    dialogRef.current.removeEventListener('transitionend', onTransitionEnd);
+  };
+
+  var onResize = function onResize() {
+    setShowInlineNav(window.innerWidth >= breakpoint);
+  };
+
+  React.useEffect(function () {
+    window.addEventListener('resize', onResize);
+    return function () {
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
+  React.useEffect(function () {
+    if (showInlineNav) {
+      hideMenu();
+      onTransitionEnd();
+    }
+  }, [showInlineNav]);
+
+  var logout = function logout() {
+    formosa.Api["delete"]('auth/logout')["catch"](function (response) {
+      if (response.status === 401) {
+        return;
+      }
+
+      addToast(errorMessageText(response), 'error');
+    }).then(function () {
+      Auth.logout();
+    });
+  };
+
+  var hideMenu = function hideMenu() {
+    document.body.classList.remove('animate-nav');
+    dialogRef.current.addEventListener('transitionend', onTransitionEnd);
+  };
+
+  var openMenu = function openMenu() {
+    document.body.classList.add('show-nav');
+    dialogRef.current.showModal();
+    setTimeout(function () {
+      document.body.classList.add('animate-nav');
+    }, 10);
+  };
+
+  var onCancelDialog = function onCancelDialog(e) {
+    e.preventDefault();
+    hideMenu();
+  };
+
+  var onClickDialog = function onClickDialog(e) {
+    if (e.target.tagName === 'DIALOG') {
+      hideMenu();
+    }
+  };
+
+  var Dialog = showInlineNav ? 'div' : 'dialog';
+  return /*#__PURE__*/React__default.createElement("nav", {
+    id: "crudnick-nav"
+  }, /*#__PURE__*/React__default.createElement(Dialog, {
+    id: "crudnick-nav__dialog",
+    ref: dialogRef,
+    onCancel: onCancelDialog,
+    onClick: onClickDialog
+  }, /*#__PURE__*/React__default.createElement("button", {
+    "aria-controls": "crudnick-nav__dialog",
+    "aria-expanded": "false",
+    className: "formosa-button crudnick-menu-button",
+    id: "crudnick-menu-close-button",
+    onClick: hideMenu,
+    title: "Close Menu",
+    type: "button"
+  }, /*#__PURE__*/React__default.createElement(SvgX, {
+    "aria-hidden": "true"
+  }), "Close Menu"), /*#__PURE__*/React__default.createElement("ul", {
+    id: "crudnick-nav__list"
+  }, nav.map(function (_ref2) {
+    var label = _ref2.label,
+        path = _ref2.path;
+    return /*#__PURE__*/React__default.createElement("li", {
+      className: "crudnick-list__item",
+      key: path
+    }, /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
+      activeClassName: "active",
+      className: "formosa-button crudnick-list__button",
+      onClick: hideMenu,
+      to: path
+    }, label));
+  }), /*#__PURE__*/React__default.createElement("li", {
+    className: "crudnick-list__item"
+  }, /*#__PURE__*/React__default.createElement("button", {
+    className: "formosa-button crudnick-list__button",
+    id: "crudnick-logout",
+    onClick: logout,
+    type: "button"
+  }, "Logout")))), /*#__PURE__*/React__default.createElement("button", {
+    "aria-controls": "crudnick-nav__dialog",
+    "aria-expanded": "true",
+    className: "formosa-button crudnick-menu-button",
+    id: "crudnick-menu-show-button",
+    onClick: openMenu,
+    title: "Show Menu",
+    type: "button"
+  }, /*#__PURE__*/React__default.createElement(SvgMenu, {
+    "aria-hidden": "true"
+  }), "Show Menu"));
+}
+Nav.propTypes = {
+  nav: PropTypes.array.isRequired
+};
+
 function ForgotPassword() {
   var _useState = React.useState({}),
       row = _useState[0],
@@ -526,8 +715,17 @@ function Login() {
       setError = _useState2[1];
 
   var afterSubmitSuccess = function afterSubmitSuccess(response) {
+    var urlSearchParams = new URLSearchParams(history.location.search);
+    var redirect;
+
+    if (urlSearchParams.get('redirect') && urlSearchParams.get('redirect')[0] === '/') {
+      redirect = urlSearchParams.get('redirect');
+    } else {
+      redirect = process.env.PUBLIC_URL || '/';
+    }
+
     Auth.login(response.user, response.token, response.user.remember);
-    window.location.href = process.env.PUBLIC_URL || '/';
+    window.location.href = redirect;
   };
 
   React.useEffect(function () {
@@ -582,102 +780,6 @@ function Login() {
   }));
 }
 
-var _path;
-
-function _extends$1() {
-  _extends$1 = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends$1.apply(this, arguments);
-}
-
-function SvgMenu(props) {
-  return /*#__PURE__*/React.createElement("svg", _extends$1({
-    xmlns: "http://www.w3.org/2000/svg",
-    viewBox: "0 0 8 8"
-  }, props), _path || (_path = /*#__PURE__*/React.createElement("path", {
-    d: "M0 0v1h8V0H0zm0 3v1h8V3H0zm0 3v1h8V6H0z"
-  })));
-}
-
-function Nav(_ref) {
-  var nav = _ref.nav;
-
-  var _useContext = React.useContext(formosa.FormosaContext),
-      addToast = _useContext.addToast;
-
-  var _useState = React.useState(false),
-      showMenu = _useState[0],
-      setShowMenu = _useState[1];
-
-  var logout = function logout() {
-    formosa.Api["delete"]('auth/logout')["catch"](function (response) {
-      if (response.status === 401) {
-        return;
-      }
-
-      addToast(errorMessageText(response), 'error');
-    }).then(function () {
-      Auth.logout();
-    });
-  };
-
-  var toggleMenu = function toggleMenu() {
-    setShowMenu(!showMenu);
-  };
-
-  var hideMenu = function hideMenu() {
-    setShowMenu(false);
-  };
-
-  return /*#__PURE__*/React__default.createElement("nav", {
-    id: "crudnick-nav"
-  }, /*#__PURE__*/React__default.createElement("ul", {
-    className: "crudnick-list" + (showMenu ? ' show' : ''),
-    id: "crudnick-nav__list"
-  }, nav.map(function (_ref2) {
-    var label = _ref2.label,
-        path = _ref2.path;
-    return /*#__PURE__*/React__default.createElement("li", {
-      className: "crudnick-list__item",
-      key: path
-    }, /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
-      activeClassName: "active",
-      className: "formosa-button crudnick-list__button",
-      onClick: hideMenu,
-      to: path
-    }, label));
-  }), /*#__PURE__*/React__default.createElement("li", {
-    className: "crudnick-list__item"
-  }, /*#__PURE__*/React__default.createElement("button", {
-    className: "formosa-button crudnick-list__button",
-    id: "crudnick-logout",
-    onClick: logout,
-    type: "button"
-  }, "Logout"))), /*#__PURE__*/React__default.createElement("button", {
-    className: "formosa-button",
-    id: "crudnick-menu-button",
-    onClick: toggleMenu,
-    type: "button"
-  }, /*#__PURE__*/React__default.createElement(SvgMenu, {
-    "aria-hidden": "true"
-  }), "Menu"));
-}
-Nav.propTypes = {
-  nav: PropTypes.array.isRequired
-};
-
 function ResetPassword() {
   var _useState = React.useState({}),
       row = _useState[0],
@@ -724,6 +826,22 @@ function ResetPassword() {
   }));
 }
 
+function Routes() {
+  var location = reactRouterDom.useLocation();
+  return /*#__PURE__*/React__default.createElement(reactRouterDom.Switch, null, /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
+    exact: true,
+    path: "/"
+  }, /*#__PURE__*/React__default.createElement(Login, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
+    exact: true,
+    path: "/forgot-password"
+  }, /*#__PURE__*/React__default.createElement(ForgotPassword, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
+    exact: true,
+    path: "/reset-password/:token"
+  }, /*#__PURE__*/React__default.createElement(ResetPassword, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, null, /*#__PURE__*/React__default.createElement(reactRouterDom.Redirect, {
+    to: "/?redirect=" + encodeURIComponent("" + process.env.PUBLIC_URL + location.pathname + location.search)
+  })));
+}
+
 function App(_ref) {
   var articleProps = _ref.articleProps,
       children = _ref.children,
@@ -737,22 +855,27 @@ function App(_ref) {
   document.addEventListener('formosaApiRequest', function () {
     Auth.refresh();
   });
-  return /*#__PURE__*/React__default.createElement(reactRouterDom.BrowserRouter, routerAttributes, /*#__PURE__*/React__default.createElement(formosa.FormContainer, null, Auth.isLoggedIn() && /*#__PURE__*/React__default.createElement(Nav, {
+
+  var onClick = function onClick(e) {
+    e.preventDefault();
+    var id = e.target.getAttribute('href').split('#')[1];
+    var elem = document.getElementById(id);
+    elem.setAttribute('tabindex', -1);
+    elem.addEventListener('blur', function () {
+      elem.removeAttribute('tabindex');
+    });
+    elem.focus();
+  };
+
+  return /*#__PURE__*/React__default.createElement(reactRouterDom.BrowserRouter, routerAttributes, /*#__PURE__*/React__default.createElement("a", {
+    href: "#crudnick-article",
+    id: "crudnick-skip",
+    onClick: onClick
+  }, "Skip to content"), /*#__PURE__*/React__default.createElement(formosa.FormContainer, null, Auth.isLoggedIn() && /*#__PURE__*/React__default.createElement(Nav, {
     nav: nav
   }), /*#__PURE__*/React__default.createElement("article", _extends({
     id: "crudnick-article"
-  }, articleProps), Auth.isLoggedIn() ? children : /*#__PURE__*/React__default.createElement(reactRouterDom.Switch, null, /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
-    exact: true,
-    path: "/"
-  }, /*#__PURE__*/React__default.createElement(Login, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
-    exact: true,
-    path: "/forgot-password"
-  }, /*#__PURE__*/React__default.createElement(ForgotPassword, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
-    exact: true,
-    path: "/reset-password/:token"
-  }, /*#__PURE__*/React__default.createElement(ResetPassword, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, null, /*#__PURE__*/React__default.createElement(reactRouterDom.Redirect, {
-    to: "/"
-  }))))));
+  }, articleProps), Auth.isLoggedIn() ? children : /*#__PURE__*/React__default.createElement(Routes, null))));
 }
 App.propTypes = {
   articleProps: PropTypes.object,
@@ -922,35 +1045,6 @@ EditForm.defaultProps = {
   transform: null
 };
 
-var _path$1;
-
-function _extends$2() {
-  _extends$2 = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends$2.apply(this, arguments);
-}
-
-function SvgArrow(props) {
-  return /*#__PURE__*/React.createElement("svg", _extends$2({
-    xmlns: "http://www.w3.org/2000/svg",
-    viewBox: "0 0 8 8"
-  }, props), _path$1 || (_path$1 = /*#__PURE__*/React.createElement("path", {
-    d: "M0 2l4 4 4-4H0z"
-  })));
-}
-
 var _path$2;
 
 function _extends$3() {
@@ -971,11 +1065,40 @@ function _extends$3() {
   return _extends$3.apply(this, arguments);
 }
 
-function SvgCheck(props) {
+function SvgArrow(props) {
   return /*#__PURE__*/React.createElement("svg", _extends$3({
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 8 8"
   }, props), _path$2 || (_path$2 = /*#__PURE__*/React.createElement("path", {
+    d: "M0 2l4 4 4-4H0z"
+  })));
+}
+
+var _path$3;
+
+function _extends$4() {
+  _extends$4 = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends$4.apply(this, arguments);
+}
+
+function SvgCheck(props) {
+  return /*#__PURE__*/React.createElement("svg", _extends$4({
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 8 8"
+  }, props), _path$3 || (_path$3 = /*#__PURE__*/React.createElement("path", {
     d: "M6.41 1l-.69.72L2.94 4.5l-.81-.78L1.41 3 0 4.41l.72.72 1.5 1.5.69.72.72-.72 3.5-3.5.72-.72L6.41 1z"
   })));
 }
