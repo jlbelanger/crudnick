@@ -1,14 +1,43 @@
 import { Api, FormosaContext } from '@jlbelanger/formosa';
-import React, { useContext, useState } from 'react'; // eslint-disable-line import/no-unresolved
+import React, { useContext, useEffect, useRef, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import Auth from '../Utilities/Auth';
 import { errorMessageText } from '../Utilities/Errors';
 import { ReactComponent as MenuIcon } from '../../svg/menu.svg';
 import { NavLink } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import PropTypes from 'prop-types';
+import { ReactComponent as XIcon } from '../../svg/x.svg';
 
 export default function Nav({ nav }) {
 	const { addToast } = useContext(FormosaContext);
-	const [showMenu, setShowMenu] = useState(false);
+	const dialogRef = useRef(null);
+	const breakpoint = 1025;
+	const [showInlineNav, setShowInlineNav] = useState(window.innerWidth >= breakpoint);
+
+	const onTransitionEnd = () => {
+		document.body.classList.remove('show-nav');
+		if (dialogRef.current.tagName === 'DIALOG') {
+			dialogRef.current.close();
+		}
+		dialogRef.current.removeEventListener('transitionend', onTransitionEnd);
+	};
+
+	const onResize = () => {
+		setShowInlineNav(window.innerWidth >= breakpoint);
+	};
+
+	useEffect(() => {
+		window.addEventListener('resize', onResize);
+		return () => {
+			window.removeEventListener('resize', onResize);
+		};
+	}, []);
+
+	useEffect(() => {
+		if (showInlineNav) {
+			hideMenu(); // eslint-disable-line no-use-before-define
+			onTransitionEnd();
+		}
+	}, [showInlineNav]);
 
 	const logout = () => {
 		Api.delete('auth/logout')
@@ -23,36 +52,77 @@ export default function Nav({ nav }) {
 			});
 	};
 
-	const toggleMenu = () => {
-		setShowMenu(!showMenu);
+	const hideMenu = () => {
+		document.body.classList.remove('animate-nav');
+		dialogRef.current.addEventListener('transitionend', onTransitionEnd);
 	};
 
-	const hideMenu = () => {
-		setShowMenu(false);
+	const openMenu = () => {
+		document.body.classList.add('show-nav');
+		dialogRef.current.showModal();
+
+		setTimeout(() => {
+			document.body.classList.add('animate-nav');
+		}, 10);
 	};
+
+	const onCancelDialog = (e) => {
+		e.preventDefault();
+		hideMenu();
+	};
+
+	const onClickDialog = (e) => {
+		if (e.target.tagName === 'DIALOG') {
+			hideMenu();
+		}
+	};
+
+	const Dialog = showInlineNav ? 'div' : 'dialog';
 
 	return (
 		<nav id="crudnick-nav">
-			<ul className={`crudnick-list${showMenu ? ' show' : ''}`} id="crudnick-nav__list">
-				{nav.map(({ label, path }) => (
-					<li className="crudnick-list__item" key={path}>
-						<NavLink
-							activeClassName="active"
-							className="formosa-button crudnick-list__button"
-							onClick={hideMenu}
-							to={path}
-						>
-							{label}
-						</NavLink>
+			<Dialog id="crudnick-nav__dialog" ref={dialogRef} onCancel={onCancelDialog} onClick={onClickDialog}>
+				<button
+					aria-controls="crudnick-nav__dialog"
+					aria-expanded="false"
+					className="formosa-button crudnick-menu-button"
+					id="crudnick-menu-close-button"
+					onClick={hideMenu}
+					title="Close Menu"
+					type="button"
+				>
+					<XIcon aria-hidden="true" />
+					Close Menu
+				</button>
+				<ul id="crudnick-nav__list">
+					{nav.map(({ label, path }) => (
+						<li className="crudnick-list__item" key={path}>
+							<NavLink
+								activeClassName="active"
+								className="formosa-button crudnick-list__button"
+								onClick={hideMenu}
+								to={path}
+							>
+								{label}
+							</NavLink>
+						</li>
+					))}
+					<li className="crudnick-list__item">
+						<button className="formosa-button crudnick-list__button" id="crudnick-logout" onClick={logout} type="button">Logout</button>
 					</li>
-				))}
-				<li className="crudnick-list__item">
-					<button className="formosa-button crudnick-list__button" id="crudnick-logout" onClick={logout} type="button">Logout</button>
-				</li>
-			</ul>
-			<button className="formosa-button" id="crudnick-menu-button" onClick={toggleMenu} type="button">
+				</ul>
+			</Dialog>
+			<button
+				aria-controls="crudnick-nav__dialog"
+				aria-expanded="true"
+				className="formosa-button crudnick-menu-button"
+				id="crudnick-menu-show-button"
+				onClick={openMenu}
+				title="Show Menu"
+				type="button"
+			>
 				<MenuIcon aria-hidden="true" />
-				Menu
+				Show Menu
 			</button>
 		</nav>
 	);
