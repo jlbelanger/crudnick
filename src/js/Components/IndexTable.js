@@ -167,7 +167,9 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 							? (
 								<tr>
 									<td colSpan={columns.length}>
-										<div className="formosa-spinner" style={{ justifyContent: 'center', margin: '16px auto' }}>Loading...</div>
+										<div className="formosa-spinner" role="status" style={{ justifyContent: 'center', margin: '16px auto' }}>
+											Loading...
+										</div>
 									</td>
 								</tr>
 							) : filteredRows.map((row) => (
