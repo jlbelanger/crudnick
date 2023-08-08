@@ -116,6 +116,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 								<th key={column.key} scope="col" style={{ width: column.size ? 0 : null }} {...column.thAttributes}>
 									{column.disableSort ? (column.shortLabel || column.label) : (
 										<button
+											aria-label={`Sort by ${column.label}`}
 											className="formosa-button"
 											data-key={column.sortKey || cleanKey(column.key)}
 											disabled={rows === null}
@@ -137,10 +138,11 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 							))}
 						</tr>
 						<tr>
-							{columns.map(({ key, disableSearch, size }) => (
+							{columns.map(({ key, disableSearch, label, size }) => (
 								<td className="formosa-input-wrapper--search" key={key}>
 									{!disableSearch && (
 										<Input
+											aria-label={`Search ${label}`}
 											className="formosa-field__input"
 											disabled={rows === null}
 											setValue={(newValue) => {
