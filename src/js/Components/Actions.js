@@ -1,6 +1,6 @@
 import { Api, FormosaContext } from '@jlbelanger/formosa';
 import { NavLink, useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
-import React, { useContext, useState } from 'react'; // eslint-disable-line import/no-unresolved
+import React, { useContext, useEffect, useRef, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import { capitalize } from '../Utilities/String';
 import { errorMessageText } from '../Utilities/Errors';
 import Modal from './Modal';
@@ -21,6 +21,22 @@ export default function Actions({
 	const history = useHistory();
 	const { addToast, disableWarningPrompt, enableWarningPrompt } = useContext(FormosaContext);
 	const [showModal, setShowModal] = useState(false);
+	const submitRef = useRef(null);
+
+	const onKeyDown = (e) => {
+		if (e.key === 's' && e.metaKey && submitRef && submitRef.current) {
+			e.preventDefault();
+			submitRef.current.click();
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', onKeyDown);
+
+		return () => {
+			window.removeEventListener('keydown', onKeyDown);
+		};
+	}, []);
 
 	const onDelete = () => {
 		setShowModal(false);
@@ -52,6 +68,7 @@ export default function Actions({
 					<button
 						className="crudnick-list__button formosa-button"
 						type="submit"
+						ref={submitRef}
 						form="crudnick-edit-form"
 					>
 						{saveButtonText}

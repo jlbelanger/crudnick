@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
+import React, { useEffect, useRef, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import { capitalize } from '../Utilities/String';
 import { errorMessageText } from '../Utilities/Errors';
 import { Field } from '@jlbelanger/formosa';
@@ -27,6 +27,7 @@ export default function AddForm({
 	const [row, setRow] = useState(defaultRow);
 	const [addAnother, setAddAnother] = useState(false);
 	const history = useHistory();
+	const submitRef = useRef(null);
 
 	const afterSubmitSuccess = (response) => {
 		if (!addAnother) {
@@ -36,6 +37,21 @@ export default function AddForm({
 
 	const FormComponent = component;
 	componentProps.formType = 'add';
+
+	const onKeyDown = (e) => {
+		if (e.key === 's' && e.metaKey && submitRef && submitRef.current) {
+			e.preventDefault();
+			submitRef.current.click();
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', onKeyDown);
+
+		return () => {
+			window.removeEventListener('keydown', onKeyDown);
+		};
+	}, []);
 
 	return (
 		<>
@@ -48,6 +64,7 @@ export default function AddForm({
 						<button
 							className="formosa-button"
 							form="crudnick-add-form"
+							ref={submitRef}
 							type="submit"
 						>
 							{saveButtonText}
