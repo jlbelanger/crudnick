@@ -24,6 +24,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 		});
 		return output;
 	});
+	const api = Api.instance();
 
 	useEffect(() => {
 		if (Object.prototype.hasOwnProperty.call(defaultOptions, 'sortKey')) {
@@ -38,7 +39,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 			setFilters(defaultOptions.filters);
 		}
 
-		Api.get(url, false)
+		api(url, false)
 			.catch((response) => {
 				setRowsError(errorMessageText(response));
 				setRows(null);

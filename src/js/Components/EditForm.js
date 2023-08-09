@@ -33,9 +33,10 @@ export default function EditForm({
 	const [row, setRow] = useState(null);
 	const [error, setError] = useState(false);
 	const [actionError, setActionError] = useState(false);
+	const api = Api.instance();
 
 	useEffect(() => {
-		Api.get(url)
+		api(url)
 			.catch((response) => {
 				setError(response);
 			})
