@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 
 export default function Modal({
 	cancelable,
+	cancelButtonAttributes,
 	cancelButtonClass,
 	cancelButtonText,
 	children,
 	event,
+	okButtonAttributes,
 	okButtonClass,
 	okButtonText,
 	onClickCancel,
@@ -63,10 +65,20 @@ export default function Modal({
 			<div className="crudnick-modal__box">
 				{children || (<p className="crudnick-modal__text">{text}</p>)}
 				<p className="crudnick-modal__options">
-					<button className={`formosa-button ${okButtonClass}`.trim()} onClick={onClickOk} type="button">
+					<button
+						className={`formosa-button ${okButtonClass}`.trim()}
+						onClick={onClickOk}
+						type="button"
+						{...okButtonAttributes}
+					>
 						{okButtonText}
 					</button>
-					<button className={`formosa-button ${cancelButtonClass}`.trim()} onClick={onClickCancel} type="button">
+					<button
+						className={`formosa-button ${cancelButtonClass}`.trim()}
+						onClick={onClickCancel}
+						type="button"
+						{...cancelButtonAttributes}
+					>
 						{cancelButtonText}
 					</button>
 				</p>
@@ -77,10 +89,12 @@ export default function Modal({
 
 Modal.propTypes = {
 	cancelable: PropTypes.bool,
+	cancelButtonAttributes: PropTypes.object,
 	cancelButtonClass: PropTypes.string,
 	cancelButtonText: PropTypes.string,
 	children: PropTypes.node,
 	event: PropTypes.object.isRequired,
+	okButtonAttributes: PropTypes.object,
 	okButtonClass: PropTypes.string,
 	okButtonText: PropTypes.string,
 	onClickCancel: PropTypes.func,
@@ -90,9 +104,11 @@ Modal.propTypes = {
 
 Modal.defaultProps = {
 	cancelable: true,
+	cancelButtonAttributes: null,
 	cancelButtonClass: 'crudnick-button--secondary',
 	cancelButtonText: 'Cancel',
 	children: null,
+	okButtonAttributes: null,
 	okButtonClass: '',
 	okButtonText: 'OK',
 	onClickCancel: null,

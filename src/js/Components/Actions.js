@@ -67,6 +67,7 @@ export default function Actions({
 				<li>
 					<button
 						className="crudnick-list__button formosa-button"
+						data-cy="save"
 						type="submit"
 						ref={submitRef}
 						form="crudnick-edit-form"
@@ -83,6 +84,7 @@ export default function Actions({
 			<li>
 				<button
 					className="crudnick-list__button formosa-button formosa-button--danger"
+					data-cy="delete"
 					onClick={(e) => {
 						if (setActionError) {
 							setActionError(false);
@@ -96,6 +98,7 @@ export default function Actions({
 				{showModal && (
 					<Modal
 						event={showModal}
+						okButtonAttributes={{ 'data-cy': 'modal-delete' }}
 						okButtonClass="formosa-button--danger"
 						okButtonText="Delete"
 						onClickOk={onDelete}

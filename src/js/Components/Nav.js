@@ -108,7 +108,9 @@ export default function Nav({ nav }) {
 						</li>
 					))}
 					<li className="crudnick-list__item">
-						<button className="formosa-button crudnick-list__button" id="crudnick-logout" onClick={logout} type="button">Logout</button>
+						<button className="formosa-button crudnick-list__button" data-cy="logout" id="crudnick-logout" onClick={logout} type="button">
+							Logout
+						</button>
 					</li>
 				</ul>
 			</Dialog>
@@ -116,6 +118,7 @@ export default function Nav({ nav }) {
 				aria-controls="crudnick-nav__dialog"
 				aria-expanded="true"
 				className="formosa-button crudnick-menu-button"
+				data-cy="menu"
 				id="crudnick-menu-show-button"
 				onClick={openMenu}
 				title="Show Menu"

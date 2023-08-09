@@ -71,7 +71,7 @@ export default function EditForm({
 			<MetaTitle title={metaTitle} />
 
 			<header className="crudnick-header">
-				<h1>{`${titlePrefixText} ${singular}`}</h1>
+				<h1 data-cy="title">{`${titlePrefixText} ${singular}`}</h1>
 				{row && (
 					<Actions
 						apiPath={apiPath}

@@ -97,12 +97,12 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 
 			<header className="crudnick-header">
 				<h1>
-					<span>{title}</span>
-					<small>{rows ? numResults : null}</small>
+					<span data-cy="title">{title}</span>
+					<small data-cy="num-results">{rows ? numResults : null}</small>
 				</h1>
 				<ul className="crudnick-list">
 					<li className="crudnick-list__item">
-						<Link className="formosa-button crudnick-list__button" to={`/${path}/add`}>Add new</Link>
+						<Link data-cy="add" className="formosa-button crudnick-list__button" to={`/${path}/add`}>Add new</Link>
 					</li>
 				</ul>
 			</header>

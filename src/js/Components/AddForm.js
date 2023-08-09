@@ -58,12 +58,13 @@ export default function AddForm({
 			<MetaTitle title={`${titlePrefixText} ${singular}`} />
 
 			<header className="crudnick-header">
-				<h1>{`${titlePrefixText} ${singular}`}</h1>
+				<h1 data-cy="title">{`${titlePrefixText} ${singular}`}</h1>
 				<ul className="crudnick-list">
 					<li>
 						<button
 							className="formosa-button"
 							form="crudnick-add-form"
+							data-cy="save"
 							ref={submitRef}
 							type="submit"
 						>
