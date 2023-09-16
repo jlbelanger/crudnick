@@ -1928,9 +1928,9 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@jlbelanger/formosa@jlbelanger/formosa#aa7d192bf0c42d3921d7bf5f9a15866c489f02ce":
+"@jlbelanger/formosa@jlbelanger/formosa#f3e6f984adfdcf33efe66017f5f1bbf56dcf8d6e":
   version "1.0.2"
-  resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/aa7d192bf0c42d3921d7bf5f9a15866c489f02ce"
+  resolved "https://codeload.github.com/jlbelanger/formosa/tar.gz/f3e6f984adfdcf33efe66017f5f1bbf56dcf8d6e"
   dependencies:
     get-value "^3.0.1"
     prop-types "^15.8.1"
@@ -2742,9 +2742,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001312, caniuse-lite@^1.0.30001400:
-  version "1.0.30001513"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001513.tgz"
-  integrity sha512-pnjGJo7SOOjAGytZZ203Em95MRM8Cr6jhCXNF/FAXTpCTRTECnqQWLpiTRqrFtdYcth8hf4WECUpkezuYsMVww==
+  version "1.0.30001519"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001519.tgz"
+  integrity sha512-0QHgqR+Jv4bxHMp8kZ1Kn8CH55OikjKJ6JmKkZYP1F3D7w+lnFXF70nG5eNfsZS89jadi5Ywy5UCSKLAglIRkg==
 
 chalk@^1.0.0, chalk@^1.1.3:
   version "1.1.3"

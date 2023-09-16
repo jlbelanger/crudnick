@@ -94,12 +94,47 @@ var errorMessageText = function errorMessageText(response, logout) {
   }).join(' ');
 };
 
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
 function Modal(_ref) {
   var cancelable = _ref.cancelable,
+      cancelButtonAttributes = _ref.cancelButtonAttributes,
       cancelButtonClass = _ref.cancelButtonClass,
       cancelButtonText = _ref.cancelButtonText,
       children = _ref.children,
       event = _ref.event,
+      okButtonAttributes = _ref.okButtonAttributes,
       okButtonClass = _ref.okButtonClass,
       okButtonText = _ref.okButtonText,
       onClickCancel = _ref.onClickCancel,
@@ -158,22 +193,24 @@ function Modal(_ref) {
     className: "crudnick-modal__text"
   }, text), /*#__PURE__*/React__default.createElement("p", {
     className: "crudnick-modal__options"
-  }, /*#__PURE__*/React__default.createElement("button", {
+  }, /*#__PURE__*/React__default.createElement("button", _extends({
     className: ("formosa-button " + okButtonClass).trim(),
     onClick: onClickOk,
     type: "button"
-  }, okButtonText), /*#__PURE__*/React__default.createElement("button", {
+  }, okButtonAttributes), okButtonText), /*#__PURE__*/React__default.createElement("button", _extends({
     className: ("formosa-button " + cancelButtonClass).trim(),
     onClick: onClickCancel,
     type: "button"
-  }, cancelButtonText))));
+  }, cancelButtonAttributes), cancelButtonText))));
 }
 Modal.propTypes = {
   cancelable: PropTypes.bool,
+  cancelButtonAttributes: PropTypes.object,
   cancelButtonClass: PropTypes.string,
   cancelButtonText: PropTypes.string,
   children: PropTypes.node,
   event: PropTypes.object.isRequired,
+  okButtonAttributes: PropTypes.object,
   okButtonClass: PropTypes.string,
   okButtonText: PropTypes.string,
   onClickCancel: PropTypes.func,
@@ -182,9 +219,11 @@ Modal.propTypes = {
 };
 Modal.defaultProps = {
   cancelable: true,
+  cancelButtonAttributes: null,
   cancelButtonClass: 'crudnick-button--secondary',
   cancelButtonText: 'Cancel',
   children: null,
+  okButtonAttributes: null,
   okButtonClass: '',
   okButtonText: 'OK',
   onClickCancel: null,
@@ -214,6 +253,22 @@ function Actions(_ref) {
       showModal = _useState[0],
       setShowModal = _useState[1];
 
+  var submitRef = React.useRef(null);
+
+  var onKeyDown = function onKeyDown(e) {
+    if (e.key === 's' && e.metaKey && submitRef && submitRef.current) {
+      e.preventDefault();
+      submitRef.current.click();
+    }
+  };
+
+  React.useEffect(function () {
+    window.addEventListener('keydown', onKeyDown);
+    return function () {
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, []);
+
   var onDelete = function onDelete() {
     setShowModal(false);
     disableWarningPrompt();
@@ -240,13 +295,16 @@ function Actions(_ref) {
     className: "crudnick-list"
   }, showSave && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement("button", {
     className: "crudnick-list__button formosa-button",
+    "data-cy": "save",
     type: "submit",
+    ref: submitRef,
     form: "crudnick-edit-form"
   }, saveButtonText)), currentPage !== '/' && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
     className: "crudnick-list__button formosa-button",
     to: "/" + path + "/" + row.id
   }, "Edit")), /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement("button", {
     className: "crudnick-list__button formosa-button formosa-button--danger",
+    "data-cy": "delete",
     onClick: function onClick(e) {
       if (setActionError) {
         setActionError(false);
@@ -257,6 +315,9 @@ function Actions(_ref) {
     type: "button"
   }, "Delete"), showModal && /*#__PURE__*/React__default.createElement(Modal, {
     event: showModal,
+    okButtonAttributes: {
+      'data-cy': 'modal-delete'
+    },
     okButtonClass: "formosa-button--danger",
     okButtonText: "Delete",
     onClickOk: onDelete,
@@ -298,39 +359,6 @@ Actions.defaultProps = {
   showSave: true,
   subpages: []
 };
-
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-
-  return target;
-}
 
 function MetaTitle(_ref) {
   var title = _ref.title;
@@ -407,6 +435,7 @@ function AddForm(_ref) {
       setAddAnother = _useState2[1];
 
   var history = reactRouterDom.useHistory();
+  var submitRef = React.useRef(null);
 
   var afterSubmitSuccess = function afterSubmitSuccess(response) {
     if (!addAnother) {
@@ -416,15 +445,33 @@ function AddForm(_ref) {
 
   var FormComponent = component;
   componentProps.formType = 'add';
+
+  var onKeyDown = function onKeyDown(e) {
+    if (e.key === 's' && e.metaKey && submitRef && submitRef.current) {
+      e.preventDefault();
+      submitRef.current.click();
+    }
+  };
+
+  React.useEffect(function () {
+    window.addEventListener('keydown', onKeyDown);
+    return function () {
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, []);
   return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(MetaTitle, {
     title: titlePrefixText + " " + singular
   }), /*#__PURE__*/React__default.createElement("header", {
     className: "crudnick-header"
-  }, /*#__PURE__*/React__default.createElement("h1", null, titlePrefixText + " " + singular), /*#__PURE__*/React__default.createElement("ul", {
+  }, /*#__PURE__*/React__default.createElement("h1", {
+    "data-cy": "title"
+  }, titlePrefixText + " " + singular), /*#__PURE__*/React__default.createElement("ul", {
     className: "crudnick-list"
   }, /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement("button", {
     className: "formosa-button",
     form: "crudnick-add-form",
+    "data-cy": "save",
+    ref: submitRef,
     type: "submit"
   }, saveButtonText)), showAddAnother && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement(formosa.Field, {
     id: "crudnick-add-another",
@@ -652,6 +699,7 @@ function Nav(_ref) {
     className: "crudnick-list__item"
   }, /*#__PURE__*/React__default.createElement("button", {
     className: "formosa-button crudnick-list__button",
+    "data-cy": "logout",
     id: "crudnick-logout",
     onClick: logout,
     type: "button"
@@ -659,6 +707,7 @@ function Nav(_ref) {
     "aria-controls": "crudnick-nav__dialog",
     "aria-expanded": "true",
     className: "formosa-button crudnick-menu-button",
+    "data-cy": "menu",
     id: "crudnick-menu-show-button",
     onClick: openMenu,
     title: "Show Menu",
@@ -947,8 +996,9 @@ function EditForm(_ref) {
       actionError = _useState3[0],
       setActionError = _useState3[1];
 
+  var api = formosa.Api.instance();
   React.useEffect(function () {
-    formosa.Api.get(url)["catch"](function (response) {
+    api(url)["catch"](function (response) {
       setError(response);
     }).then(function (response) {
       if (!response) {
@@ -980,7 +1030,9 @@ function EditForm(_ref) {
     title: metaTitle
   }), /*#__PURE__*/React__default.createElement("header", {
     className: "crudnick-header"
-  }, /*#__PURE__*/React__default.createElement("h1", null, titlePrefixText + " " + singular), row && /*#__PURE__*/React__default.createElement(Actions, {
+  }, /*#__PURE__*/React__default.createElement("h1", {
+    "data-cy": "title"
+  }, titlePrefixText + " " + singular), row && /*#__PURE__*/React__default.createElement(Actions, {
     apiPath: apiPath,
     currentPage: "/",
     path: path,
@@ -1217,6 +1269,7 @@ function IndexTable(_ref) {
       filters = _useState6[0],
       setFilters = _useState6[1];
 
+  var api = formosa.Api.instance();
   React.useEffect(function () {
     if (Object.prototype.hasOwnProperty.call(defaultOptions, 'sortKey')) {
       setSortKey(defaultOptions.sortKey);
@@ -1230,7 +1283,7 @@ function IndexTable(_ref) {
       setFilters(defaultOptions.filters);
     }
 
-    formosa.Api.get(url, false)["catch"](function (response) {
+    api(url, false)["catch"](function (response) {
       setRowsError(errorMessageText(response));
       setRows(null);
       setFilteredRows([]);
@@ -1294,11 +1347,16 @@ function IndexTable(_ref) {
     title: title
   }), /*#__PURE__*/React__default.createElement("header", {
     className: "crudnick-header"
-  }, /*#__PURE__*/React__default.createElement("h1", null, /*#__PURE__*/React__default.createElement("span", null, title), /*#__PURE__*/React__default.createElement("small", null, rows ? numResults : null)), /*#__PURE__*/React__default.createElement("ul", {
+  }, /*#__PURE__*/React__default.createElement("h1", null, /*#__PURE__*/React__default.createElement("span", {
+    "data-cy": "title"
+  }, title), /*#__PURE__*/React__default.createElement("small", {
+    "data-cy": "num-results"
+  }, rows ? numResults : null)), /*#__PURE__*/React__default.createElement("ul", {
     className: "crudnick-list"
   }, /*#__PURE__*/React__default.createElement("li", {
     className: "crudnick-list__item"
   }, /*#__PURE__*/React__default.createElement(reactRouterDom.Link, {
+    "data-cy": "add",
     className: "formosa-button crudnick-list__button",
     to: "/" + path + "/add"
   }, "Add new")))), rowsError ? /*#__PURE__*/React__default.createElement(formosa.Alert, {
@@ -1311,6 +1369,7 @@ function IndexTable(_ref) {
         width: column.size ? 0 : null
       }
     }, column.thAttributes), column.disableSort ? column.shortLabel || column.label : /*#__PURE__*/React__default.createElement("button", {
+      "aria-label": "Sort by " + column.label,
       className: "formosa-button",
       "data-key": column.sortKey || cleanKey(column.key),
       disabled: rows === null,
@@ -1325,11 +1384,13 @@ function IndexTable(_ref) {
   })), /*#__PURE__*/React__default.createElement("tr", null, columns.map(function (_ref2) {
     var key = _ref2.key,
         disableSearch = _ref2.disableSearch,
+        label = _ref2.label,
         size = _ref2.size;
     return /*#__PURE__*/React__default.createElement("td", {
       className: "formosa-input-wrapper--search",
       key: key
     }, !disableSearch && /*#__PURE__*/React__default.createElement(formosa.Input, {
+      "aria-label": "Search " + label,
       className: "formosa-field__input",
       disabled: rows === null,
       setValue: function setValue(newValue) {
@@ -1349,6 +1410,7 @@ function IndexTable(_ref) {
     colSpan: columns.length
   }, /*#__PURE__*/React__default.createElement("div", {
     className: "formosa-spinner",
+    role: "status",
     style: {
       justifyContent: 'center',
       margin: '16px auto'
