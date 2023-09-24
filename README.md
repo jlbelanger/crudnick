@@ -2,13 +2,24 @@
 
 Crudnick is a framework for creating an admin backend CMS with [React](https://www.npmjs.com/package/react) and [Tapioca](https://github.com/jlbelanger/tapioca).
 
-## Built-in features
+## Features
 
-- login
-- request password reset
-- reset password
-- log out
-- list/add/edit/delete users
+- Authentication
+	- Login
+	- Log out
+	- Request password reset
+	- Reset password
+	- List/add/edit/delete users
+- Index pages
+	- Search
+	- Sort
+- Add/edit pages
+	- Delete records
+
+## Requirements
+
+- [React](https://www.npmjs.com/package/react) 18+
+- [Tapioca](https://github.com/jlbelanger/tapioca) (Laravel API framework)
 
 ## Install
 
