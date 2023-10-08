@@ -114,7 +114,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 					<thead>
 						<tr>
 							{columns.map((column) => (
-								<th key={column.key} scope="col" style={{ width: column.size ? 0 : null }} {...column.thAttributes}>
+								<th className={column.size ? 'crudnick-column--shrink' : null} key={column.key} scope="col" {...column.thAttributes}>
 									{column.disableSort ? (column.shortLabel || column.label) : (
 										<button
 											aria-label={`Sort by ${column.label}`}
@@ -170,7 +170,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 							? (
 								<tr>
 									<td colSpan={columns.length}>
-										<div className="formosa-spinner" role="status" style={{ justifyContent: 'center', margin: '16px auto' }}>
+										<div className="formosa-spinner" role="status">
 											Loading...
 										</div>
 									</td>
