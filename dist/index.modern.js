@@ -1,4 +1,4 @@
-import { FormosaContext, Api, FormContext, Form, Field, FormAlert, Submit, Alert, FormContainer, Input } from '@jlbelanger/formosa';
+import { FormosaContext, Api, FormContext, Form, Field, FormAlert, Alert, Submit, FormContainer, Input } from '@jlbelanger/formosa';
 import { useHistory, NavLink, Prompt, Link, useParams, useLocation, Switch, Route, Redirect, BrowserRouter } from 'react-router-dom';
 import React__default, { useRef, useEffect, useContext, useState, createElement } from 'react';
 import Cookies from 'js-cookie';
@@ -718,11 +718,34 @@ Nav.propTypes = {
 };
 
 function ForgotPassword() {
+  var history = useHistory();
+
   var _useState = useState({}),
       row = _useState[0],
       setRow = _useState[1];
 
+  var _useState2 = useState(false),
+      message = _useState2[0],
+      setMessage = _useState2[1];
+
+  useEffect(function () {
+    var urlSearchParams = new URLSearchParams(history.location.search);
+
+    if (urlSearchParams.get('expired')) {
+      setMessage({
+        text: 'Error: This link has expired.',
+        type: 'error'
+      });
+      history.replace({
+        search: ''
+      });
+    }
+  }, []);
   return /*#__PURE__*/React__default.createElement(Form, {
+    beforeSubmit: function beforeSubmit() {
+      setMessage(false);
+      return true;
+    },
     className: "crudnick-auth-form",
     clearOnSubmit: true,
     errorMessageText: errorMessageText,
@@ -734,7 +757,9 @@ function ForgotPassword() {
     successMessageText: "If there is an account with this email address, you will receive a password reset email shortly."
   }, /*#__PURE__*/React__default.createElement(MetaTitle, {
     title: "Forgot your password?"
-  }), /*#__PURE__*/React__default.createElement("h1", null, "Forgot your password?"), /*#__PURE__*/React__default.createElement(FormAlert, null), /*#__PURE__*/React__default.createElement(Field, {
+  }), /*#__PURE__*/React__default.createElement("h1", null, "Forgot your password?"), /*#__PURE__*/React__default.createElement(FormAlert, null), message && /*#__PURE__*/React__default.createElement(Alert, {
+    type: message.type
+  }, message.text), /*#__PURE__*/React__default.createElement(Field, {
     autoComplete: "email",
     label: "Email",
     name: "email",
@@ -749,57 +774,48 @@ function ForgotPassword() {
   }));
 }
 
-function Login() {
-  var history = useHistory();
+function LoginForm(_ref) {
+  var message = _ref.message,
+      row = _ref.row,
+      setMessage = _ref.setMessage,
+      setShowVerificationButton = _ref.setShowVerificationButton,
+      showVerificationButton = _ref.showVerificationButton;
 
-  var _useState = useState({}),
-      row = _useState[0],
-      setRow = _useState[1];
+  var _useContext = useContext(FormContext),
+      clearAlert = _useContext.clearAlert;
 
-  var _useState2 = useState(false),
-      error = _useState2[0],
-      setError = _useState2[1];
+  var resendVerificationEmail = function resendVerificationEmail() {
+    clearAlert();
+    setMessage(null);
+    setShowVerificationButton(false);
+    var data = {
+      username: row.username || showVerificationButton
+    };
+    Api.post('auth/resend-verification', JSON.stringify(data))["catch"](function (response) {
+      setMessage(errorMessageText(response));
+    }).then(function (response) {
+      if (!response) {
+        return;
+      }
 
-  var afterSubmitSuccess = function afterSubmitSuccess(response) {
-    var urlSearchParams = new URLSearchParams(history.location.search);
-    var redirect;
-
-    if (urlSearchParams.get('redirect') && urlSearchParams.get('redirect')[0] === '/') {
-      redirect = urlSearchParams.get('redirect');
-    } else {
-      redirect = process.env.PUBLIC_URL || '/';
-    }
-
-    Auth.login(response.user, response.token, response.user.remember);
-    window.location.href = redirect;
+      setMessage({
+        text: 'Check your email to continue the registration process.',
+        type: 'success'
+      });
+    });
   };
 
-  useEffect(function () {
-    var urlSearchParams = new URLSearchParams(history.location.search);
-
-    if (urlSearchParams.get('status') === '401') {
-      setError('Your session has expired. Please log in again.', 'warning');
-      history.replace({
-        search: ''
-      });
-    }
-  }, []);
-  return /*#__PURE__*/React__default.createElement(Form, {
-    afterSubmitSuccess: afterSubmitSuccess,
-    className: "crudnick-auth-form",
-    errorMessageText: function errorMessageText$1(response) {
-      return errorMessageText(response, false);
-    },
-    method: "POST",
-    path: "auth/login",
-    row: row,
-    setRow: setRow,
-    showMessage: false
-  }, /*#__PURE__*/React__default.createElement(MetaTitle, {
+  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(MetaTitle, {
     title: "Login"
-  }), /*#__PURE__*/React__default.createElement("h1", null, "Login"), error && /*#__PURE__*/React__default.createElement(Alert, {
-    type: "error"
-  }, error), /*#__PURE__*/React__default.createElement(FormAlert, null), /*#__PURE__*/React__default.createElement(Field, {
+  }), /*#__PURE__*/React__default.createElement("h1", null, "Login"), message && /*#__PURE__*/React__default.createElement(Alert, {
+    type: message.type
+  }, message.text), showVerificationButton && /*#__PURE__*/React__default.createElement("p", {
+    className: "formosa-alert formosa-alert--" + (showVerificationButton === true ? 'error' : 'success') + " post-alert-button"
+  }, /*#__PURE__*/React__default.createElement("button", {
+    className: "formosa-button button--secondary",
+    onClick: resendVerificationEmail,
+    type: "button"
+  }, "Resend verification email")), /*#__PURE__*/React__default.createElement(FormAlert, null), /*#__PURE__*/React__default.createElement(Field, {
     autoCapitalize: "none",
     autoComplete: "username",
     label: "Username",
@@ -825,6 +841,156 @@ function Login() {
     }, "Forgot password?")
   }));
 }
+LoginForm.propTypes = {
+  message: PropTypes.object,
+  row: PropTypes.object.isRequired,
+  setMessage: PropTypes.func.isRequired,
+  setShowVerificationButton: PropTypes.func.isRequired,
+  showVerificationButton: PropTypes.bool
+};
+LoginForm.defaultProps = {
+  message: null,
+  showVerificationButton: false
+};
+
+function Login() {
+  var history = useHistory();
+
+  var _useState = useState({}),
+      row = _useState[0],
+      setRow = _useState[1];
+
+  var _useState2 = useState(null),
+      message = _useState2[0],
+      setMessage = _useState2[1];
+
+  var _useState3 = useState(false),
+      showVerificationButton = _useState3[0],
+      setShowVerificationButton = _useState3[1];
+
+  var beforeSubmit = function beforeSubmit() {
+    setMessage(null);
+    setShowVerificationButton(false);
+    return true;
+  };
+
+  var afterSubmitFailure = function afterSubmitFailure(response) {
+    setShowVerificationButton(response.errors[0].code === 'auth.unverified');
+  };
+
+  var afterSubmitSuccess = function afterSubmitSuccess(response) {
+    var urlSearchParams = new URLSearchParams(history.location.search);
+    var redirect;
+
+    if (urlSearchParams.get('redirect') && urlSearchParams.get('redirect')[0] === '/') {
+      redirect = urlSearchParams.get('redirect');
+    } else {
+      redirect = process.env.PUBLIC_URL || '/';
+    }
+
+    Auth.login(response.user, response.token, response.user.remember);
+    window.location.href = redirect;
+  };
+
+  useEffect(function () {
+    var urlSearchParams = new URLSearchParams(history.location.search);
+
+    if (urlSearchParams.get('status') === '401') {
+      setMessage({
+        text: 'Your session has expired. Please log in again.',
+        type: 'warning'
+      });
+      history.replace({
+        search: ''
+      });
+    } else if (urlSearchParams.get('verify')) {
+      setMessage({
+        text: "Check your email (" + urlSearchParams.get('email') + ") to continue the registration process.",
+        type: 'success'
+      });
+      setShowVerificationButton(urlSearchParams.get('username'));
+      history.replace({
+        search: ''
+      });
+    } else if (urlSearchParams.get('expired')) {
+      history.push('/forgot-password?expired=1');
+    }
+  }, []);
+  return /*#__PURE__*/React__default.createElement(Form, {
+    afterSubmitFailure: afterSubmitFailure,
+    afterSubmitSuccess: afterSubmitSuccess,
+    beforeSubmit: beforeSubmit,
+    className: "crudnick-auth-form",
+    errorMessageText: function errorMessageText$1(response) {
+      return errorMessageText(response, false);
+    },
+    method: "POST",
+    path: "auth/login",
+    row: row,
+    setRow: setRow,
+    showMessage: false
+  }, /*#__PURE__*/React__default.createElement(LoginForm, {
+    message: message,
+    row: row,
+    setMessage: setMessage,
+    showVerificationButton: showVerificationButton,
+    setShowVerificationButton: setShowVerificationButton
+  }));
+}
+
+function Register() {
+  var history = useHistory();
+
+  var _useState = useState({}),
+      row = _useState[0],
+      setRow = _useState[1];
+
+  var afterSubmitSuccess = function afterSubmitSuccess(response) {
+    if (response.user) {
+      Auth.login(response.user, response.token, response.user.remember);
+      window.location.href = process.env.PUBLIC_URL || '/';
+    } else {
+      history.push("/?verify=1&email=" + row.email + "&username=" + row.username);
+    }
+  };
+
+  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(MetaTitle, {
+    title: "Register"
+  }), /*#__PURE__*/React__default.createElement(MyForm, {
+    afterSubmitSuccess: afterSubmitSuccess,
+    errorMessageText: errorMessageText,
+    method: "POST",
+    path: "auth/register",
+    row: row,
+    setRow: setRow
+  }, /*#__PURE__*/React__default.createElement(Field, {
+    autoComplete: "username",
+    label: "Username",
+    name: "username",
+    required: true,
+    type: "text"
+  }), /*#__PURE__*/React__default.createElement(Field, {
+    autoComplete: "email",
+    label: "Email",
+    name: "email",
+    required: true,
+    type: "email"
+  }), /*#__PURE__*/React__default.createElement(Field, {
+    autoComplete: "new-password",
+    label: "Password",
+    name: "password",
+    required: true,
+    type: "password"
+  }), /*#__PURE__*/React__default.createElement(Field, {
+    autoComplete: "new-password",
+    label: "Confirm password",
+    name: "password_confirmation",
+    required: true,
+    type: "password"
+  }), /*#__PURE__*/React__default.createElement(Submit, {
+    label: "Register"
+  })));
+}
 
 function ResetPassword() {
   var _useState = useState({}),
@@ -835,6 +1001,13 @@ function ResetPassword() {
       token = _useParams.token;
 
   var history = useHistory();
+  useEffect(function () {
+    var urlSearchParams = new URLSearchParams(history.location.search);
+
+    if (urlSearchParams.get('expires') < Math.floor(Date.now() / 1000)) {
+      history.push('/?expired=1');
+    }
+  }, []);
   return /*#__PURE__*/React__default.createElement(Form, {
     afterSubmitSuccess: function afterSubmitSuccess() {
       history.push('/');
@@ -842,7 +1015,7 @@ function ResetPassword() {
     className: "crudnick-auth-form",
     errorMessageText: errorMessageText,
     method: "PUT",
-    path: "auth/reset-password/" + token,
+    path: "auth/reset-password/" + token + window.location.search,
     row: row,
     setRow: setRow,
     showMessage: false,
@@ -872,6 +1045,31 @@ function ResetPassword() {
   }));
 }
 
+function VerifyEmail() {
+  var history = useHistory();
+  useEffect(function () {
+    var urlSearchParams = new URLSearchParams(history.location.search);
+
+    if (urlSearchParams.get('expires') < Math.floor(Date.now() / 1000)) {
+      history.push('/?expired=1');
+    }
+  }, []);
+  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(MetaTitle, {
+    title: "Verify your email"
+  }), /*#__PURE__*/React__default.createElement(Form, {
+    afterSubmitSuccess: function afterSubmitSuccess() {
+      history.push('/');
+    },
+    errorMessageText: errorMessageText,
+    method: "POST",
+    path: "auth/verify-email" + window.location.search,
+    successToastText: "Email verified successfully."
+  }, /*#__PURE__*/React__default.createElement("p", null, "Please click the verify button to complete the registration process."), /*#__PURE__*/React__default.createElement(Submit, {
+    "data-cy": "verify",
+    label: "Verify"
+  })));
+}
+
 function Routes() {
   var location = useLocation();
   return /*#__PURE__*/React__default.createElement(Switch, null, /*#__PURE__*/React__default.createElement(Route, {
@@ -879,11 +1077,17 @@ function Routes() {
     path: "/"
   }, /*#__PURE__*/React__default.createElement(Login, null)), /*#__PURE__*/React__default.createElement(Route, {
     exact: true,
+    path: "/register"
+  }, /*#__PURE__*/React__default.createElement(Register, null)), /*#__PURE__*/React__default.createElement(Route, {
+    exact: true,
     path: "/forgot-password"
   }, /*#__PURE__*/React__default.createElement(ForgotPassword, null)), /*#__PURE__*/React__default.createElement(Route, {
     exact: true,
     path: "/reset-password/:token"
-  }, /*#__PURE__*/React__default.createElement(ResetPassword, null)), /*#__PURE__*/React__default.createElement(Route, null, /*#__PURE__*/React__default.createElement(Redirect, {
+  }, /*#__PURE__*/React__default.createElement(ResetPassword, null)), /*#__PURE__*/React__default.createElement(Route, {
+    exact: true,
+    path: "/verify-email"
+  }, /*#__PURE__*/React__default.createElement(VerifyEmail, null)), /*#__PURE__*/React__default.createElement(Route, null, /*#__PURE__*/React__default.createElement(Redirect, {
     to: "/?redirect=" + encodeURIComponent("" + process.env.PUBLIC_URL + location.pathname + location.search)
   })));
 }
@@ -1360,11 +1564,9 @@ function IndexTable(_ref) {
     type: "error"
   }, rowsError) : /*#__PURE__*/React__default.createElement("table", null, /*#__PURE__*/React__default.createElement("thead", null, /*#__PURE__*/React__default.createElement("tr", null, columns.map(function (column) {
     return /*#__PURE__*/React__default.createElement("th", _extends({
+      className: column.size ? 'crudnick-column--shrink' : null,
       key: column.key,
-      scope: "col",
-      style: {
-        width: column.size ? 0 : null
-      }
+      scope: "col"
     }, column.thAttributes), column.disableSort ? column.shortLabel || column.label : /*#__PURE__*/React__default.createElement("button", {
       "aria-label": "Sort by " + column.label,
       className: "formosa-button",
@@ -1407,11 +1609,7 @@ function IndexTable(_ref) {
     colSpan: columns.length
   }, /*#__PURE__*/React__default.createElement("div", {
     className: "formosa-spinner",
-    role: "status",
-    style: {
-      justifyContent: 'center',
-      margin: '16px auto'
-    }
+    role: "status"
   }, "Loading..."))) : filteredRows.map(function (row) {
     return /*#__PURE__*/React__default.createElement("tr", {
       key: row.id

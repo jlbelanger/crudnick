@@ -1,14 +1,28 @@
-import { Field, Form, FormAlert, Submit } from '@jlbelanger/formosa';
-import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
+import { Alert, Field, Form, FormAlert, Submit } from '@jlbelanger/formosa';
+import { Link, useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
+import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
 import { errorMessageText } from '../../Utilities/Errors';
-import { Link } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import MetaTitle from '../../Components/MetaTitle';
 
 export default function ForgotPassword() {
+	const history = useHistory();
 	const [row, setRow] = useState({});
+	const [message, setMessage] = useState(false);
+
+	useEffect(() => {
+		const urlSearchParams = new URLSearchParams(history.location.search);
+		if (urlSearchParams.get('expired')) {
+			setMessage({
+				text: 'Error: This link has expired.',
+				type: 'error',
+			});
+			history.replace({ search: '' });
+		}
+	}, []);
 
 	return (
 		<Form
+			beforeSubmit={() => { setMessage(false); return true; }}
 			className="crudnick-auth-form"
 			clearOnSubmit
 			errorMessageText={errorMessageText}
@@ -24,6 +38,7 @@ export default function ForgotPassword() {
 			<h1>Forgot your password?</h1>
 
 			<FormAlert />
+			{message && (<Alert type={message.type}>{message.text}</Alert>)}
 
 			<Field
 				autoComplete="email"

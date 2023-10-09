@@ -932,6 +932,11 @@ input.formosa-field__input--search {
   margin: 0;
 }
 
+td > .formosa-spinner {
+  justify-content: center;
+  margin: 16px auto;
+}
+
 .crudnick-header {
   align-items: center;
   display: flex;
@@ -1319,4 +1324,8 @@ thead .formosa-button:hover, thead .formosa-button:active, thead .formosa-button
 }
 thead .formosa-button[disabled]:hover, thead .formosa-button[disabled]:active, thead .formosa-button[disabled]:focus {
   background-color: transparent;
+}
+
+.crudnick-column--shrink {
+  width: 0;
 }
