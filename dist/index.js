@@ -941,60 +941,6 @@ function Login() {
   }));
 }
 
-function Register() {
-  var history = reactRouterDom.useHistory();
-
-  var _useState = React.useState({}),
-      row = _useState[0],
-      setRow = _useState[1];
-
-  var afterSubmitSuccess = function afterSubmitSuccess(response) {
-    if (response.user) {
-      Auth.login(response.user, response.token, response.user.remember);
-      window.location.href = process.env.PUBLIC_URL || '/';
-    } else {
-      history.push("/?verify=1&email=" + row.email + "&username=" + row.username);
-    }
-  };
-
-  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(MetaTitle, {
-    title: "Register"
-  }), /*#__PURE__*/React__default.createElement(MyForm, {
-    afterSubmitSuccess: afterSubmitSuccess,
-    errorMessageText: errorMessageText,
-    method: "POST",
-    path: "auth/register",
-    row: row,
-    setRow: setRow
-  }, /*#__PURE__*/React__default.createElement(formosa.Field, {
-    autoComplete: "username",
-    label: "Username",
-    name: "username",
-    required: true,
-    type: "text"
-  }), /*#__PURE__*/React__default.createElement(formosa.Field, {
-    autoComplete: "email",
-    label: "Email",
-    name: "email",
-    required: true,
-    type: "email"
-  }), /*#__PURE__*/React__default.createElement(formosa.Field, {
-    autoComplete: "new-password",
-    label: "Password",
-    name: "password",
-    required: true,
-    type: "password"
-  }), /*#__PURE__*/React__default.createElement(formosa.Field, {
-    autoComplete: "new-password",
-    label: "Confirm password",
-    name: "password_confirmation",
-    required: true,
-    type: "password"
-  }), /*#__PURE__*/React__default.createElement(formosa.Submit, {
-    label: "Register"
-  })));
-}
-
 function ResetPassword() {
   var _useState = React.useState({}),
       row = _useState[0],
@@ -1048,31 +994,6 @@ function ResetPassword() {
   }));
 }
 
-function VerifyEmail() {
-  var history = reactRouterDom.useHistory();
-  React.useEffect(function () {
-    var urlSearchParams = new URLSearchParams(history.location.search);
-
-    if (urlSearchParams.get('expires') < Math.floor(Date.now() / 1000)) {
-      history.push('/?expired=1');
-    }
-  }, []);
-  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(MetaTitle, {
-    title: "Verify your email"
-  }), /*#__PURE__*/React__default.createElement(formosa.Form, {
-    afterSubmitSuccess: function afterSubmitSuccess() {
-      history.push('/');
-    },
-    errorMessageText: errorMessageText,
-    method: "POST",
-    path: "auth/verify-email" + window.location.search,
-    successToastText: "Email verified successfully."
-  }, /*#__PURE__*/React__default.createElement("p", null, "Please click the verify button to complete the registration process."), /*#__PURE__*/React__default.createElement(formosa.Submit, {
-    "data-cy": "verify",
-    label: "Verify"
-  })));
-}
-
 function Routes() {
   var location = reactRouterDom.useLocation();
   return /*#__PURE__*/React__default.createElement(reactRouterDom.Switch, null, /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
@@ -1080,17 +1001,11 @@ function Routes() {
     path: "/"
   }, /*#__PURE__*/React__default.createElement(Login, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
     exact: true,
-    path: "/register"
-  }, /*#__PURE__*/React__default.createElement(Register, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
-    exact: true,
     path: "/forgot-password"
   }, /*#__PURE__*/React__default.createElement(ForgotPassword, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
     exact: true,
     path: "/reset-password/:token"
-  }, /*#__PURE__*/React__default.createElement(ResetPassword, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
-    exact: true,
-    path: "/verify-email"
-  }, /*#__PURE__*/React__default.createElement(VerifyEmail, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, null, /*#__PURE__*/React__default.createElement(reactRouterDom.Redirect, {
+  }, /*#__PURE__*/React__default.createElement(ResetPassword, null)), /*#__PURE__*/React__default.createElement(reactRouterDom.Route, null, /*#__PURE__*/React__default.createElement(reactRouterDom.Redirect, {
     to: "/?redirect=" + encodeURIComponent("" + process.env.PUBLIC_URL + location.pathname + location.search)
   })));
 }
