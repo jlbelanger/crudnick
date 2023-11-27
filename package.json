@@ -20,7 +20,7 @@
 		"start": "npx update-browserslist-db@latest && microbundle-crl watch --no-compress --format modern,cjs --css-modules false --jsxFragment React.Fragment"
 	},
 	"dependencies": {
-		"@jlbelanger/formosa": "jlbelanger/formosa#fb0e98ddb57dce6e5023c3b0cd9cfc64396a423c",
+		"@jlbelanger/formosa": "jlbelanger/formosa#caa3f062eaad6a250052fb19f28a556264f4f5b8",
 		"get-value": "^3.0.1",
 		"js-cookie": "^3.0.1",
 		"prop-types": "^15.8.1"

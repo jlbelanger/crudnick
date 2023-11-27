@@ -239,6 +239,7 @@ function Actions(_ref) {
       row = _ref.row,
       saveButtonText = _ref.saveButtonText,
       setActionError = _ref.setActionError,
+      showDelete = _ref.showDelete,
       showSave = _ref.showSave,
       singular = _ref.singular,
       subpages = _ref.subpages;
@@ -302,7 +303,7 @@ function Actions(_ref) {
   }, saveButtonText)), currentPage !== '/' && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
     className: "crudnick-list__button formosa-button",
     to: "/" + path + "/" + row.id
-  }, "Edit")), /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement("button", {
+  }, "Edit")), showDelete && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement("button", {
     className: "crudnick-list__button formosa-button formosa-button--danger",
     "data-cy": "delete",
     onClick: function onClick(e) {
@@ -347,6 +348,7 @@ Actions.propTypes = {
   saveButtonText: PropTypes.string,
   setActionError: PropTypes.func,
   row: PropTypes.object,
+  showDelete: PropTypes.bool,
   showSave: PropTypes.bool,
   singular: PropTypes.string.isRequired,
   subpages: PropTypes.array
@@ -356,6 +358,7 @@ Actions.defaultProps = {
   row: null,
   saveButtonText: 'Save',
   setActionError: null,
+  showDelete: true,
   showSave: true,
   subpages: []
 };
@@ -1080,7 +1083,7 @@ Error.propTypes = {
   error: PropTypes.object.isRequired
 };
 
-var _excluded$2 = ["actions", "apiPath", "component", "componentProps", "extra", "filterBody", "filterValues", "name", "path", "relationshipNames", "saveButtonText", "singular", "subpages", "titlePrefixText", "transform", "url"];
+var _excluded$2 = ["actions", "apiPath", "component", "componentProps", "extra", "filterBody", "filterValues", "name", "path", "relationshipNames", "saveButtonText", "showDelete", "showSave", "singular", "subpages", "titlePrefixText", "transform", "url"];
 function EditForm(_ref) {
   var actions = _ref.actions,
       apiPath = _ref.apiPath,
@@ -1093,6 +1096,8 @@ function EditForm(_ref) {
       path = _ref.path,
       relationshipNames = _ref.relationshipNames,
       saveButtonText = _ref.saveButtonText,
+      showDelete = _ref.showDelete,
+      showSave = _ref.showSave,
       singular = _ref.singular,
       subpages = _ref.subpages,
       titlePrefixText = _ref.titlePrefixText,
@@ -1158,6 +1163,8 @@ function EditForm(_ref) {
     saveButtonText: saveButtonText,
     row: row,
     setActionError: setActionError,
+    showDelete: showDelete,
+    showSave: showSave,
     singular: singular,
     subpages: subpages
   }, actions ? actions(row, setRow) : null)), actionError && /*#__PURE__*/React__default.createElement(formosa.Alert, {
@@ -1196,6 +1203,8 @@ EditForm.propTypes = {
   path: PropTypes.string.isRequired,
   relationshipNames: PropTypes.array,
   saveButtonText: PropTypes.string,
+  showDelete: PropTypes.bool,
+  showSave: PropTypes.bool,
   singular: PropTypes.string.isRequired,
   subpages: PropTypes.array,
   titlePrefixText: PropTypes.string,
@@ -1211,6 +1220,8 @@ EditForm.defaultProps = {
   name: null,
   relationshipNames: [],
   saveButtonText: 'Save',
+  showDelete: true,
+  showSave: true,
   subpages: [],
   titlePrefixText: 'Edit',
   transform: null

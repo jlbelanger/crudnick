@@ -22,6 +22,8 @@ export default function EditForm({
 	path,
 	relationshipNames,
 	saveButtonText,
+	showDelete,
+	showSave,
 	singular,
 	subpages,
 	titlePrefixText,
@@ -80,6 +82,8 @@ export default function EditForm({
 						saveButtonText={saveButtonText}
 						row={row}
 						setActionError={setActionError}
+						showDelete={showDelete}
+						showSave={showSave}
 						singular={singular}
 						subpages={subpages}
 					>
@@ -131,6 +135,8 @@ EditForm.propTypes = {
 	path: PropTypes.string.isRequired,
 	relationshipNames: PropTypes.array,
 	saveButtonText: PropTypes.string,
+	showDelete: PropTypes.bool,
+	showSave: PropTypes.bool,
 	singular: PropTypes.string.isRequired,
 	subpages: PropTypes.array,
 	titlePrefixText: PropTypes.string,
@@ -147,6 +153,8 @@ EditForm.defaultProps = {
 	name: null,
 	relationshipNames: [],
 	saveButtonText: 'Save',
+	showDelete: true,
+	showSave: true,
 	subpages: [],
 	titlePrefixText: 'Edit',
 	transform: null,

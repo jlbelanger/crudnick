@@ -14,6 +14,7 @@ export default function Actions({
 	row,
 	saveButtonText,
 	setActionError,
+	showDelete,
 	showSave,
 	singular,
 	subpages,
@@ -81,32 +82,34 @@ export default function Actions({
 					<NavLink className="crudnick-list__button formosa-button" to={`/${path}/${row.id}`}>Edit</NavLink>
 				</li>
 			)}
-			<li>
-				<button
-					className="crudnick-list__button formosa-button formosa-button--danger"
-					data-cy="delete"
-					onClick={(e) => {
-						if (setActionError) {
-							setActionError(false);
-						}
-						setShowModal(e);
-					}}
-					type="button"
-				>
-					Delete
-				</button>
-				{showModal && (
-					<Modal
-						event={showModal}
-						okButtonAttributes={{ 'data-cy': 'modal-delete' }}
-						okButtonClass="formosa-button--danger"
-						okButtonText="Delete"
-						onClickOk={onDelete}
-						onClickCancel={() => { setShowModal(false); }}
-						text={`Are you sure you want to delete this ${singular}?`}
-					/>
-				)}
-			</li>
+			{showDelete && (
+				<li>
+					<button
+						className="crudnick-list__button formosa-button formosa-button--danger"
+						data-cy="delete"
+						onClick={(e) => {
+							if (setActionError) {
+								setActionError(false);
+							}
+							setShowModal(e);
+						}}
+						type="button"
+					>
+						Delete
+					</button>
+					{showModal && (
+						<Modal
+							event={showModal}
+							okButtonAttributes={{ 'data-cy': 'modal-delete' }}
+							okButtonClass="formosa-button--danger"
+							okButtonText="Delete"
+							onClickOk={onDelete}
+							onClickCancel={() => { setShowModal(false); }}
+							text={`Are you sure you want to delete this ${singular}?`}
+						/>
+					)}
+				</li>
+			)}
 			{process.env.REACT_APP_FRONTEND_URL && row.url && (
 				<li>
 					<a
@@ -142,6 +145,7 @@ Actions.propTypes = {
 	saveButtonText: PropTypes.string,
 	setActionError: PropTypes.func,
 	row: PropTypes.object,
+	showDelete: PropTypes.bool,
 	showSave: PropTypes.bool,
 	singular: PropTypes.string.isRequired,
 	subpages: PropTypes.array,
@@ -152,6 +156,7 @@ Actions.defaultProps = {
 	row: null,
 	saveButtonText: 'Save',
 	setActionError: null,
+	showDelete: true,
 	showSave: true,
 	subpages: [],
 };
