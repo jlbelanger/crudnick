@@ -1181,7 +1181,6 @@ a:hover, a:active, a:focus {
     display: flex;
     flex-direction: row;
     min-width: none;
-    overflow: unset;
     padding: 0 24px;
     position: static;
     transform: none;
