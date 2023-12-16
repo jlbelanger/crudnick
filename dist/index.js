@@ -8,176 +8,126 @@ var Cookies = _interopDefault(require('js-cookie'));
 var PropTypes = _interopDefault(require('prop-types'));
 var get = _interopDefault(require('get-value'));
 
-var capitalize = function capitalize(s) {
-  return s.replace(/(?:^|\s)\S/g, function (a) {
-    return a.toUpperCase();
-  });
-};
-var cleanKey = function cleanKey(key) {
-  return key.replace(/^relationships\./, '');
-};
+const capitalize = s => s.replace(/(?:^|\s)\S/g, a => a.toUpperCase());
+const cleanKey = key => key.replace(/^relationships\./, '');
 
-var Auth = /*#__PURE__*/function () {
-  function Auth() {}
-
-  Auth.login = function login(user, token, remember) {
+class Auth {
+  static login(user, token, remember) {
     Cookies.set(process.env.REACT_APP_COOKIE_PREFIX + "_user", JSON.stringify(user), Auth.attributes(remember));
     Cookies.set(process.env.REACT_APP_COOKIE_PREFIX + "_token", token, Auth.attributes(remember));
-  };
-
-  Auth.refresh = function refresh() {
-    var user = Auth.user();
+  }
+  static refresh() {
+    let user = Auth.user();
     user = user ? JSON.parse(user) : null;
-
     if (user && user.remember) {
       Auth.login(user, Auth.token(), user.remember);
     }
-  };
-
-  Auth.attributes = function attributes(remember) {
-    var attributes = {
+  }
+  static attributes(remember) {
+    const attributes = {
       sameSite: 'lax'
     };
-
     if (remember) {
       attributes.expires = 365;
     }
-
     if (window.location.protocol === 'https:') {
       attributes.secure = true;
     }
-
     return attributes;
-  };
-
-  Auth.logout = function logout(status) {
+  }
+  static logout(status) {
     if (status === void 0) {
       status = '';
     }
-
     Cookies.remove(process.env.REACT_APP_COOKIE_PREFIX + "_user");
     Cookies.remove(process.env.REACT_APP_COOKIE_PREFIX + "_token");
     window.location.href = "" + (process.env.PUBLIC_URL ? process.env.PUBLIC_URL : '/') + (status ? "?status=" + status : '');
-  };
-
-  Auth.id = function id() {
-    var user = Auth.user();
+  }
+  static id() {
+    const user = Auth.user();
     return user ? JSON.parse(user).id : null;
-  };
-
-  Auth.user = function user() {
+  }
+  static user() {
     return Cookies.get(process.env.REACT_APP_COOKIE_PREFIX + "_user");
-  };
-
-  Auth.token = function token() {
+  }
+  static token() {
     return Cookies.get(process.env.REACT_APP_COOKIE_PREFIX + "_token");
-  };
-
-  Auth.isLoggedIn = function isLoggedIn() {
+  }
+  static isLoggedIn() {
     return !!Auth.user() && !!Auth.token();
-  };
+  }
+}
 
-  return Auth;
-}();
-
-var errorMessageText = function errorMessageText(response, logout) {
+const errorMessageText = function (response, logout) {
   if (logout === void 0) {
     logout = true;
   }
-
   if (logout && response.status === 401) {
     return Auth.logout(response.status);
   }
-
-  return "Error: " + response.errors.map(function (e) {
-    return e.title;
-  }).join(' ');
+  return "Error: " + response.errors.map(e => e.title).join(' ');
 };
 
 function _extends() {
-  _extends = Object.assign || function (target) {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
-
       for (var key in source) {
         if (Object.prototype.hasOwnProperty.call(source, key)) {
           target[key] = source[key];
         }
       }
     }
-
     return target;
   };
-
   return _extends.apply(this, arguments);
 }
 
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-
-  return target;
-}
-
 function Modal(_ref) {
-  var cancelable = _ref.cancelable,
-      cancelButtonAttributes = _ref.cancelButtonAttributes,
-      cancelButtonClass = _ref.cancelButtonClass,
-      cancelButtonText = _ref.cancelButtonText,
-      children = _ref.children,
-      event = _ref.event,
-      okButtonAttributes = _ref.okButtonAttributes,
-      okButtonClass = _ref.okButtonClass,
-      okButtonText = _ref.okButtonText,
-      onClickCancel = _ref.onClickCancel,
-      onClickOk = _ref.onClickOk,
-      text = _ref.text;
-  var dialogRef = React.useRef(null);
-
-  var onKeydown = function onKeydown(e) {
+  let {
+    cancelable,
+    cancelButtonAttributes,
+    cancelButtonClass,
+    cancelButtonText,
+    children,
+    event,
+    okButtonAttributes,
+    okButtonClass,
+    okButtonText,
+    onClickCancel,
+    onClickOk,
+    text
+  } = _ref;
+  const dialogRef = React.useRef(null);
+  const onKeydown = e => {
     if (e.key === 'Escape' && onClickCancel) {
       onClickCancel();
     }
   };
-
-  var onClickDialog = function onClickDialog(e) {
+  const onClickDialog = e => {
     if (e.target.tagName === 'DIALOG' && onClickCancel) {
       onClickCancel();
     }
   };
-
-  React.useEffect(function () {
+  React.useEffect(() => {
     document.body.classList.add('crudnick-modal-open');
-
     if (cancelable) {
       document.addEventListener('keydown', onKeydown);
     }
-
-    return function () {
+    return () => {
       document.body.classList.remove('crudnick-modal-open');
-
       if (cancelable) {
         document.removeEventListener('keydown', onKeydown);
       }
-
       if (event.target) {
         event.target.focus();
       }
     };
   }, []);
-  React.useEffect(function () {
+  React.useEffect(() => {
     if (dialogRef && dialogRef.current && dialogRef.current.getAttribute('open') === null) {
       dialogRef.current.showModal();
       dialogRef.current.focus();
-
       if (cancelable) {
         dialogRef.current.addEventListener('click', onClickDialog);
       }
@@ -232,66 +182,58 @@ Modal.defaultProps = {
 };
 
 function Actions(_ref) {
-  var apiPath = _ref.apiPath,
-      children = _ref.children,
-      currentPage = _ref.currentPage,
-      path = _ref.path,
-      row = _ref.row,
-      saveButtonText = _ref.saveButtonText,
-      setActionError = _ref.setActionError,
-      showDelete = _ref.showDelete,
-      showSave = _ref.showSave,
-      singular = _ref.singular,
-      subpages = _ref.subpages;
-  var history = reactRouterDom.useHistory();
-
-  var _useContext = React.useContext(formosa.FormosaContext),
-      addToast = _useContext.addToast,
-      disableWarningPrompt = _useContext.disableWarningPrompt,
-      enableWarningPrompt = _useContext.enableWarningPrompt;
-
-  var _useState = React.useState(false),
-      showModal = _useState[0],
-      setShowModal = _useState[1];
-
-  var submitRef = React.useRef(null);
-
-  var onKeyDown = function onKeyDown(e) {
+  let {
+    apiPath,
+    children,
+    currentPage,
+    path,
+    row,
+    saveButtonText,
+    setActionError,
+    showDelete,
+    showSave,
+    singular,
+    subpages
+  } = _ref;
+  const history = reactRouterDom.useHistory();
+  const {
+    addToast,
+    disableWarningPrompt,
+    enableWarningPrompt
+  } = React.useContext(formosa.FormosaContext);
+  const [showModal, setShowModal] = React.useState(false);
+  const submitRef = React.useRef(null);
+  const onKeyDown = e => {
     if (e.key === 's' && e.metaKey && submitRef && submitRef.current) {
       e.preventDefault();
       submitRef.current.click();
     }
   };
-
-  React.useEffect(function () {
+  React.useEffect(() => {
     window.addEventListener('keydown', onKeyDown);
-    return function () {
+    return () => {
       window.removeEventListener('keydown', onKeyDown);
     };
   }, []);
-
-  var onDelete = function onDelete() {
+  const onDelete = () => {
     setShowModal(false);
     disableWarningPrompt();
-    formosa.Api["delete"](apiPath + "/" + row.id)["catch"](function (response) {
+    formosa.Api.delete(apiPath + "/" + row.id).catch(response => {
       if (setActionError) {
         setActionError(errorMessageText(response));
       } else {
         addToast(errorMessageText(response), 'error', 10000);
       }
-
       enableWarningPrompt();
-    }).then(function (response) {
+    }).then(response => {
       if (!response) {
         return;
       }
-
       addToast(capitalize(singular) + " deleted successfully.", 'success');
       history.push("/" + path);
       enableWarningPrompt();
     });
   };
-
   return /*#__PURE__*/React__default.createElement("ul", {
     className: "crudnick-list"
   }, showSave && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement("button", {
@@ -306,11 +248,10 @@ function Actions(_ref) {
   }, "Edit")), showDelete && /*#__PURE__*/React__default.createElement("li", null, /*#__PURE__*/React__default.createElement("button", {
     className: "crudnick-list__button formosa-button formosa-button--danger",
     "data-cy": "delete",
-    onClick: function onClick(e) {
+    onClick: e => {
       if (setActionError) {
         setActionError(false);
       }
-
       setShowModal(e);
     },
     type: "button"
@@ -322,7 +263,7 @@ function Actions(_ref) {
     okButtonClass: "formosa-button--danger",
     okButtonText: "Delete",
     onClickOk: onDelete,
-    onClickCancel: function onClickCancel() {
+    onClickCancel: () => {
       setShowModal(false);
     },
     text: "Are you sure you want to delete this " + singular + "?"
@@ -331,14 +272,12 @@ function Actions(_ref) {
     href: "" + process.env.REACT_APP_FRONTEND_URL + row.url,
     rel: "noreferrer",
     target: "_blank"
-  }, "View")), subpages.map(function (page) {
-    return /*#__PURE__*/React__default.createElement("li", {
-      key: page
-    }, /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
-      className: "crudnick-list__button formosa-button crudnick-button--secondary",
-      to: "/" + path + "/" + row.id + "/" + page.toLowerCase()
-    }, page));
-  }), children);
+  }, "View")), subpages.map(page => /*#__PURE__*/React__default.createElement("li", {
+    key: page
+  }, /*#__PURE__*/React__default.createElement(reactRouterDom.NavLink, {
+    className: "crudnick-list__button formosa-button crudnick-button--secondary",
+    to: "/" + path + "/" + row.id + "/" + page.toLowerCase()
+  }, page))), children);
 }
 Actions.propTypes = {
   apiPath: PropTypes.string.isRequired,
@@ -364,18 +303,17 @@ Actions.defaultProps = {
 };
 
 function MetaTitle(_ref) {
-  var title = _ref.title;
-  React.useEffect(function () {
-    var metaTitle = title;
-
+  let {
+    title
+  } = _ref;
+  React.useEffect(() => {
+    let metaTitle = title;
     if (process.env.REACT_APP_TITLE) {
       if (metaTitle) {
         metaTitle += ' | ';
       }
-
       metaTitle += process.env.REACT_APP_TITLE;
     }
-
     document.querySelector('title').innerText = metaTitle;
   }, [title]);
   return null;
@@ -388,77 +326,67 @@ MetaTitle.defaultProps = {
 };
 
 function MyFormPrompt() {
-  var _useContext = React.useContext(formosa.FormContext),
-      getDirtyKeys = _useContext.getDirtyKeys;
-
+  const {
+    getDirtyKeys
+  } = React.useContext(formosa.FormContext);
   return /*#__PURE__*/React__default.createElement(reactRouterDom.Prompt, {
     when: getDirtyKeys().length > 0,
     message: "You have unsaved changes. Are you sure you want to leave this page?"
   });
 }
 
-var _excluded = ["children"];
 function MyForm(_ref) {
-  var children = _ref.children,
-      otherProps = _objectWithoutPropertiesLoose(_ref, _excluded);
-
-  var _useContext = React.useContext(formosa.FormosaContext),
-      showWarningPrompt = _useContext.showWarningPrompt;
-
+  let {
+    children,
+    ...otherProps
+  } = _ref;
+  const {
+    showWarningPrompt
+  } = React.useContext(formosa.FormosaContext);
   return /*#__PURE__*/React__default.createElement(formosa.Form, otherProps, children, showWarningPrompt && /*#__PURE__*/React__default.createElement(MyFormPrompt, null));
 }
 MyForm.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-var _excluded$1 = ["addAnotherText", "apiPath", "component", "componentProps", "defaultRow", "extra", "filterBody", "filterValues", "path", "relationshipNames", "saveButtonText", "showAddAnother", "singular", "titlePrefixText"];
 function AddForm(_ref) {
-  var addAnotherText = _ref.addAnotherText,
-      apiPath = _ref.apiPath,
-      component = _ref.component,
-      componentProps = _ref.componentProps,
-      defaultRow = _ref.defaultRow,
-      extra = _ref.extra,
-      filterBody = _ref.filterBody,
-      filterValues = _ref.filterValues,
-      path = _ref.path,
-      relationshipNames = _ref.relationshipNames,
-      saveButtonText = _ref.saveButtonText,
-      showAddAnother = _ref.showAddAnother,
-      singular = _ref.singular,
-      titlePrefixText = _ref.titlePrefixText,
-      otherProps = _objectWithoutPropertiesLoose(_ref, _excluded$1);
-
-  var _useState = React.useState(defaultRow),
-      row = _useState[0],
-      setRow = _useState[1];
-
-  var _useState2 = React.useState(false),
-      addAnother = _useState2[0],
-      setAddAnother = _useState2[1];
-
-  var history = reactRouterDom.useHistory();
-  var submitRef = React.useRef(null);
-
-  var afterSubmitSuccess = function afterSubmitSuccess(response) {
+  let {
+    addAnotherText,
+    apiPath,
+    component,
+    componentProps,
+    defaultRow,
+    extra,
+    filterBody,
+    filterValues,
+    path,
+    relationshipNames,
+    saveButtonText,
+    showAddAnother,
+    singular,
+    titlePrefixText,
+    ...otherProps
+  } = _ref;
+  const [row, setRow] = React.useState(defaultRow);
+  const [addAnother, setAddAnother] = React.useState(false);
+  const history = reactRouterDom.useHistory();
+  const submitRef = React.useRef(null);
+  const afterSubmitSuccess = response => {
     if (!addAnother) {
       history.push("/" + path + "/" + response.id);
     }
   };
-
-  var FormComponent = component;
+  const FormComponent = component;
   componentProps.formType = 'add';
-
-  var onKeyDown = function onKeyDown(e) {
+  const onKeyDown = e => {
     if (e.key === 's' && e.metaKey && submitRef && submitRef.current) {
       e.preventDefault();
       submitRef.current.click();
     }
   };
-
-  React.useEffect(function () {
+  React.useEffect(() => {
     window.addEventListener('keydown', onKeyDown);
-    return function () {
+    return () => {
       window.removeEventListener('keydown', onKeyDown);
     };
   }, []);
@@ -533,25 +461,20 @@ AddForm.defaultProps = {
 };
 
 var _path;
-
 function _extends$1() {
-  _extends$1 = Object.assign || function (target) {
+  _extends$1 = Object.assign ? Object.assign.bind() : function (target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
-
       for (var key in source) {
         if (Object.prototype.hasOwnProperty.call(source, key)) {
           target[key] = source[key];
         }
       }
     }
-
     return target;
   };
-
   return _extends$1.apply(this, arguments);
 }
-
 function SvgMenu(props) {
   return /*#__PURE__*/React.createElement("svg", _extends$1({
     viewBox: "0 0 20 20",
@@ -562,25 +485,20 @@ function SvgMenu(props) {
 }
 
 var _path$1;
-
 function _extends$2() {
-  _extends$2 = Object.assign || function (target) {
+  _extends$2 = Object.assign ? Object.assign.bind() : function (target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
-
       for (var key in source) {
         if (Object.prototype.hasOwnProperty.call(source, key)) {
           target[key] = source[key];
         }
       }
     }
-
     return target;
   };
-
   return _extends$2.apply(this, arguments);
 }
-
 function SvgX(props) {
   return /*#__PURE__*/React.createElement("svg", _extends$2({
     viewBox: "0 0 8 8",
@@ -591,82 +509,68 @@ function SvgX(props) {
 }
 
 function Nav(_ref) {
-  var nav = _ref.nav;
-
-  var _useContext = React.useContext(formosa.FormosaContext),
-      addToast = _useContext.addToast;
-
-  var dialogRef = React.useRef(null);
-  var breakpoint = 1025;
-
-  var _useState = React.useState(window.innerWidth >= breakpoint),
-      showInlineNav = _useState[0],
-      setShowInlineNav = _useState[1];
-
-  var onTransitionEnd = function onTransitionEnd() {
+  let {
+    nav
+  } = _ref;
+  const {
+    addToast
+  } = React.useContext(formosa.FormosaContext);
+  const dialogRef = React.useRef(null);
+  const breakpoint = 1025;
+  const [showInlineNav, setShowInlineNav] = React.useState(window.innerWidth >= breakpoint);
+  const onTransitionEnd = () => {
     document.body.classList.remove('show-nav');
-
     if (dialogRef.current.tagName === 'DIALOG') {
       dialogRef.current.close();
     }
-
     dialogRef.current.removeEventListener('transitionend', onTransitionEnd);
   };
-
-  var onResize = function onResize() {
+  const onResize = () => {
     setShowInlineNav(window.innerWidth >= breakpoint);
   };
-
-  React.useEffect(function () {
+  React.useEffect(() => {
     window.addEventListener('resize', onResize);
-    return function () {
+    return () => {
       window.removeEventListener('resize', onResize);
     };
   }, []);
-  React.useEffect(function () {
+  React.useEffect(() => {
     if (showInlineNav) {
       hideMenu();
       onTransitionEnd();
     }
   }, [showInlineNav]);
-
-  var logout = function logout() {
-    formosa.Api["delete"]('auth/logout')["catch"](function (response) {
+  const logout = () => {
+    formosa.Api.delete('auth/logout').catch(response => {
       if (response.status === 401) {
         return;
       }
-
       addToast(errorMessageText(response), 'error');
-    }).then(function () {
+    }).then(() => {
       Auth.logout();
     });
   };
-
-  var hideMenu = function hideMenu() {
+  const hideMenu = () => {
     document.body.classList.remove('animate-nav');
     dialogRef.current.addEventListener('transitionend', onTransitionEnd);
   };
-
-  var openMenu = function openMenu() {
+  const openMenu = () => {
     document.body.classList.add('show-nav');
     dialogRef.current.showModal();
-    setTimeout(function () {
+    setTimeout(() => {
       document.body.classList.add('animate-nav');
     }, 10);
   };
-
-  var onCancelDialog = function onCancelDialog(e) {
+  const onCancelDialog = e => {
     e.preventDefault();
     hideMenu();
   };
-
-  var onClickDialog = function onClickDialog(e) {
+  const onClickDialog = e => {
     if (e.target.tagName === 'DIALOG') {
       hideMenu();
     }
   };
-
-  var Dialog = showInlineNav ? 'div' : 'dialog';
+  const Dialog = showInlineNav ? 'div' : 'dialog';
   return /*#__PURE__*/React__default.createElement("nav", {
     id: "crudnick-nav"
   }, /*#__PURE__*/React__default.createElement(Dialog, {
@@ -686,9 +590,11 @@ function Nav(_ref) {
     "aria-hidden": "true"
   }), "Close Menu"), /*#__PURE__*/React__default.createElement("ul", {
     id: "crudnick-nav__list"
-  }, nav.map(function (_ref2) {
-    var label = _ref2.label,
-        path = _ref2.path;
+  }, nav.map(_ref2 => {
+    let {
+      label,
+      path
+    } = _ref2;
     return /*#__PURE__*/React__default.createElement("li", {
       className: "crudnick-list__item",
       key: path
@@ -724,19 +630,11 @@ Nav.propTypes = {
 };
 
 function ForgotPassword() {
-  var history = reactRouterDom.useHistory();
-
-  var _useState = React.useState({}),
-      row = _useState[0],
-      setRow = _useState[1];
-
-  var _useState2 = React.useState(false),
-      message = _useState2[0],
-      setMessage = _useState2[1];
-
-  React.useEffect(function () {
-    var urlSearchParams = new URLSearchParams(history.location.search);
-
+  const history = reactRouterDom.useHistory();
+  const [row, setRow] = React.useState({});
+  const [message, setMessage] = React.useState(false);
+  React.useEffect(() => {
+    const urlSearchParams = new URLSearchParams(history.location.search);
     if (urlSearchParams.get('expired')) {
       setMessage({
         text: 'Error: This link has expired.',
@@ -748,7 +646,7 @@ function ForgotPassword() {
     }
   }, []);
   return /*#__PURE__*/React__default.createElement(formosa.Form, {
-    beforeSubmit: function beforeSubmit() {
+    beforeSubmit: () => {
       setMessage(false);
       return true;
     },
@@ -781,36 +679,35 @@ function ForgotPassword() {
 }
 
 function LoginForm(_ref) {
-  var message = _ref.message,
-      row = _ref.row,
-      setMessage = _ref.setMessage,
-      setShowVerificationButton = _ref.setShowVerificationButton,
-      showVerificationButton = _ref.showVerificationButton;
-
-  var _useContext = React.useContext(formosa.FormContext),
-      clearAlert = _useContext.clearAlert;
-
-  var resendVerificationEmail = function resendVerificationEmail() {
+  let {
+    message,
+    row,
+    setMessage,
+    setShowVerificationButton,
+    showVerificationButton
+  } = _ref;
+  const {
+    clearAlert
+  } = React.useContext(formosa.FormContext);
+  const resendVerificationEmail = () => {
     clearAlert();
     setMessage(null);
     setShowVerificationButton(false);
-    var data = {
+    const data = {
       username: row.username || showVerificationButton
     };
-    formosa.Api.post('auth/resend-verification', JSON.stringify(data))["catch"](function (response) {
+    formosa.Api.post('auth/resend-verification', JSON.stringify(data)).catch(response => {
       setMessage(errorMessageText(response));
-    }).then(function (response) {
+    }).then(response => {
       if (!response) {
         return;
       }
-
       setMessage({
         text: 'Check your email to continue the registration process.',
         type: 'success'
       });
     });
   };
-
   return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(MetaTitle, {
     title: "Login"
   }), /*#__PURE__*/React__default.createElement("h1", null, "Login"), message && /*#__PURE__*/React__default.createElement(formosa.Alert, {
@@ -860,47 +757,31 @@ LoginForm.defaultProps = {
 };
 
 function Login() {
-  var history = reactRouterDom.useHistory();
-
-  var _useState = React.useState({}),
-      row = _useState[0],
-      setRow = _useState[1];
-
-  var _useState2 = React.useState(null),
-      message = _useState2[0],
-      setMessage = _useState2[1];
-
-  var _useState3 = React.useState(false),
-      showVerificationButton = _useState3[0],
-      setShowVerificationButton = _useState3[1];
-
-  var beforeSubmit = function beforeSubmit() {
+  const history = reactRouterDom.useHistory();
+  const [row, setRow] = React.useState({});
+  const [message, setMessage] = React.useState(null);
+  const [showVerificationButton, setShowVerificationButton] = React.useState(false);
+  const beforeSubmit = () => {
     setMessage(null);
     setShowVerificationButton(false);
     return true;
   };
-
-  var afterSubmitFailure = function afterSubmitFailure(response) {
+  const afterSubmitFailure = response => {
     setShowVerificationButton(response.errors[0].code === 'auth.unverified');
   };
-
-  var afterSubmitSuccess = function afterSubmitSuccess(response) {
-    var urlSearchParams = new URLSearchParams(history.location.search);
-    var redirect;
-
+  const afterSubmitSuccess = response => {
+    const urlSearchParams = new URLSearchParams(history.location.search);
+    let redirect;
     if (urlSearchParams.get('redirect') && urlSearchParams.get('redirect')[0] === '/') {
       redirect = urlSearchParams.get('redirect');
     } else {
       redirect = process.env.PUBLIC_URL || '/';
     }
-
     Auth.login(response.user, response.token, response.user.remember);
     window.location.href = redirect;
   };
-
-  React.useEffect(function () {
-    var urlSearchParams = new URLSearchParams(history.location.search);
-
+  React.useEffect(() => {
+    const urlSearchParams = new URLSearchParams(history.location.search);
     if (urlSearchParams.get('status') === '401') {
       setMessage({
         text: 'Your session has expired. Please log in again.',
@@ -927,9 +808,7 @@ function Login() {
     afterSubmitSuccess: afterSubmitSuccess,
     beforeSubmit: beforeSubmit,
     className: "crudnick-auth-form",
-    errorMessageText: function errorMessageText$1(response) {
-      return errorMessageText(response, false);
-    },
+    errorMessageText: response => errorMessageText(response, false),
     method: "POST",
     path: "auth/login",
     row: row,
@@ -945,23 +824,19 @@ function Login() {
 }
 
 function ResetPassword() {
-  var _useState = React.useState({}),
-      row = _useState[0],
-      setRow = _useState[1];
-
-  var _useParams = reactRouterDom.useParams(),
-      token = _useParams.token;
-
-  var history = reactRouterDom.useHistory();
-  React.useEffect(function () {
-    var urlSearchParams = new URLSearchParams(history.location.search);
-
+  const [row, setRow] = React.useState({});
+  const {
+    token
+  } = reactRouterDom.useParams();
+  const history = reactRouterDom.useHistory();
+  React.useEffect(() => {
+    const urlSearchParams = new URLSearchParams(history.location.search);
     if (urlSearchParams.get('expires') < Math.floor(Date.now() / 1000)) {
       history.push('/?expired=1');
     }
   }, []);
   return /*#__PURE__*/React__default.createElement(formosa.Form, {
-    afterSubmitSuccess: function afterSubmitSuccess() {
+    afterSubmitSuccess: () => {
       history.push('/');
     },
     className: "crudnick-auth-form",
@@ -998,7 +873,7 @@ function ResetPassword() {
 }
 
 function Routes() {
-  var location = reactRouterDom.useLocation();
+  const location = reactRouterDom.useLocation();
   return /*#__PURE__*/React__default.createElement(reactRouterDom.Switch, null, /*#__PURE__*/React__default.createElement(reactRouterDom.Route, {
     exact: true,
     path: "/"
@@ -1014,30 +889,28 @@ function Routes() {
 }
 
 function App(_ref) {
-  var articleProps = _ref.articleProps,
-      children = _ref.children,
-      nav = _ref.nav,
-      routerAttributes = _ref.routerAttributes;
-
+  let {
+    articleProps,
+    children,
+    nav,
+    routerAttributes
+  } = _ref;
   if (Auth.isLoggedIn() && !formosa.Api.getToken()) {
     formosa.Api.setToken(Auth.token());
   }
-
-  document.addEventListener('formosaApiRequest', function () {
+  document.addEventListener('formosaApiRequest', () => {
     Auth.refresh();
   });
-
-  var onClick = function onClick(e) {
+  const onClick = e => {
     e.preventDefault();
-    var id = e.target.getAttribute('href').split('#')[1];
-    var elem = document.getElementById(id);
+    const id = e.target.getAttribute('href').split('#')[1];
+    const elem = document.getElementById(id);
     elem.setAttribute('tabindex', -1);
-    elem.addEventListener('blur', function () {
+    elem.addEventListener('blur', () => {
       elem.removeAttribute('tabindex');
     });
     elem.focus();
   };
-
   return /*#__PURE__*/React__default.createElement(reactRouterDom.BrowserRouter, routerAttributes, /*#__PURE__*/React__default.createElement("a", {
     href: "#crudnick-article",
     id: "crudnick-skip",
@@ -1060,19 +933,17 @@ App.defaultProps = {
 };
 
 function Error(_ref) {
-  var error = _ref.error;
-
+  let {
+    error
+  } = _ref;
   if (error.status === 401) {
     Auth.logout(error.status);
     return null;
   }
-
-  var message = 'Error loading data. Please try again later.';
-
+  let message = 'Error loading data. Please try again later.';
   if (error.errors[0].title) {
     message = "Error: " + error.errors[0].title;
   }
-
   return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(MetaTitle, {
     title: "Error"
   }), /*#__PURE__*/React__default.createElement(formosa.Alert, {
@@ -1083,52 +954,42 @@ Error.propTypes = {
   error: PropTypes.object.isRequired
 };
 
-var _excluded$2 = ["actions", "apiPath", "component", "componentProps", "extra", "filterBody", "filterValues", "name", "path", "relationshipNames", "saveButtonText", "showDelete", "showSave", "singular", "subpages", "titlePrefixText", "transform", "url"];
 function EditForm(_ref) {
-  var actions = _ref.actions,
-      apiPath = _ref.apiPath,
-      component = _ref.component,
-      componentProps = _ref.componentProps,
-      extra = _ref.extra,
-      filterBody = _ref.filterBody,
-      filterValues = _ref.filterValues,
-      name = _ref.name,
-      path = _ref.path,
-      relationshipNames = _ref.relationshipNames,
-      saveButtonText = _ref.saveButtonText,
-      showDelete = _ref.showDelete,
-      showSave = _ref.showSave,
-      singular = _ref.singular,
-      subpages = _ref.subpages,
-      titlePrefixText = _ref.titlePrefixText,
-      transform = _ref.transform,
-      url = _ref.url,
-      otherProps = _objectWithoutPropertiesLoose(_ref, _excluded$2);
-
-  var _useParams = reactRouterDom.useParams(),
-      id = _useParams.id;
-
-  var _useState = React.useState(null),
-      row = _useState[0],
-      setRow = _useState[1];
-
-  var _useState2 = React.useState(false),
-      error = _useState2[0],
-      setError = _useState2[1];
-
-  var _useState3 = React.useState(false),
-      actionError = _useState3[0],
-      setActionError = _useState3[1];
-
-  var api = formosa.Api.instance();
-  React.useEffect(function () {
-    api(url)["catch"](function (response) {
+  let {
+    actions,
+    apiPath,
+    component,
+    componentProps,
+    extra,
+    filterBody,
+    filterValues,
+    name,
+    path,
+    relationshipNames,
+    saveButtonText,
+    showDelete,
+    showSave,
+    singular,
+    subpages,
+    titlePrefixText,
+    transform,
+    url,
+    ...otherProps
+  } = _ref;
+  const {
+    id
+  } = reactRouterDom.useParams();
+  const [row, setRow] = React.useState(null);
+  const [error, setError] = React.useState(false);
+  const [actionError, setActionError] = React.useState(false);
+  const api = formosa.Api.instance();
+  React.useEffect(() => {
+    api(url).catch(response => {
       setError(response);
-    }).then(function (response) {
+    }).then(response => {
       if (!response) {
         return;
       }
-
       if (transform) {
         setRow(transform(response));
       } else {
@@ -1136,20 +997,17 @@ function EditForm(_ref) {
       }
     });
   }, [url]);
-
   if (error) {
     return /*#__PURE__*/React__default.createElement(Error, {
       error: error
     });
   }
-
-  var afterSubmitFailure = function afterSubmitFailure(e) {
+  const afterSubmitFailure = e => {
     setActionError(errorMessageText(e));
   };
-
-  var FormComponent = component;
+  const FormComponent = component;
   componentProps.formType = 'edit';
-  var metaTitle = row ? titlePrefixText + " " + (typeof name === 'function' ? name(row) : get(row, name)) : '';
+  const metaTitle = row ? titlePrefixText + " " + (typeof name === 'function' ? name(row) : get(row, name)) : '';
   return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(MetaTitle, {
     title: metaTitle
   }), /*#__PURE__*/React__default.createElement("header", {
@@ -1171,7 +1029,7 @@ function EditForm(_ref) {
     type: "error"
   }, actionError), row && /*#__PURE__*/React__default.createElement(MyForm, _extends({
     afterSubmitFailure: afterSubmitFailure,
-    beforeSubmit: function beforeSubmit() {
+    beforeSubmit: () => {
       setActionError(false);
       return true;
     },
@@ -1228,25 +1086,20 @@ EditForm.defaultProps = {
 };
 
 var _path$2;
-
 function _extends$3() {
-  _extends$3 = Object.assign || function (target) {
+  _extends$3 = Object.assign ? Object.assign.bind() : function (target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
-
       for (var key in source) {
         if (Object.prototype.hasOwnProperty.call(source, key)) {
           target[key] = source[key];
         }
       }
     }
-
     return target;
   };
-
   return _extends$3.apply(this, arguments);
 }
-
 function SvgArrow(props) {
   return /*#__PURE__*/React.createElement("svg", _extends$3({
     xmlns: "http://www.w3.org/2000/svg",
@@ -1257,25 +1110,20 @@ function SvgArrow(props) {
 }
 
 var _path$3;
-
 function _extends$4() {
-  _extends$4 = Object.assign || function (target) {
+  _extends$4 = Object.assign ? Object.assign.bind() : function (target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
-
       for (var key in source) {
         if (Object.prototype.hasOwnProperty.call(source, key)) {
           target[key] = source[key];
         }
       }
     }
-
     return target;
   };
-
   return _extends$4.apply(this, arguments);
 }
-
 function SvgCheck(props) {
   return /*#__PURE__*/React.createElement("svg", _extends$4({
     xmlns: "http://www.w3.org/2000/svg",
@@ -1285,192 +1133,141 @@ function SvgCheck(props) {
   })));
 }
 
-var escapeRegExp = function escapeRegExp(string) {
-  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
-};
-
-var filterByKey = function filterByKey(records, key, value) {
+const escapeRegExp = string => string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
+const filterByKey = (records, key, value) => {
   value = value.trim().toLowerCase();
-  var escapedValue = escapeRegExp(value);
-  records = records.filter(function (record) {
-    var recordValue = (get(record, key) || '').toString().replace(/<[^>]+?>/g, '').toLowerCase();
+  const escapedValue = escapeRegExp(value);
+  records = records.filter(record => {
+    const recordValue = (get(record, key) || '').toString().replace(/<[^>]+?>/g, '').toLowerCase();
     return recordValue.match(new RegExp("(^|[^a-z])" + escapedValue));
   });
-  records = records.sort(function (a, b) {
-    var aValue = (get(a, key) || '').toString().toLowerCase();
-    var bValue = (get(b, key) || '').toString().toLowerCase();
-    var aPos = aValue.indexOf(value) === 0;
-    var bPos = bValue.indexOf(value) === 0;
-
+  records = records.sort((a, b) => {
+    const aValue = (get(a, key) || '').toString().toLowerCase();
+    const bValue = (get(b, key) || '').toString().toLowerCase();
+    const aPos = aValue.indexOf(value) === 0;
+    const bPos = bValue.indexOf(value) === 0;
     if (aPos && bPos || !aPos && !bPos) {
       return 0;
     }
-
     if (aPos && !bPos) {
       return -1;
     }
-
     return 1;
   });
   return records;
 };
-
-var filterByKeys = function filterByKeys(records, filters) {
-  Object.keys(filters).forEach(function (key) {
+const filterByKeys = (records, filters) => {
+  Object.keys(filters).forEach(key => {
     records = filterByKey(records, key, filters[key]);
   });
   return records;
 };
 
-var sortByKey = function sortByKey(records, key, dir) {
-  return records.sort(function (a, b) {
-    var aVal = get(a, key);
-
-    if (aVal === undefined || aVal === null) {
-      aVal = '';
+const sortByKey = (records, key, dir) => records.sort((a, b) => {
+  let aVal = get(a, key);
+  if (aVal === undefined || aVal === null) {
+    aVal = '';
+  }
+  let bVal = get(b, key);
+  if (bVal === undefined || bVal === null) {
+    bVal = '';
+  }
+  if (aVal === bVal) {
+    return 0;
+  }
+  if (aVal === '') {
+    return 1;
+  }
+  if (bVal === '') {
+    return -1;
+  }
+  if (typeof aVal === 'number' && typeof bVal === 'number') {
+    if (dir === 'asc') {
+      return aVal < bVal ? -1 : 1;
     }
-
-    var bVal = get(b, key);
-
-    if (bVal === undefined || bVal === null) {
-      bVal = '';
-    }
-
-    if (aVal === bVal) {
-      return 0;
-    }
-
-    if (aVal === '') {
-      return 1;
-    }
-
-    if (bVal === '') {
-      return -1;
-    }
-
-    if (typeof aVal === 'number' && typeof bVal === 'number') {
-      if (dir === 'asc') {
-        return aVal < bVal ? -1 : 1;
-      }
-
-      return aVal > bVal ? -1 : 1;
-    }
-
-    aVal = aVal.toString();
-    bVal = bVal.toString();
-    return dir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
-  });
-};
+    return aVal > bVal ? -1 : 1;
+  }
+  aVal = aVal.toString();
+  bVal = bVal.toString();
+  return dir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+});
 
 function IndexTable(_ref) {
-  var columns = _ref.columns,
-      defaultOptions = _ref.defaultOptions,
-      path = _ref.path,
-      title = _ref.title,
-      url = _ref.url;
-
-  var _useState = React.useState(null),
-      rows = _useState[0],
-      setRows = _useState[1];
-
-  var _useState2 = React.useState([]),
-      filteredRows = _useState2[0],
-      setFilteredRows = _useState2[1];
-
-  var _useState3 = React.useState(false),
-      rowsError = _useState3[0],
-      setRowsError = _useState3[1];
-
-  var _useState4 = React.useState('name'),
-      sortKey = _useState4[0],
-      setSortKey = _useState4[1];
-
-  var _useState5 = React.useState('asc'),
-      sortDir = _useState5[0],
-      setSortDir = _useState5[1];
-
-  var _useState6 = React.useState(function () {
-    var output = {};
-    columns.forEach(function (column) {
+  let {
+    columns,
+    defaultOptions,
+    path,
+    title,
+    url
+  } = _ref;
+  const [rows, setRows] = React.useState(null);
+  const [filteredRows, setFilteredRows] = React.useState([]);
+  const [rowsError, setRowsError] = React.useState(false);
+  const [sortKey, setSortKey] = React.useState('name');
+  const [sortDir, setSortDir] = React.useState('asc');
+  const [filters, setFilters] = React.useState(() => {
+    const output = {};
+    columns.forEach(column => {
       output[cleanKey(column.key)] = '';
     });
     return output;
-  }),
-      filters = _useState6[0],
-      setFilters = _useState6[1];
-
-  var api = formosa.Api.instance();
-  React.useEffect(function () {
+  });
+  const api = formosa.Api.instance();
+  React.useEffect(() => {
     if (Object.prototype.hasOwnProperty.call(defaultOptions, 'sortKey')) {
       setSortKey(defaultOptions.sortKey);
     }
-
     if (Object.prototype.hasOwnProperty.call(defaultOptions, 'sortDir')) {
       setSortDir(defaultOptions.sortDir);
     }
-
     if (Object.prototype.hasOwnProperty.call(defaultOptions, 'filters')) {
       setFilters(defaultOptions.filters);
     }
-
-    api(url, false)["catch"](function (response) {
+    api(url, false).catch(response => {
       setRowsError(errorMessageText(response));
       setRows(null);
       setFilteredRows([]);
-    }).then(function (response) {
+    }).then(response => {
       if (!response) {
         return;
       }
-
       setRows(response);
       setFilteredRows(response);
     });
   }, [url]);
-
-  var sort = function sort(e) {
-    var newSortKey = e.target.getAttribute('data-key');
-    var newSortDir;
-
+  const sort = e => {
+    const newSortKey = e.target.getAttribute('data-key');
+    let newSortDir;
     if (sortKey === newSortKey) {
       newSortDir = sortDir === 'asc' ? 'desc' : 'asc';
     } else {
       newSortDir = 'asc';
     }
-
     setSortKey(newSortKey);
     setSortDir(newSortDir);
     setRows(sortByKey(rows, newSortKey, newSortDir));
     setFilteredRows(sortByKey(filteredRows, newSortKey, newSortDir));
   };
-
-  var numRows = rows ? rows.length : 0;
-  var numResults = " (" + filteredRows.length.toLocaleString();
-
+  const numRows = rows ? rows.length : 0;
+  let numResults = " (" + filteredRows.length.toLocaleString();
   if (filteredRows.length !== numRows) {
     numResults += " of " + numRows.toLocaleString();
   }
-
   numResults += " result" + (numRows === 1 ? '' : 's') + ")";
-  columns = columns.map(function (column) {
+  columns = columns.map(column => {
     if (column.link) {
-      column.fn = function (row, value) {
-        return /*#__PURE__*/React__default.createElement(reactRouterDom.Link, {
-          className: "crudnick-link--table",
-          to: "/" + path + "/" + row.id
-        }, value);
-      };
+      column.fn = (row, value) => /*#__PURE__*/React__default.createElement(reactRouterDom.Link, {
+        className: "crudnick-link--table",
+        to: "/" + path + "/" + row.id
+      }, value);
     } else if (column.type === 'checkbox') {
-      column.fn = function (_row, value) {
-        return value ? /*#__PURE__*/React__default.createElement(SvgCheck, {
-          "aria-hidden": "true",
-          height: 16,
-          width: 16
-        }) : null;
-      };
-
+      column.fn = (_row, value) => value ? /*#__PURE__*/React__default.createElement(SvgCheck, {
+        "aria-hidden": "true",
+        height: 16,
+        width: 16
+      }) : null;
       column.size = 4;
     }
-
     return column;
   });
   return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(MetaTitle, {
@@ -1491,29 +1288,29 @@ function IndexTable(_ref) {
     to: "/" + path + "/add"
   }, "Add new")))), rowsError ? /*#__PURE__*/React__default.createElement(formosa.Alert, {
     type: "error"
-  }, rowsError) : /*#__PURE__*/React__default.createElement("table", null, /*#__PURE__*/React__default.createElement("thead", null, /*#__PURE__*/React__default.createElement("tr", null, columns.map(function (column) {
-    return /*#__PURE__*/React__default.createElement("th", _extends({
-      className: column.size ? 'crudnick-column--shrink' : null,
-      key: column.key,
-      scope: "col"
-    }, column.thAttributes), column.disableSort ? column.shortLabel || column.label : /*#__PURE__*/React__default.createElement("button", {
-      "aria-label": "Sort by " + column.label,
-      className: "formosa-button",
-      "data-key": column.sortKey || cleanKey(column.key),
-      disabled: rows === null,
-      onClick: sort,
-      type: "button"
-    }, column.shortLabel || column.label, sortKey === (column.sortKey || cleanKey(column.key)) ? /*#__PURE__*/React__default.createElement(SvgArrow, {
-      "aria-hidden": "true",
-      className: "crudnick-icon--caret " + (sortDir === 'desc' ? 'flip' : ''),
-      height: 12,
-      width: 12
-    }) : null));
-  })), /*#__PURE__*/React__default.createElement("tr", null, columns.map(function (_ref2) {
-    var key = _ref2.key,
-        disableSearch = _ref2.disableSearch,
-        label = _ref2.label,
-        size = _ref2.size;
+  }, rowsError) : /*#__PURE__*/React__default.createElement("table", null, /*#__PURE__*/React__default.createElement("thead", null, /*#__PURE__*/React__default.createElement("tr", null, columns.map(column => /*#__PURE__*/React__default.createElement("th", _extends({
+    className: column.size ? 'crudnick-column--shrink' : null,
+    key: column.key,
+    scope: "col"
+  }, column.thAttributes), column.disableSort ? column.shortLabel || column.label : /*#__PURE__*/React__default.createElement("button", {
+    "aria-label": "Sort by " + column.label,
+    className: "formosa-button",
+    "data-key": column.sortKey || cleanKey(column.key),
+    disabled: rows === null,
+    onClick: sort,
+    type: "button"
+  }, column.shortLabel || column.label, sortKey === (column.sortKey || cleanKey(column.key)) ? /*#__PURE__*/React__default.createElement(SvgArrow, {
+    "aria-hidden": "true",
+    className: "crudnick-icon--caret " + (sortDir === 'desc' ? 'flip' : ''),
+    height: 12,
+    width: 12
+  }) : null)))), /*#__PURE__*/React__default.createElement("tr", null, columns.map(_ref2 => {
+    let {
+      key,
+      disableSearch,
+      label,
+      size
+    } = _ref2;
     return /*#__PURE__*/React__default.createElement("td", {
       className: "formosa-input-wrapper--search",
       key: key
@@ -1521,13 +1318,13 @@ function IndexTable(_ref) {
       "aria-label": "Search " + label,
       className: "formosa-field__input",
       disabled: rows === null,
-      setValue: function setValue(newValue) {
-        var _extends2;
-
-        var newFilters = _extends({}, filters, (_extends2 = {}, _extends2[cleanKey(key)] = newValue, _extends2));
-
+      setValue: newValue => {
+        const newFilters = {
+          ...filters,
+          [cleanKey(key)]: newValue
+        };
         setFilters(newFilters);
-        var newRows = filterByKeys(rows, newFilters);
+        const newRows = filterByKeys(rows, newFilters);
         setFilteredRows(newRows);
       },
       size: size,
@@ -1539,18 +1336,18 @@ function IndexTable(_ref) {
   }, /*#__PURE__*/React__default.createElement("div", {
     className: "formosa-spinner",
     role: "status"
-  }, "Loading..."))) : filteredRows.map(function (row) {
-    return /*#__PURE__*/React__default.createElement("tr", {
-      key: row.id
-    }, columns.map(function (_ref3) {
-      var fn = _ref3.fn,
-          key = _ref3.key;
-      return /*#__PURE__*/React__default.createElement("td", {
-        className: "crudnick-cell--" + key,
-        key: key
-      }, fn ? fn(row, get(row, cleanKey(key)), key) : get(row, cleanKey(key)));
-    }));
-  }))));
+  }, "Loading..."))) : filteredRows.map(row => /*#__PURE__*/React__default.createElement("tr", {
+    key: row.id
+  }, columns.map(_ref3 => {
+    let {
+      fn,
+      key
+    } = _ref3;
+    return /*#__PURE__*/React__default.createElement("td", {
+      className: "crudnick-cell--" + key,
+      key: key
+    }, fn ? fn(row, get(row, cleanKey(key)), key) : get(row, cleanKey(key)));
+  }))))));
 }
 IndexTable.propTypes = {
   columns: PropTypes.array.isRequired,
@@ -1560,21 +1357,21 @@ IndexTable.propTypes = {
   url: PropTypes.string.isRequired
 };
 
-var Actions$1 = Actions;
-var AddForm$1 = AddForm;
-var App$1 = App;
-var Auth$1 = Auth;
-var EditForm$1 = EditForm;
-var Error$1 = Error;
-var errorMessageText$1 = errorMessageText;
-var ForgotPassword$1 = ForgotPassword;
-var IndexTable$1 = IndexTable;
-var Login$1 = Login;
-var MetaTitle$1 = MetaTitle;
-var MyForm$1 = MyForm;
-var Modal$1 = Modal;
-var Nav$1 = Nav;
-var ResetPassword$1 = ResetPassword;
+const Actions$1 = Actions;
+const AddForm$1 = AddForm;
+const App$1 = App;
+const Auth$1 = Auth;
+const EditForm$1 = EditForm;
+const Error$1 = Error;
+const errorMessageText$1 = errorMessageText;
+const ForgotPassword$1 = ForgotPassword;
+const IndexTable$1 = IndexTable;
+const Login$1 = Login;
+const MetaTitle$1 = MetaTitle;
+const MyForm$1 = MyForm;
+const Modal$1 = Modal;
+const Nav$1 = Nav;
+const ResetPassword$1 = ResetPassword;
 
 exports.Actions = Actions$1;
 exports.AddForm = AddForm$1;

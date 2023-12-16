@@ -12,6 +12,7 @@
 
 	.show-nav.animate-nav & {
 		box-shadow: 0 0 0 100vh rgba($crudnick-black, .4);
+		display: block;
 	}
 }
 
@@ -45,7 +46,7 @@
 		color: $crudnick-nav-active-color;
 	}
 
-	@media (min-width: $crudnick-nav-breakpoint) {
+	@media (width >= $crudnick-nav-breakpoint) {
 		.crudnick-list__item {
 			flex: 1 1 auto;
 		}
@@ -84,7 +85,7 @@
 		transform: translateX(0);
 	}
 
-	@media (min-width: $crudnick-nav-breakpoint) {
+	@media (width >= $crudnick-nav-breakpoint) {
 		display: flex;
 		flex-direction: row;
 		min-width: none;
@@ -121,7 +122,7 @@
 		visibility: hidden;
 	}
 
-	@media (min-width: $crudnick-nav-breakpoint) {
+	@media (width >= $crudnick-nav-breakpoint) {
 		display: none;
 	}
 }

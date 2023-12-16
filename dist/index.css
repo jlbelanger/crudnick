@@ -386,15 +386,12 @@ input.formosa-field__input--checkbox.formosa-field__input {
 .formosa-field__input--file {
   background-color: transparent;
   border: 0;
-  bottom: 0;
   cursor: pointer;
   font-size: 0;
-  left: 0;
+  inset: 0;
   opacity: 0;
   padding: 0;
   position: absolute;
-  right: 0;
-  top: 0;
 }
 .formosa-field--disabled .formosa-field__input--file {
   cursor: default;
@@ -465,7 +462,7 @@ input.formosa-field__input--checkbox.formosa-field__input {
   display: inline-block;
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .formosa-responsive {
     display: table;
     width: 100%;
@@ -726,12 +723,9 @@ input.formosa-field__input--search {
 }
 
 .formosa-spinner--fullscreen {
-  bottom: 0;
+  inset: 0;
   justify-content: center;
-  left: 0;
   position: fixed;
-  right: 0;
-  top: 0;
   z-index: 9999;
 }
 .formosa-spinner--fullscreen::before {
@@ -989,10 +983,6 @@ textarea[size] {
   color: #666;
 }
 
-:-ms-input-placeholder {
-  color: #666;
-}
-
 ::placeholder {
   color: #666;
 }
@@ -1064,14 +1054,11 @@ a:hover, a:active, a:focus {
   align-items: center;
   background: transparent;
   border: 0;
-  bottom: 0;
   display: flex;
+  inset: 0;
   justify-content: center;
-  left: 0;
   padding: 0;
   position: fixed;
-  right: 0;
-  top: 0;
   z-index: 9999;
 }
 
@@ -1114,6 +1101,7 @@ a:hover, a:active, a:focus {
 }
 .show-nav.animate-nav #crudnick-nav__dialog {
   box-shadow: 0 0 0 100vh rgba(0, 0, 0, 0.4);
+  display: block;
 }
 
 #crudnick-nav__dialog::backdrop {
@@ -1141,7 +1129,7 @@ a:hover, a:active, a:focus {
   background-color: #020408;
   color: #f2f6fc;
 }
-@media (min-width: 1025px) {
+@media (width >= 1025px) {
   #crudnick-nav .crudnick-list__item {
     flex: 1 1 auto;
   }
@@ -1176,7 +1164,7 @@ a:hover, a:active, a:focus {
 .show-nav.animate-nav #crudnick-nav__list {
   transform: translateX(0);
 }
-@media (min-width: 1025px) {
+@media (width >= 1025px) {
   #crudnick-nav__list {
     display: flex;
     flex-direction: row;
@@ -1210,7 +1198,7 @@ a:hover, a:active, a:focus {
 .show-nav #crudnick-menu-show-button {
   visibility: hidden;
 }
-@media (min-width: 1025px) {
+@media (width >= 1025px) {
   #crudnick-menu-show-button {
     display: none;
   }
