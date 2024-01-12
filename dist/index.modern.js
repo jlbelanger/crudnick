@@ -1354,21 +1354,5 @@ IndexTable.propTypes = {
   url: PropTypes.string.isRequired
 };
 
-const Actions$1 = Actions;
-const AddForm$1 = AddForm;
-const App$1 = App;
-const Auth$1 = Auth;
-const EditForm$1 = EditForm;
-const Error$1 = Error;
-const errorMessageText$1 = errorMessageText;
-const ForgotPassword$1 = ForgotPassword;
-const IndexTable$1 = IndexTable;
-const Login$1 = Login;
-const MetaTitle$1 = MetaTitle;
-const MyForm$1 = MyForm;
-const Modal$1 = Modal;
-const Nav$1 = Nav;
-const ResetPassword$1 = ResetPassword;
-
-export { Actions$1 as Actions, AddForm$1 as AddForm, App$1 as App, Auth$1 as Auth, EditForm$1 as EditForm, Error$1 as Error, ForgotPassword$1 as ForgotPassword, IndexTable$1 as IndexTable, Login$1 as Login, MetaTitle$1 as MetaTitle, Modal$1 as Modal, MyForm$1 as MyForm, Nav$1 as Nav, ResetPassword$1 as ResetPassword, errorMessageText$1 as errorMessageText };
+export { Actions, AddForm, App, Auth, EditForm, Error, errorMessageText as ErrorMessageText, ForgotPassword, IndexTable, Login, MetaTitle, Modal, MyForm, Nav, ResetPassword };
 //# sourceMappingURL=index.modern.js.map
