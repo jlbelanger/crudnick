@@ -1354,5 +1354,5 @@ IndexTable.propTypes = {
   url: PropTypes.string.isRequired
 };
 
-export { Actions, AddForm, App, Auth, EditForm, Error, errorMessageText as ErrorMessageText, ForgotPassword, IndexTable, Login, MetaTitle, Modal, MyForm, Nav, ResetPassword };
+export { Actions, AddForm, App, Auth, EditForm, Error, ForgotPassword, IndexTable, Login, MetaTitle, Modal, MyForm, Nav, ResetPassword, errorMessageText };
 //# sourceMappingURL=index.modern.js.map
