@@ -1,7 +1,9 @@
+@use '../utilities/variables';
+
 table {
 	border-spacing: 0;
-	margin: 0 #{-1 * $crudnick-table-cell-padding};
-	width: calc(100% + #{$crudnick-table-cell-padding});
+	margin: 0 calc(variables.$crudnick-table-cell-padding * -1);
+	width: calc(100% + #{variables.$crudnick-table-cell-padding});
 }
 
 th {
@@ -10,14 +12,14 @@ th {
 
 th,
 td {
-	border-color: $crudnick-darker;
+	border-color: variables.$crudnick-darker;
 	border-style: solid;
 	border-width: 0 0 1px;
-	padding: $crudnick-table-cell-padding;
+	padding: variables.$crudnick-table-cell-padding;
 
 	tfoot &,
 	thead & {
-		border-color: $crudnick-primary;
+		border-color: variables.$crudnick-primary;
 	}
 
 	tfoot & {
@@ -35,25 +37,29 @@ tbody > tr:last-of-type {
 
 thead {
 	th {
-		padding: 0 $crudnick-table-cell-padding $crudnick-table-cell-padding;
+		padding: 0 variables.$crudnick-table-cell-padding variables.$crudnick-table-cell-padding;
 	}
 
 	.formosa-button {
 		background-color: transparent;
-		background-size: $crudnick-table-arrow-width;
+		background-size: variables.$crudnick-table-arrow-width;
 		display: flex;
 		font-weight: bold;
 		justify-content: space-between;
-		margin: #{-1 * $crudnick-padding};
-		padding: $crudnick-table-cell-padding #{$crudnick-padding + ($crudnick-table-arrow-width * 2)} $crudnick-table-cell-padding $crudnick-padding;
+		margin: calc(variables.$crudnick-padding * -1);
+		padding:
+			variables.$crudnick-table-cell-padding
+			calc(variables.$crudnick-padding + (variables.$crudnick-table-arrow-width * 2))
+			variables.$crudnick-table-cell-padding
+			variables.$crudnick-padding;
 		position: relative;
 		text-align: left;
-		width: calc(100% + #{$crudnick-padding * 2});
+		width: calc(100% + #{variables.$crudnick-padding * 2});
 
 		svg {
-			margin-top: #{($crudnick-table-arrow-width * .5) * -1};
+			margin-top: calc((variables.$crudnick-table-arrow-width * .5) * -1);
 			position: absolute;
-			right: $crudnick-table-cell-padding;
+			right: variables.$crudnick-table-cell-padding;
 			top: 50%;
 		}
 

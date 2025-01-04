@@ -1,9 +1,11 @@
+@use '../utilities/variables';
+
 .crudnick-header {
 	align-items: center;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	margin: 0 0 $crudnick-margin;
+	margin: 0 0 variables.$crudnick-margin;
 	max-width: 100%;
 
 	h1 {

@@ -2,18 +2,18 @@ import React, { useEffect, useRef } from 'react'; // eslint-disable-line import/
 import PropTypes from 'prop-types';
 
 export default function Modal({
-	cancelable,
-	cancelButtonAttributes,
-	cancelButtonClass,
-	cancelButtonText,
-	children,
+	cancelable = true,
+	cancelButtonAttributes = null,
+	cancelButtonClass = 'crudnick-button--secondary',
+	cancelButtonText = 'Cancel',
+	children = null,
 	event,
-	okButtonAttributes,
-	okButtonClass,
-	okButtonText,
-	onClickCancel,
-	onClickOk,
-	text,
+	okButtonAttributes = null,
+	okButtonClass = '',
+	okButtonText = 'OK',
+	onClickCancel = null,
+	onClickOk = null,
+	text = null,
 }) {
 	const dialogRef = useRef(null);
 
@@ -100,18 +100,4 @@ Modal.propTypes = {
 	onClickCancel: PropTypes.func,
 	onClickOk: PropTypes.func,
 	text: PropTypes.string,
-};
-
-Modal.defaultProps = {
-	cancelable: true,
-	cancelButtonAttributes: null,
-	cancelButtonClass: 'crudnick-button--secondary',
-	cancelButtonText: 'Cancel',
-	children: null,
-	okButtonAttributes: null,
-	okButtonClass: '',
-	okButtonText: 'OK',
-	onClickCancel: null,
-	onClickOk: null,
-	text: null,
 };

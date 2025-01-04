@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $crudnick-primary: #259 !default;
 $crudnick-white: #fff !default;
 $crudnick-gray: #666 !default;
@@ -5,15 +7,15 @@ $crudnick-black: #000 !default;
 
 $crudnick-dark-mode: 1 !default;
 
-$crudnick-lightest: scale-color($crudnick-primary, $lightness: 95% * $crudnick-dark-mode) !default;
-$crudnick-lighter: scale-color($crudnick-primary, $lightness: 70% * $crudnick-dark-mode) !default;
-$crudnick-light: scale-color($crudnick-primary, $lightness: 50% * $crudnick-dark-mode) !default;
-$crudnick-lightish: scale-color($crudnick-primary, $lightness: 30% * $crudnick-dark-mode) !default;
+$crudnick-lightest: color.scale($crudnick-primary, $lightness: 95% * $crudnick-dark-mode) !default;
+$crudnick-lighter: color.scale($crudnick-primary, $lightness: 70% * $crudnick-dark-mode) !default;
+$crudnick-light: color.scale($crudnick-primary, $lightness: 50% * $crudnick-dark-mode) !default;
+$crudnick-lightish: color.scale($crudnick-primary, $lightness: 30% * $crudnick-dark-mode) !default;
 
-$crudnick-dark: scale-color($crudnick-primary, $lightness: -50% * $crudnick-dark-mode) !default;
-$crudnick-darker: scale-color($crudnick-primary, $lightness: -70% * $crudnick-dark-mode) !default;
-$crudnick-darkerer: scale-color($crudnick-primary, $lightness: -85% * $crudnick-dark-mode) !default;
-$crudnick-darkest: scale-color($crudnick-primary, $lightness: -95% * $crudnick-dark-mode) !default;
+$crudnick-dark: color.scale($crudnick-primary, $lightness: -50% * $crudnick-dark-mode) !default;
+$crudnick-darker: color.scale($crudnick-primary, $lightness: -70% * $crudnick-dark-mode) !default;
+$crudnick-darkerer: color.scale($crudnick-primary, $lightness: -85% * $crudnick-dark-mode) !default;
+$crudnick-darkest: color.scale($crudnick-primary, $lightness: -95% * $crudnick-dark-mode) !default;
 
 $crudnick-font-size: 18px !default;
 $crudnick-margin: 24px !default;
@@ -29,7 +31,7 @@ $crudnick-body-color: $crudnick-lightest !default;
 $crudnick-button-height: 44px !default;
 
 $crudnick-button-secondary-background-color: $crudnick-darker !default;
-$crudnick-button-secondary-background-color-hover: scale-color($crudnick-button-secondary-background-color, $lightness: -15%) !default;
+$crudnick-button-secondary-background-color-hover: color.scale($crudnick-button-secondary-background-color, $lightness: -15%) !default;
 $crudnick-button-secondary-border-color: transparent !default;
 $crudnick-button-secondary-color: $crudnick-lighter !default;
 
@@ -89,23 +91,7 @@ $crudnick-skip-width: 200px !default;
 
 $crudnick-table-arrow-width: 12px !default;
 $crudnick-table-cell-padding: $crudnick-margin * .5 !default;
-$crudnick-table-link-background-color-hover: scale-color($crudnick-darkest, $lightness: 5%) !default;
+$crudnick-table-link-background-color-hover: color.scale($crudnick-darkest, $lightness: 5%) !default;
 
 $crudnick-textarea-large-height: 60vh;
 $crudnick-textarea-medium-height: 30vh;
-
-$formosa-dark-mode: true !default;
-$formosa-button-link-color: $crudnick-light !default;
-$formosa-checkbox-padding: 20px !default;
-$formosa-checkbox-size: 43px !default;
-$formosa-focus-border-width: 4px !default;
-$formosa-input-background-color: $crudnick-input-background-color !default;
-$formosa-input-border-width: 0 !default;
-$formosa-input-font-family: $crudnick-font-family !default;
-$formosa-input-padding: 8px !default;
-$formosa-note-opacity: 1 !default;
-$formosa-primary-background-color: $crudnick-primary !default;
-$formosa-primary-color: $crudnick-white !default;
-$formosa-radio-size: 24px !default;
-$formosa-spinner-color: transparent !default;
-$formosa-spinner-color-alternate: $crudnick-primary !default;

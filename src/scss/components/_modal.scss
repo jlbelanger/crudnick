@@ -1,3 +1,5 @@
+@use '../utilities/variables';
+
 .crudnick-modal-open {
 	overflow: hidden;
 }
@@ -11,18 +13,18 @@
 	justify-content: center;
 	padding: 0;
 	position: fixed;
-	z-index: $crudnick-modal-zindex;
+	z-index: variables.$crudnick-modal-zindex;
 }
 
 .crudnick-modal::backdrop {
-	background-color: $crudnick-modal-container-background-color;
+	background-color: variables.$crudnick-modal-container-background-color;
 }
 
 .crudnick-modal__box {
-	background-color: $crudnick-modal-background-color;
-	color: $crudnick-modal-text-color;
-	max-width: $crudnick-modal-max-width;
-	padding: $crudnick-modal-padding;
+	background-color: variables.$crudnick-modal-background-color;
+	color: variables.$crudnick-modal-text-color;
+	max-width: variables.$crudnick-modal-max-width;
+	padding: variables.$crudnick-modal-padding;
 	width: 100%;
 }
 
@@ -34,9 +36,9 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	margin: $crudnick-modal-button-margin-top auto 0;
+	margin: variables.$crudnick-modal-button-margin-top auto 0;
 
 	button + button {
-		margin-left: $crudnick-modal-button-margin-side;
+		margin-left: variables.$crudnick-modal-button-margin-side;
 	}
 }

@@ -11,23 +11,23 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 
 export default function EditForm({
-	actions,
+	actions = null,
 	apiPath,
 	component,
-	componentProps,
-	extra,
-	filterBody,
-	filterValues,
-	name,
+	componentProps = {},
+	extra = null,
+	filterBody = null,
+	filterValues = null,
+	name = null,
 	path,
-	relationshipNames,
-	saveButtonText,
-	showDelete,
-	showSave,
+	relationshipNames = [],
+	saveButtonText = 'Save',
+	showDelete = true,
+	showSave = true,
 	singular,
-	subpages,
-	titlePrefixText,
-	transform,
+	subpages = [],
+	titlePrefixText = 'Edit',
+	transform = null,
 	url,
 	...otherProps
 }) {
@@ -142,20 +142,4 @@ EditForm.propTypes = {
 	titlePrefixText: PropTypes.string,
 	transform: PropTypes.func,
 	url: PropTypes.string.isRequired,
-};
-
-EditForm.defaultProps = {
-	actions: null,
-	componentProps: {},
-	extra: null,
-	filterBody: null,
-	filterValues: null,
-	name: null,
-	relationshipNames: [],
-	saveButtonText: 'Save',
-	showDelete: true,
-	showSave: true,
-	subpages: [],
-	titlePrefixText: 'Edit',
-	transform: null,
 };

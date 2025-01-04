@@ -1,5 +1,7 @@
+@use '../utilities/variables';
+
 a {
-	color: $crudnick-link-color;
+	color: variables.$crudnick-link-color;
 	text-decoration: underline;
 
 	&:hover,
@@ -11,12 +13,12 @@ a {
 
 .crudnick-link--table {
 	display: block;
-	margin: #{-1 * $crudnick-table-cell-padding};
-	padding: $crudnick-table-cell-padding;
+	margin: calc(variables.$crudnick-table-cell-padding * -1);
+	padding: variables.$crudnick-table-cell-padding;
 
 	&:hover,
 	&:active,
 	&:focus {
-		background-color: $crudnick-table-link-background-color-hover;
+		background-color: variables.$crudnick-table-link-background-color-hover;
 	}
 }

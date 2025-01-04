@@ -8,16 +8,16 @@ import PropTypes from 'prop-types';
 
 export default function Actions({
 	apiPath,
-	children,
+	children = null,
 	currentPage,
 	path,
-	row,
-	saveButtonText,
-	setActionError,
-	showDelete,
-	showSave,
+	row = null,
+	saveButtonText = 'Save',
+	setActionError = null,
+	showDelete = true,
+	showSave = true,
 	singular,
-	subpages,
+	subpages = [],
 }) {
 	const history = useHistory();
 	const { addToast, disableWarningPrompt, enableWarningPrompt } = useContext(FormosaContext);
@@ -149,14 +149,4 @@ Actions.propTypes = {
 	showSave: PropTypes.bool,
 	singular: PropTypes.string.isRequired,
 	subpages: PropTypes.array,
-};
-
-Actions.defaultProps = {
-	children: null,
-	row: null,
-	saveButtonText: 'Save',
-	setActionError: null,
-	showDelete: true,
-	showSave: true,
-	subpages: [],
 };

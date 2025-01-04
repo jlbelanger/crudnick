@@ -1,19 +1,35 @@
-@import 'scss/utilities/variables';
-@import './node_modules/@jlbelanger/formosa/src/style';
-@import 'scss/components/add-another';
-@import 'scss/components/auth';
-@import 'scss/components/autocomplete';
-@import 'scss/components/button';
-@import 'scss/components/formosa';
-@import 'scss/components/header';
-@import 'scss/components/heading';
-@import 'scss/components/input';
-@import 'scss/components/layout';
-@import 'scss/components/link';
-@import 'scss/components/list';
-@import 'scss/components/modal';
-@import 'scss/components/nav';
-@import 'scss/components/paragraph';
-@import 'scss/components/skip';
-@import 'scss/components/svg';
-@import 'scss/components/table';
+@use 'scss/utilities/variables' as *;
+@use '~@jlbelanger/formosa/src/scss/utilities/variables' with (
+	$formosa-dark-mode: true,
+	$formosa-checkbox-padding: 20px,
+	$formosa-checkbox-size: 43px,
+	$formosa-focus-border-width: 4px,
+	$formosa-input-background-color: $crudnick-input-background-color,
+	$formosa-input-border-width: 0px,
+	$formosa-input-font-family: $crudnick-font-family,
+	$formosa-input-padding: 8px,
+	$formosa-note-opacity: 1,
+	$formosa-primary-background-color: $crudnick-primary,
+	$formosa-primary-color: $crudnick-white,
+	$formosa-radio-size: 24px,
+	$formosa-spinner-color: transparent,
+	$formosa-spinner-color-alternate: $crudnick-primary,
+);
+@use '~@jlbelanger/formosa/src/style';
+@use 'scss/components/add-another';
+@use 'scss/components/auth';
+@use 'scss/components/autocomplete';
+@use 'scss/components/button';
+@use 'scss/components/formosa-overrides';
+@use 'scss/components/header';
+@use 'scss/components/heading';
+@use 'scss/components/input';
+@use 'scss/components/layout';
+@use 'scss/components/link';
+@use 'scss/components/list';
+@use 'scss/components/modal';
+@use 'scss/components/nav';
+@use 'scss/components/paragraph';
+@use 'scss/components/skip';
+@use 'scss/components/svg';
+@use 'scss/components/table';

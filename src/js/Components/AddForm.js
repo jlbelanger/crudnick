@@ -8,20 +8,20 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 
 export default function AddForm({
-	addAnotherText,
+	addAnotherText = 'Add another',
 	apiPath,
 	component,
-	componentProps,
-	defaultRow,
-	extra,
-	filterBody,
-	filterValues,
+	componentProps = {},
+	defaultRow = {},
+	extra = null,
+	filterBody = null,
+	filterValues = null,
 	path,
-	relationshipNames,
-	saveButtonText,
-	showAddAnother,
+	relationshipNames = [],
+	saveButtonText = 'Save',
+	showAddAnother = true,
 	singular,
-	titlePrefixText,
+	titlePrefixText = 'Add',
 	...otherProps
 }) {
 	const [row, setRow] = useState(defaultRow);
@@ -126,17 +126,4 @@ AddForm.propTypes = {
 	showAddAnother: PropTypes.bool,
 	singular: PropTypes.string.isRequired,
 	titlePrefixText: PropTypes.string,
-};
-
-AddForm.defaultProps = {
-	addAnotherText: 'Add another',
-	componentProps: {},
-	defaultRow: {},
-	extra: null,
-	filterBody: null,
-	filterValues: null,
-	relationshipNames: [],
-	saveButtonText: 'Save',
-	showAddAnother: true,
-	titlePrefixText: 'Add',
 };

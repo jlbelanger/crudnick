@@ -69,34 +69,29 @@ const errorMessageText = function (response, logout) {
 };
 
 function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
+  return _extends = Object.assign ? Object.assign.bind() : function (n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
-    return target;
-  };
-  return _extends.apply(this, arguments);
+    return n;
+  }, _extends.apply(null, arguments);
 }
 
 function Modal(_ref) {
   let {
-    cancelable,
-    cancelButtonAttributes,
-    cancelButtonClass,
-    cancelButtonText,
-    children,
+    cancelable = true,
+    cancelButtonAttributes = null,
+    cancelButtonClass = 'crudnick-button--secondary',
+    cancelButtonText = 'Cancel',
+    children = null,
     event,
-    okButtonAttributes,
-    okButtonClass,
-    okButtonText,
-    onClickCancel,
-    onClickOk,
-    text
+    okButtonAttributes = null,
+    okButtonClass = '',
+    okButtonText = 'OK',
+    onClickCancel = null,
+    onClickOk = null,
+    text = null
   } = _ref;
   const dialogRef = React.useRef(null);
   const onKeydown = e => {
@@ -167,33 +162,20 @@ Modal.propTypes = {
   onClickOk: PropTypes.func,
   text: PropTypes.string
 };
-Modal.defaultProps = {
-  cancelable: true,
-  cancelButtonAttributes: null,
-  cancelButtonClass: 'crudnick-button--secondary',
-  cancelButtonText: 'Cancel',
-  children: null,
-  okButtonAttributes: null,
-  okButtonClass: '',
-  okButtonText: 'OK',
-  onClickCancel: null,
-  onClickOk: null,
-  text: null
-};
 
 function Actions(_ref) {
   let {
     apiPath,
-    children,
+    children = null,
     currentPage,
     path,
-    row,
-    saveButtonText,
-    setActionError,
-    showDelete,
-    showSave,
+    row = null,
+    saveButtonText = 'Save',
+    setActionError = null,
+    showDelete = true,
+    showSave = true,
     singular,
-    subpages
+    subpages = []
   } = _ref;
   const history = reactRouterDom.useHistory();
   const {
@@ -292,19 +274,10 @@ Actions.propTypes = {
   singular: PropTypes.string.isRequired,
   subpages: PropTypes.array
 };
-Actions.defaultProps = {
-  children: null,
-  row: null,
-  saveButtonText: 'Save',
-  setActionError: null,
-  showDelete: true,
-  showSave: true,
-  subpages: []
-};
 
 function MetaTitle(_ref) {
   let {
-    title
+    title = ''
   } = _ref;
   React.useEffect(() => {
     let metaTitle = title;
@@ -320,9 +293,6 @@ function MetaTitle(_ref) {
 }
 MetaTitle.propTypes = {
   title: PropTypes.string
-};
-MetaTitle.defaultProps = {
-  title: ''
 };
 
 function MyFormPrompt() {
@@ -351,20 +321,20 @@ MyForm.propTypes = {
 
 function AddForm(_ref) {
   let {
-    addAnotherText,
+    addAnotherText = 'Add another',
     apiPath,
     component,
-    componentProps,
-    defaultRow,
-    extra,
-    filterBody,
-    filterValues,
+    componentProps = {},
+    defaultRow = {},
+    extra = null,
+    filterBody = null,
+    filterValues = null,
     path,
-    relationshipNames,
-    saveButtonText,
-    showAddAnother,
+    relationshipNames = [],
+    saveButtonText = 'Save',
+    showAddAnother = true,
     singular,
-    titlePrefixText,
+    titlePrefixText = 'Add',
     ...otherProps
   } = _ref;
   const [row, setRow] = React.useState(defaultRow);
@@ -447,33 +417,16 @@ AddForm.propTypes = {
   singular: PropTypes.string.isRequired,
   titlePrefixText: PropTypes.string
 };
-AddForm.defaultProps = {
-  addAnotherText: 'Add another',
-  componentProps: {},
-  defaultRow: {},
-  extra: null,
-  filterBody: null,
-  filterValues: null,
-  relationshipNames: [],
-  saveButtonText: 'Save',
-  showAddAnother: true,
-  titlePrefixText: 'Add'
-};
 
 var _path;
 function _extends$1() {
-  _extends$1 = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
+  return _extends$1 = Object.assign ? Object.assign.bind() : function (n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
-    return target;
-  };
-  return _extends$1.apply(this, arguments);
+    return n;
+  }, _extends$1.apply(null, arguments);
 }
 function SvgMenu(props) {
   return /*#__PURE__*/React.createElement("svg", _extends$1({
@@ -486,18 +439,13 @@ function SvgMenu(props) {
 
 var _path$1;
 function _extends$2() {
-  _extends$2 = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
+  return _extends$2 = Object.assign ? Object.assign.bind() : function (n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
-    return target;
-  };
-  return _extends$2.apply(this, arguments);
+    return n;
+  }, _extends$2.apply(null, arguments);
 }
 function SvgX(props) {
   return /*#__PURE__*/React.createElement("svg", _extends$2({
@@ -680,11 +628,11 @@ function ForgotPassword() {
 
 function LoginForm(_ref) {
   let {
-    message,
+    message = null,
     row,
     setMessage,
     setShowVerificationButton,
-    showVerificationButton
+    showVerificationButton = false
   } = _ref;
   const {
     clearAlert
@@ -750,10 +698,6 @@ LoginForm.propTypes = {
   setMessage: PropTypes.func.isRequired,
   setShowVerificationButton: PropTypes.func.isRequired,
   showVerificationButton: PropTypes.bool
-};
-LoginForm.defaultProps = {
-  message: null,
-  showVerificationButton: false
 };
 
 function Login() {
@@ -890,10 +834,10 @@ function Routes() {
 
 function App(_ref) {
   let {
-    articleProps,
+    articleProps = null,
     children,
     nav,
-    routerAttributes
+    routerAttributes = null
   } = _ref;
   if (Auth.isLoggedIn() && !formosa.Api.getToken()) {
     formosa.Api.setToken(Auth.token());
@@ -927,10 +871,6 @@ App.propTypes = {
   nav: PropTypes.array.isRequired,
   routerAttributes: PropTypes.object
 };
-App.defaultProps = {
-  articleProps: null,
-  routerAttributes: null
-};
 
 function Error(_ref) {
   let {
@@ -956,23 +896,23 @@ Error.propTypes = {
 
 function EditForm(_ref) {
   let {
-    actions,
+    actions = null,
     apiPath,
     component,
-    componentProps,
-    extra,
-    filterBody,
-    filterValues,
-    name,
+    componentProps = {},
+    extra = null,
+    filterBody = null,
+    filterValues = null,
+    name = null,
     path,
-    relationshipNames,
-    saveButtonText,
-    showDelete,
-    showSave,
+    relationshipNames = [],
+    saveButtonText = 'Save',
+    showDelete = true,
+    showSave = true,
     singular,
-    subpages,
-    titlePrefixText,
-    transform,
+    subpages = [],
+    titlePrefixText = 'Edit',
+    transform = null,
     url,
     ...otherProps
   } = _ref;
@@ -1069,36 +1009,16 @@ EditForm.propTypes = {
   transform: PropTypes.func,
   url: PropTypes.string.isRequired
 };
-EditForm.defaultProps = {
-  actions: null,
-  componentProps: {},
-  extra: null,
-  filterBody: null,
-  filterValues: null,
-  name: null,
-  relationshipNames: [],
-  saveButtonText: 'Save',
-  showDelete: true,
-  showSave: true,
-  subpages: [],
-  titlePrefixText: 'Edit',
-  transform: null
-};
 
 var _path$2;
 function _extends$3() {
-  _extends$3 = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
+  return _extends$3 = Object.assign ? Object.assign.bind() : function (n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
-    return target;
-  };
-  return _extends$3.apply(this, arguments);
+    return n;
+  }, _extends$3.apply(null, arguments);
 }
 function SvgArrow(props) {
   return /*#__PURE__*/React.createElement("svg", _extends$3({
@@ -1111,18 +1031,13 @@ function SvgArrow(props) {
 
 var _path$3;
 function _extends$4() {
-  _extends$4 = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
+  return _extends$4 = Object.assign ? Object.assign.bind() : function (n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
-    return target;
-  };
-  return _extends$4.apply(this, arguments);
+    return n;
+  }, _extends$4.apply(null, arguments);
 }
 function SvgCheck(props) {
   return /*#__PURE__*/React.createElement("svg", _extends$4({

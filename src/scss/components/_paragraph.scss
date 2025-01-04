@@ -1,3 +1,5 @@
+@use '../utilities/variables';
+
 p {
-	margin: 0 0 $crudnick-margin;
+	margin: 0 0 variables.$crudnick-margin;
 }

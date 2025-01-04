@@ -7,10 +7,10 @@ import React from 'react'; // eslint-disable-line import/no-unresolved
 import Routes from './Routes';
 
 export default function App({
-	articleProps,
+	articleProps = null,
 	children,
 	nav,
-	routerAttributes,
+	routerAttributes = null,
 }) {
 	if (Auth.isLoggedIn() && !Api.getToken()) {
 		Api.setToken(Auth.token());
@@ -50,9 +50,4 @@ App.propTypes = {
 	children: PropTypes.node.isRequired,
 	nav: PropTypes.array.isRequired,
 	routerAttributes: PropTypes.object,
-};
-
-App.defaultProps = {
-	articleProps: null,
-	routerAttributes: null,
 };

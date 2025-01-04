@@ -1,11 +1,13 @@
+@use '../utilities/variables';
+
 h1 {
 	margin: 0;
 
 	small {
-		color: $crudnick-heading-small-color;
-		font-size: $crudnick-heading-small-font-size;
-		font-weight: $crudnick-heading-small-font-weight;
-		margin: $crudnick-heading-small-margin;
+		color: variables.$crudnick-heading-small-color;
+		font-size: variables.$crudnick-heading-small-font-size;
+		font-weight: variables.$crudnick-heading-small-font-weight;
+		margin: variables.$crudnick-heading-small-margin;
 	}
 }
 
@@ -14,5 +16,5 @@ h3,
 h4,
 h5,
 h6 {
-	margin: $crudnick-heading-margin;
+	margin: variables.$crudnick-heading-margin;
 }

@@ -1,3 +1,8 @@
+/* stylelint-disable-next-line @stylistic/max-line-length */
+/* Ensure height is even. */
+.formosa-field--disabled {
+  /* Undo iOS Safari styles. */
+}
 .formosa-field--disabled > .formosa-input-wrapper {
   opacity: 0.5;
 }
@@ -14,8 +19,8 @@
 .formosa-field__input--select,
 .formosa-field__input--textarea,
 .formosa-file-input-wrapper {
-  background-color: #0a1a2e;
-  border: 0 solid #555;
+  background-color: rgb(10.2, 25.5, 45.9);
+  border: 0px solid #555;
   border-radius: 0;
   color: #fff;
   font-family: "Helvetica Neue", helvetica, arial, sans-serif;
@@ -65,7 +70,7 @@
 .formosa-field__input--textarea {
   -webkit-appearance: none;
      -moz-appearance: none;
-          appearance: none;
+          appearance: none; /* So focus style works on iOS. */
 }
 
 .formosa-field__input:not([size]) {
@@ -98,8 +103,8 @@ h1 + .formosa-alert {
 }
 
 .formosa-autocomplete {
-  background-color: #0a1a2e;
-  border: 0 solid #555;
+  background-color: rgb(10.2, 25.5, 45.9);
+  border: 0px solid #555;
   border-radius: 0;
   display: flex;
   min-height: 42px;
@@ -111,15 +116,15 @@ h1 + .formosa-alert {
 }
 
 .formosa-autocomplete__options {
-  background-color: #122e53;
-  left: 0;
+  background-color: rgb(18.4527272727, 46.1318181818, 83.0372727273);
+  left: 0px;
   list-style: none;
   margin: 0;
   max-height: 50vh;
   overflow: auto;
   padding: 0;
   position: absolute;
-  right: 0;
+  right: 0px;
   top: 100%;
   z-index: 9996;
 }
@@ -144,11 +149,11 @@ input.formosa-autocomplete__input.formosa-field__input {
 }
 
 .formosa-autocomplete__option + .formosa-autocomplete__option {
-  border-top: 1px solid #1e4a85;
+  border-top: 1px solid rgb(29.5939090909, 73.9847727273, 133.1725909091);
 }
 
 .formosa-autocomplete__option--highlighted .formosa-autocomplete__option__button {
-  background-color: #1f4d8b;
+  background-color: rgb(30.8318181818, 77.0795454545, 138.7431818182);
 }
 
 .formosa-autocomplete__option__button {
@@ -184,7 +189,7 @@ input.formosa-autocomplete__input.formosa-field__input {
 }
 
 .formosa-autocomplete__value {
-  background-color: #122e53;
+  background-color: rgb(18.4527272727, 46.1318181818, 83.0372727273);
   height: 34px;
   line-height: 34px;
   margin: 4px;
@@ -249,14 +254,14 @@ input.formosa-autocomplete__input.formosa-field__input {
 }
 
 .formosa-autocomplete__clear {
-  background-color: #0a1a2e;
+  background-color: rgb(10.2, 25.5, 45.9);
   height: 42px;
   width: 42px;
 }
 
 .formosa-button {
   background-color: #259;
-  border: 0 solid #259;
+  border: 0px solid #259;
   border-radius: 0;
   color: #fff;
   cursor: pointer;
@@ -267,7 +272,7 @@ input.formosa-autocomplete__input.formosa-field__input {
   padding: 8px 12px;
 }
 .formosa-button:hover, .formosa-button:active, .formosa-button:focus {
-  background-color: #1d4882;
+  background-color: rgb(28.9, 72.25, 130.05);
 }
 .formosa-button[disabled] {
   cursor: default;
@@ -285,7 +290,7 @@ input.formosa-autocomplete__input.formosa-field__input {
   color: #000;
 }
 .formosa-button--danger:hover, .formosa-button--danger:active, .formosa-button--danger:focus {
-  background-color: #ff3030;
+  background-color: rgb(255, 48.45, 48.45);
 }
 .formosa-button--danger[disabled]:hover, .formosa-button--danger[disabled]:active, .formosa-button--danger[disabled]:focus {
   background-color: #f66;
@@ -297,7 +302,7 @@ input.formosa-autocomplete__input.formosa-field__input {
   color: #000;
 }
 .formosa-button--success:hover, .formosa-button--success:active, .formosa-button--success:focus {
-  background-color: #44c144;
+  background-color: rgb(67.575, 192.525, 67.575);
 }
 .formosa-button--success[disabled]:hover, .formosa-button--success[disabled]:active, .formosa-button--success[disabled]:focus {
   background-color: #6c6;
@@ -309,7 +314,7 @@ input.formosa-autocomplete__input.formosa-field__input {
   color: #000;
 }
 .formosa-button--warning:hover, .formosa-button--warning:active, .formosa-button--warning:focus {
-  background-color: #ff7530;
+  background-color: rgb(255, 117.3, 48.45);
 }
 .formosa-button--warning[disabled]:hover, .formosa-button--warning[disabled]:active, .formosa-button--warning[disabled]:focus {
   background-color: #f96;
@@ -419,7 +424,7 @@ input.formosa-field__input--checkbox.formosa-field__input {
 :focus {
   border-color: #4ad;
   box-shadow: 0 0 0 4px #6cf;
-  outline: none !important;
+  outline: none !important; /* stylelint-disable-line declaration-no-important */
 }
 
 .formosa-horizontal {
@@ -622,10 +627,10 @@ input.formosa-radio__input {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  border-color: #0a1a2e;
+  border-color: rgb(10.2, 25.5, 45.9);
   border-radius: 100px;
   border-width: 6px;
-  box-shadow: 0 0 0 0 #555;
+  box-shadow: 0 0 0 0px #555;
   cursor: pointer;
   height: 24px;
   line-height: 1.5;
@@ -643,7 +648,7 @@ input.formosa-radio__input:checked {
   background-color: #fff;
 }
 input.formosa-radio__input:focus {
-  box-shadow: 0 0 0 0 #4ad, 0 0 0 4px #6cf;
+  box-shadow: 0 0 0 0px #4ad, 0 0 0 4px #6cf;
 }
 
 .formosa-search-wrapper {
@@ -749,11 +754,11 @@ input.formosa-field__input--search {
 .formosa-suffix {
   border-color: transparent;
   border-style: solid;
-  border-width: 0 0;
+  border-width: 0px 0;
   bottom: 0;
   padding: 8px;
   position: absolute;
-  right: 0;
+  right: 0px;
   top: 0;
   z-index: 1;
 }
@@ -879,21 +884,21 @@ input.formosa-field__input--search {
 
 .crudnick-button--secondary,
 .formosa-button.formosa-postfix {
-  background-color: #0a1a2e;
+  background-color: rgb(10.2, 25.5, 45.9);
   border-color: transparent;
-  color: #b0caed;
+  color: rgb(175.7181818182, 202.1454545455, 237.3818181818);
 }
 .crudnick-button--secondary:hover, .crudnick-button--secondary:active, .crudnick-button--secondary:focus,
 .formosa-button.formosa-postfix:hover,
 .formosa-button.formosa-postfix:active,
 .formosa-button.formosa-postfix:focus {
-  background-color: #091627;
+  background-color: rgb(8.67, 21.675, 39.015);
 }
 
 .crudnick-button--link {
   background-color: transparent;
   border-color: transparent;
-  color: #4684d6;
+  color: rgb(70.0090909091, 131.6727272727, 213.8909090909);
   text-decoration: underline;
 }
 .crudnick-button--link:hover, .crudnick-button--link:active, .crudnick-button--link:focus {
@@ -910,7 +915,7 @@ input.formosa-field__input--search {
 }
 
 .formosa-icon--search path {
-  fill: #112b4d;
+  fill: rgb(17, 42.5, 76.5);
 }
 
 .formosa-field__note {
@@ -992,8 +997,8 @@ textarea[size] {
 }
 
 body {
-  background-color: #020408;
-  color: #f2f6fc;
+  background-color: rgb(1.7, 4.25, 7.65);
+  color: rgb(241.7863636364, 246.1909090909, 252.0636363636);
   font-family: "Helvetica Neue", helvetica, arial, sans-serif;
   font-size: 18px;
   margin: 66px 0 0;
@@ -1009,7 +1014,7 @@ main {
 }
 
 a {
-  color: #4684d6;
+  color: rgb(70.0090909091, 131.6727272727, 213.8909090909);
   text-decoration: underline;
 }
 a:hover, a:active, a:focus {
@@ -1022,7 +1027,7 @@ a:hover, a:active, a:focus {
   padding: 12px;
 }
 .crudnick-link--table:hover, .crudnick-link--table:active, .crudnick-link--table:focus {
-  background-color: #06101c;
+  background-color: rgb(6.2513636364, 15.6284090909, 28.1311363636);
 }
 
 .crudnick-list {
@@ -1067,8 +1072,8 @@ a:hover, a:active, a:focus {
 }
 
 .crudnick-modal__box {
-  background-color: #0a1a2e;
-  color: #f2f6fc;
+  background-color: rgb(10.2, 25.5, 45.9);
+  color: rgb(241.7863636364, 246.1909090909, 252.0636363636);
   max-width: 800px;
   padding: 32px;
   width: 100%;
@@ -1126,8 +1131,8 @@ a:hover, a:active, a:focus {
   box-shadow: inset 0 0 0 4px #6cf;
 }
 #crudnick-nav .active {
-  background-color: #020408;
-  color: #f2f6fc;
+  background-color: rgb(1.7, 4.25, 7.65);
+  color: rgb(241.7863636364, 246.1909090909, 252.0636363636);
 }
 @media (width >= 1025px) {
   #crudnick-nav .crudnick-list__item {
@@ -1261,7 +1266,7 @@ th {
 
 th,
 td {
-  border-color: #0a1a2e;
+  border-color: rgb(10.2, 25.5, 45.9);
   border-style: solid;
   border-width: 0 0 1px;
   padding: 12px;

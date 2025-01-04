@@ -18,7 +18,7 @@ Crudnick is a framework for creating an admin backend CMS with [React](https://w
 
 ## Requirements
 
-- [React](https://www.npmjs.com/package/react) 18+
+- [React](https://www.npmjs.com/package/react) 19+
 - [Tapioca](https://github.com/jlbelanger/tapioca) (Laravel API framework)
 
 ## Install
@@ -195,10 +195,11 @@ Replace the contents of `src/index.js` with the following:
 import '@jlbelanger/crudnick/dist/index.css';
 import { App } from '@jlbelanger/crudnick';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import Routes from './Routes';
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
 	<React.StrictMode>
 		<App
 			nav={[
@@ -207,8 +208,7 @@ ReactDOM.render(
 		>
 			<Routes />
 		</App>
-	</React.StrictMode>,
-	document.getElementById('root')
+	</React.StrictMode>
 );
 ```
 

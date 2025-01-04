@@ -1,3 +1,5 @@
+@use '../utilities/variables';
+
 .crudnick-list {
 	display: flex;
 	list-style: none;
@@ -15,6 +17,6 @@
 }
 
 .crudnick-list__text {
-	height: $crudnick-input-height;
-	line-height: $crudnick-input-height;
+	height: variables.$crudnick-input-height;
+	line-height: variables.$crudnick-input-height;
 }

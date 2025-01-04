@@ -1,20 +1,22 @@
+@use '../utilities/variables';
+
 * {
 	box-sizing: border-box;
 }
 
 body {
-	background-color: $crudnick-body-background-color;
-	color: $crudnick-body-color;
-	font-family: $crudnick-font-family;
-	font-size: $crudnick-font-size;
-	margin: #{$crudnick-nav-height + $crudnick-margin} 0 0;
+	background-color: variables.$crudnick-body-background-color;
+	color: variables.$crudnick-body-color;
+	font-family: variables.$crudnick-font-family;
+	font-size: variables.$crudnick-font-size;
+	margin: calc(variables.$crudnick-nav-height + variables.$crudnick-margin) 0 0;
 }
 
 main {
 	margin: 0 auto;
-	max-width: $crudnick-content-width;
+	max-width: variables.$crudnick-content-width;
 }
 
 #crudnick-article {
-	margin: $crudnick-margin;
+	margin: variables.$crudnick-margin;
 }
