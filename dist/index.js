@@ -1,5 +1,6 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+require('@jlbelanger/formosa/dist/formosa.css');
 var formosa = require('@jlbelanger/formosa');
 var reactRouterDom = require('react-router-dom');
 var React = require('react');

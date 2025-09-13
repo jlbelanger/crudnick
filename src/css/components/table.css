@@ -1,0 +1,86 @@
+table {
+	border-spacing: 0;
+	margin: 0 calc(var(--crudnick-table-cell-padding) * -1);
+	width: calc(100% + (var(--crudnick-table-cell-padding)));
+}
+
+th {
+	text-align: left;
+}
+
+th,
+td {
+	border-color: var(--crudnick-darker);
+	border-style: solid;
+	border-width: 0 0 1px;
+	padding: var(--crudnick-table-cell-padding);
+
+	tfoot &,
+	thead & {
+		border-color: var(--crudnick-primary);
+	}
+
+	tfoot & {
+		border-bottom-width: 0;
+		border-top-width: 1px;
+	}
+}
+
+tbody > tr:last-of-type {
+	th,
+	td {
+		border-color: transparent;
+	}
+}
+
+thead {
+	th {
+		padding: 0 var(--crudnick-table-cell-padding) var(--crudnick-table-cell-padding);
+	}
+
+	.formosa-button {
+		background-color: transparent;
+		background-size: var(--crudnick-table-arrow-width);
+		display: flex;
+		font-weight: bold;
+		justify-content: space-between;
+		margin: calc(var(--crudnick-padding) * -1);
+		padding:
+			var(--crudnick-table-cell-padding)
+			calc(var(--crudnick-padding) + (var(--crudnick-table-arrow-width) * 2))
+			var(--crudnick-table-cell-padding)
+			var(--crudnick-padding);
+		position: relative;
+		text-align: left;
+		width: calc(100% + (var(--crudnick-padding) * 2));
+
+		svg {
+			margin-top: calc((var(--crudnick-table-arrow-width) * .5) * -1);
+			position: absolute;
+			right: var(--crudnick-table-cell-padding);
+			top: 50%;
+		}
+
+		.flip {
+			transform: scaleY(-1);
+		}
+
+		&:hover,
+		&:active,
+		&:focus {
+			background-color: transparent;
+		}
+
+		&[disabled] {
+			&:hover,
+			&:active,
+			&:focus {
+				background-color: transparent;
+			}
+		}
+	}
+}
+
+.crudnick-column--shrink {
+	width: 0;
+}

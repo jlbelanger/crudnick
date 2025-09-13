@@ -15,12 +15,12 @@
 	"scripts": {
 		"build": "(([ -d dist ] && rm -r dist/) || true) && microbundle-crl --no-compress --format modern,cjs --css-modules false --jsxFragment React.Fragment",
 		"lint": "yarn lint:css && yarn lint:js",
-		"lint:css": "node_modules/.bin/stylelint 'src/scss/**/*.scss'",
+		"lint:css": "node_modules/.bin/stylelint 'src/css/**/*.css'",
 		"lint:js": "node_modules/.bin/eslint . --ext .js",
 		"start": "npx update-browserslist-db@latest && microbundle-crl watch --no-compress --format modern,cjs --css-modules false --jsxFragment React.Fragment"
 	},
 	"dependencies": {
-		"@jlbelanger/formosa": "jlbelanger/formosa#1061f96c17116e84f4f781e84e72d712d8623b26",
+		"@jlbelanger/formosa": "link:../formosa",
 		"get-value": "^3.0.1",
 		"js-cookie": "^3.0.5",
 		"prop-types": "^15.8.1"
@@ -42,11 +42,9 @@
 		"eslint-plugin-react-hooks": "^5.1.0",
 		"microbundle-crl": "^0.13.11",
 		"postcss": "^8.4.49",
-		"sass": "^1.83.0",
-		"stylelint": "^16.12.0",
-		"stylelint-config-standard-scss": "^14.0.0",
-		"stylelint-order": "^6.0.4",
-		"stylelint-scss": "^6.10.0"
+		"stylelint": "^16.18.0",
+		"stylelint-config-standard": "^38.0.0",
+		"stylelint-order": "^6.0.4"
 	},
 	"peerDependencies": {
 		"react": "^19.0.0",

@@ -1,3 +1,4 @@
+import '@jlbelanger/formosa/dist/formosa.css';
 import { FormosaContext, Api, FormContext, Form, Field, FormAlert, Alert, Submit, FormContainer, Input } from '@jlbelanger/formosa';
 import { useHistory, NavLink, Prompt, Link, useParams, useLocation, Switch, Route, Redirect, BrowserRouter } from 'react-router-dom';
 import React__default, { useRef, useEffect, useContext, useState, createElement } from 'react';

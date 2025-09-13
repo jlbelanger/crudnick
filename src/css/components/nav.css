@@ -1,10 +1,9 @@
-@use '~@jlbelanger/formosa/src/scss/utilities/variables' as formosa;
-@use '../utilities/variables';
+@custom-media --crudnick-nav-breakpoint (width >= 1025px);
 
 #crudnick-nav__dialog {
 	background: none;
 	border: 0;
-	box-shadow: 0 0 0 100vh rgba(variables.$crudnick-black, 0);
+	box-shadow: 0 0 0 100vh hsl(from var(--crudnick-black) h s l / 0%);
 	padding: 0;
 	transition: box-shadow .3s ease-in-out;
 	width: 100%;
@@ -14,7 +13,7 @@
 	}
 
 	.show-nav.animate-nav & {
-		box-shadow: 0 0 0 100vh rgba(variables.$crudnick-black, .4);
+		box-shadow: 0 0 0 100vh hsl(from var(--crudnick-black) h s l / 40%);
 		display: block;
 	}
 }
@@ -24,11 +23,11 @@
 }
 
 #crudnick-nav {
-	background-color: variables.$crudnick-nav-background-color;
+	background-color: var(--crudnick-nav-background-color);
 	display: flex;
 	justify-content: flex-end;
 	left: 0;
-	margin: 0 0 variables.$crudnick-margin;
+	margin: 0 0 var(--crudnick-margin);
 	position: fixed;
 	right: 0;
 	top: 0;
@@ -40,16 +39,16 @@
 
 	.crudnick-list__button {
 		&:focus {
-			box-shadow: inset 0 0 0 formosa.$formosa-focus-border-width formosa.$formosa-focus-box-shadow-color;
+			box-shadow: inset 0 0 0 var(--formosa-focus-border-width) var(--formosa-focus-box-shadow-color);
 		}
 	}
 
 	.active {
-		background-color: variables.$crudnick-nav-active-background-color;
-		color: variables.$crudnick-nav-active-color;
+		background-color: var(--crudnick-nav-active-background-color);
+		color: var(--crudnick-nav-active-color);
 	}
 
-	@media (width >= variables.$crudnick-nav-breakpoint) {
+	@media (--crudnick-nav-breakpoint) {
 		.crudnick-list__item {
 			flex: 1 1 auto;
 		}
@@ -57,25 +56,25 @@
 }
 
 #crudnick-nav__list {
-	background-color: variables.$crudnick-nav-background-color;
+	background-color: var(--crudnick-nav-background-color);
 	bottom: 0;
 	margin: 0 auto;
-	max-width: variables.$crudnick-content-width;
+	max-width: var(--crudnick-content-width);
 	min-width: 200px;
 	overflow: auto;
 	padding: 0;
 	position: fixed;
 	right: 0;
-	top: variables.$crudnick-button-height;
+	top: var(--crudnick-button-height);
 	transform: translateX(200%);
 	transition: transform .3s ease-in-out;
 
 	a,
 	button {
-		height: variables.$crudnick-button-height;
-		line-height: variables.$crudnick-button-height;
+		height: var(--crudnick-button-height);
+		line-height: var(--crudnick-button-height);
 		margin: 0;
-		padding: 0 variables.$crudnick-padding;
+		padding: 0 var(--crudnick-padding);
 		text-align: left;
 		width: 100%;
 	}
@@ -88,11 +87,11 @@
 		transform: translateX(0);
 	}
 
-	@media (width >= variables.$crudnick-nav-breakpoint) {
+	@media (--crudnick-nav-breakpoint) {
 		display: flex;
 		flex-direction: row;
-		min-width: none;
-		padding: 0 variables.$crudnick-margin;
+		min-width: 0;
+		padding: 0 var(--crudnick-margin);
 		position: static;
 		transform: none;
 		transition: none;
@@ -112,11 +111,11 @@
 	background-size: 50%;
 	display: block;
 	font-size: 0;
-	height: variables.$crudnick-button-height;
-	width: variables.$crudnick-button-height;
+	height: var(--crudnick-button-height);
+	width: var(--crudnick-button-height);
 
 	&:focus {
-		box-shadow: inset 0 0 0 formosa.$formosa-focus-border-width formosa.$formosa-focus-box-shadow-color;
+		box-shadow: inset 0 0 0 var(--formosa-focus-border-width) var(--formosa-focus-box-shadow-color);
 	}
 }
 
@@ -125,7 +124,7 @@
 		visibility: hidden;
 	}
 
-	@media (width >= variables.$crudnick-nav-breakpoint) {
+	@media (--crudnick-nav-breakpoint) {
 		display: none;
 	}
 }

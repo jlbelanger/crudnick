@@ -1,0 +1,4 @@
+.crudnick-auth-form {
+	margin: 0 auto;
+	max-width: var(--crudnick-auth-form-width);
+}

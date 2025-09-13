@@ -1,8 +1,5 @@
-@use '~@jlbelanger/formosa/src/scss/utilities/variables' as formosa;
-@use '../utilities/variables';
-
 .formosa-horizontal {
-	margin-top: variables.$crudnick-margin;
+	margin-top: var(--crudnick-margin);
 }
 
 .formosa-search-wrapper {
@@ -13,17 +10,17 @@
 
 .formosa-icon--search {
 	path {
-		fill: variables.$crudnick-dark;
+		fill: var(--crudnick-dark);
 	}
 }
 
 .formosa-field__note {
-	color: variables.$crudnick-note-color;
+	color: var(--crudnick-note-color);
 }
 
 .formosa-autocomplete__value {
 	padding-left: 0;
-	padding-right: calc(formosa.$formosa-autocomplete-value-height - formosa.$formosa-autocomplete-value-padding-top);
+	padding-right: calc(var(--formosa-autocomplete-value-height) - var(--formosa-autocomplete-value-padding-top));
 }
 
 .formosa-autocomplete__value--input {

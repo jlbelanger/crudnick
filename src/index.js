@@ -1,4 +1,5 @@
-import './style.scss';
+import '@jlbelanger/formosa/dist/formosa.css';
+import './style.css';
 
 export { default as Actions } from './js/Components/Actions';
 export { default as AddForm } from './js/Components/AddForm';

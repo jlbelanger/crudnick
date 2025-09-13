@@ -1,0 +1,128 @@
+:root {
+	/* Colors. */
+	--crudnick-primary: #259;
+	--crudnick-white: #fff;
+	--crudnick-gray: #666;
+	--crudnick-black: #000;
+	--crudnick-lightest: hsl(from var(--crudnick-primary) h s calc(l * 3.22));
+	--crudnick-lighter: hsl(from var(--crudnick-primary) h s calc(l * 2.63));
+	--crudnick-light: hsl(from var(--crudnick-primary) h s calc(l * 1.7));
+	--crudnick-dark: hsl(from var(--crudnick-primary) h s calc(l * .5));
+	--crudnick-darker: hsl(from var(--crudnick-primary) h s calc(l * .3));
+	--crudnick-darkerer: hsl(from var(--crudnick-primary) h s calc(l * .214));
+	--crudnick-darkest: hsl(from var(--crudnick-primary) h s calc(l * .05));
+
+	/* Typography. */
+	--crudnick-font-family: 'Helvetica Neue', helvetica, arial, sans-serif;
+	--crudnick-font-size: 18px;
+	--crudnick-margin: 24px;
+	--crudnick-padding: 12px;
+
+	/* Links. */
+	--crudnick-link-color: var(--crudnick-light);
+
+	/* Auth. */
+	--crudnick-auth-form-width: 500px;
+
+	/* Body. */
+	--crudnick-body-background-color: var(--crudnick-darkest);
+	--crudnick-body-color: var(--crudnick-lightest);
+
+	/* Buttons. */
+	--crudnick-button-height: 44px;
+
+	/* Buttons - secondary. */
+	--crudnick-button-secondary-background-color: var(--crudnick-darker);
+	--crudnick-button-secondary-background-color-hover: hsl(from var(--crudnick-button-secondary-background-color) h s calc(l * .86));
+	--crudnick-button-secondary-border-color: transparent;
+	--crudnick-button-secondary-color: var(--crudnick-lighter);
+
+	/* Buttons - links. */
+	--crudnick-button-link-background-color: transparent;
+	--crudnick-button-link-background-color-hover: transparent;
+	--crudnick-button-link-border-color: transparent;
+	--crudnick-button-link-color: var(--crudnick-link-color);
+
+	/* Content. */
+	--crudnick-content-width: 2000px;
+
+	/* Disabled. */
+	--crudnick-disabled-opacity: .3;
+
+	/* Headings. */
+	--crudnick-heading-margin: 16px 0;
+	--crudnick-heading-small-color: var(--crudnick-gray);
+	--crudnick-heading-small-font-size: 18px;
+	--crudnick-heading-small-font-weight: normal;
+	--crudnick-heading-small-margin: 0 0 0 4px;
+
+	/* Icons. */
+	--crudnick-icon-fill: var(--crudnick-white);
+
+	/* Inputs. */
+	--crudnick-input-background-color: var(--crudnick-darker);
+	--crudnick-input-border-color: var(--crudnick-darker);
+	--crudnick-input-border-width: 2px;
+	--crudnick-input-padding: 12px;
+	--crudnick-input-height: calc((var(--crudnick-input-padding) + var(--crudnick-input-border-width)) * 2 + var(--crudnick-font-size));
+
+	/* Placeholders. */
+	--crudnick-placeholder-color: var(--crudnick-gray);
+
+	/* Modals. */
+	--crudnick-modal-background-color: var(--crudnick-darker);
+	--crudnick-modal-button-margin-side: 8px;
+	--crudnick-modal-button-margin-top: 20px;
+	--crudnick-modal-container-background-color: hsl(from var(--crudnick-black) h s l / 60%);
+	--crudnick-modal-input-background-color: var(--crudnick-darkest);
+	--crudnick-modal-margin: 32px;
+	--crudnick-modal-max-width: 800px;
+	--crudnick-modal-padding: 32px;
+	--crudnick-modal-text-color: var(--crudnick-lightest);
+	--crudnick-modal-zindex: 9999;
+
+	/* Nav. */
+	--crudnick-nav-background-color: var(--crudnick-primary);
+	--crudnick-nav-active-background-color: var(--crudnick-body-background-color);
+	--crudnick-nav-active-color: var(--crudnick-body-color);
+	--crudnick-nav-height: calc(var(--crudnick-padding) * 2 + var(--crudnick-font-size));
+
+	/* Notes. */
+	--crudnick-note-color: var(--crudnick-gray);
+
+	/* Skip. */
+	--crudnick-skip-background-color: #6cf;
+	--crudnick-skip-box-shadow: 0 0 10px 5px hsl(from var(--crudnick-black) h s l / 20%);
+	--crudnick-skip-color: var(--crudnick-black);
+	--crudnick-skip-font-size: 20px;
+	--crudnick-skip-font-weight: bold;
+	--crudnick-skip-height: var(--crudnick-button-height);
+	--crudnick-skip-width: 200px;
+
+	/* Tables. */
+	--crudnick-table-arrow-width: 12px;
+	--crudnick-table-cell-padding: calc(var(--crudnick-margin) * .5);
+	--crudnick-table-link-background-color-hover: var(--crudnick-darkerer);
+
+	/* Textareas. */
+	--crudnick-textarea-large-height: 60vh;
+	--crudnick-textarea-medium-height: 30vh;
+
+	/* Formosa overrides. */
+	--formosa-autocomplete-clear-color: #ddd;
+	--formosa-autocomplete-clear-color-hover: var(--crudnick-white);
+	--formosa-checkbox-padding: 20px;
+	--formosa-checkbox-size: 43px;
+	--formosa-focus-border-width: 4px;
+	--formosa-input-background-color: var(--crudnick-input-background-color);
+	--formosa-input-border-width: 0px;
+	--formosa-input-color: var(--crudnick-white);
+	--formosa-input-font-family: var(--crudnick-font-family);
+	--formosa-input-padding: 8px;
+	--formosa-note-opacity: 1;
+	--formosa-primary-background-color: var(--crudnick-primary);
+	--formosa-primary-color: var(--crudnick-white);
+	--formosa-radio-size: 24px;
+	--formosa-spinner-color: transparent;
+	--formosa-spinner-color-alternate: var(--crudnick-primary);
+}

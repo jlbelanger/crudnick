@@ -1,0 +1,20 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: var(--crudnick-body-background-color);
+	color: var(--crudnick-body-color);
+	font-family: var(--crudnick-font-family);
+	font-size: var(--crudnick-font-size);
+	margin: calc(var(--crudnick-nav-height) + var(--crudnick-margin)) 0 0;
+}
+
+main {
+	margin: 0 auto;
+	max-width: var(--crudnick-content-width);
+}
+
+#crudnick-article {
+	margin: var(--crudnick-margin);
+}
