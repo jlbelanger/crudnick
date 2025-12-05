@@ -1,14 +1,16 @@
+import CrudnickConfig from '../Utilities/Config';
 import PropTypes from 'prop-types';
-import { useEffect } from 'react'; // eslint-disable-line import/no-unresolved
+import { useEffect } from 'react';
 
 export default function MetaTitle({ title = '' }) {
 	useEffect(() => {
 		let metaTitle = title;
-		if (process.env.REACT_APP_TITLE) {
+		const siteTitle = CrudnickConfig.get('siteTitle');
+		if (siteTitle) {
 			if (metaTitle) {
 				metaTitle += ' | ';
 			}
-			metaTitle += process.env.REACT_APP_TITLE;
+			metaTitle += siteTitle;
 		}
 		document.querySelector('title').innerText = metaTitle;
 	}, [title]);

@@ -5,7 +5,6 @@
 		"jest": true
 	},
 	"ignorePatterns": ["dist/**/*"],
-	"parser": "@babel/eslint-parser",
 	"rules": {
 		"class-methods-use-this": 0,
 		"comma-dangle": ["error", {
@@ -16,6 +15,7 @@
 			"functions": "never"
 		}],
 		"import/order": 0,
+		"import/prefer-default-export": 0,
 		"indent": ["error", "tab", { "SwitchCase": 1 }],
 		"jsx-a11y/control-has-associated-label": 0,
 		"jsx-a11y/heading-has-content": 0,
@@ -40,5 +40,9 @@
 		"react/state-in-constructor": ["error", "never"],
 		"react/static-property-placement": ["error", "static public field"],
 		"sort-imports": ["error", { "ignoreCase": true }]
+	},
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "module"
 	}
 }

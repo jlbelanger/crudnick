@@ -1,7 +1,7 @@
 import { Alert, Api, Field, FormAlert, FormContext, Submit } from '@jlbelanger/formosa';
-import React, { useContext } from 'react'; // eslint-disable-line import/no-unresolved
+import React, { useContext } from 'react';
 import { errorMessageText } from '../../Utilities/Errors';
-import { Link } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
+import { Link } from 'react-router';
 import MetaTitle from '../../Components/MetaTitle';
 import PropTypes from 'prop-types';
 

@@ -1,16 +1,14 @@
 import { Api, FormContainer } from '@jlbelanger/formosa';
 import Auth from './Utilities/Auth';
-import { BrowserRouter } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 import Nav from './Components/Nav';
+import { Outlet } from 'react-router';
 import PropTypes from 'prop-types';
-import React from 'react'; // eslint-disable-line import/no-unresolved
-import Routes from './Routes';
+import React from 'react';
 
-export default function App({
+export default function Layout({
 	articleProps = null,
 	children,
 	nav,
-	routerAttributes = null,
 }) {
 	if (Auth.isLoggedIn() && !Api.getToken()) {
 		Api.setToken(Auth.token());
@@ -33,21 +31,20 @@ export default function App({
 	};
 
 	return (
-		<BrowserRouter {...routerAttributes}>
+		<>
 			<a href="#crudnick-article" id="crudnick-skip" onClick={onClick}>Skip to content</a>
 			<FormContainer>
 				{Auth.isLoggedIn() && <Nav nav={nav} />}
 				<article id="crudnick-article" {...articleProps}>
-					{Auth.isLoggedIn() ? children : (<Routes />)}
+					{children}
 				</article>
 			</FormContainer>
-		</BrowserRouter>
+		</>
 	);
 }
 
-App.propTypes = {
+Layout.propTypes = {
 	articleProps: PropTypes.object,
-	children: PropTypes.node.isRequired,
+	children: PropTypes.node,
 	nav: PropTypes.array.isRequired,
-	routerAttributes: PropTypes.object,
 };

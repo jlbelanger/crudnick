@@ -1,11 +1,11 @@
 import { Api, FormosaContext } from '@jlbelanger/formosa';
-import React, { useContext, useEffect, useRef, useState } from 'react'; // eslint-disable-line import/no-unresolved
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Auth from '../Utilities/Auth';
 import { errorMessageText } from '../Utilities/Errors';
-import { ReactComponent as MenuIcon } from '../../svg/menu.svg';
-import { NavLink } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
+import MenuIcon from '../../svg/menu.svg?react'; // eslint-disable-line import/no-unresolved
+import { NavLink } from 'react-router';
 import PropTypes from 'prop-types';
-import { ReactComponent as XIcon } from '../../svg/x.svg';
+import XIcon from '../../svg/x.svg?react'; // eslint-disable-line import/no-unresolved
 
 export default function Nav({ nav }) {
 	const { addToast } = useContext(FormosaContext);
@@ -98,7 +98,6 @@ export default function Nav({ nav }) {
 					{nav.map(({ label, path }) => (
 						<li className="crudnick-list__item" key={path}>
 							<NavLink
-								activeClassName="active"
 								className="formosa-button crudnick-list__button"
 								onClick={hideMenu}
 								to={path}

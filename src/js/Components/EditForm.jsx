@@ -1,5 +1,5 @@
 import { Alert, Api } from '@jlbelanger/formosa';
-import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
+import React, { useEffect, useState } from 'react';
 import Actions from './Actions';
 import { capitalize } from '../Utilities/String';
 import Error from './Error';
@@ -8,7 +8,7 @@ import get from 'get-value';
 import MetaTitle from './MetaTitle';
 import MyForm from './MyForm';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
+import { useParams } from 'react-router';
 
 export default function EditForm({
 	actions = null,

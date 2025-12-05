@@ -1,20 +1,22 @@
 import { Field, Submit } from '@jlbelanger/formosa';
-import React, { useState } from 'react'; // eslint-disable-line import/no-unresolved
+import React, { useState } from 'react';
 import Auth from '../../Utilities/Auth';
+import CrudnickConfig from '../../Utilities/Config';
 import { errorMessageText } from '../../Utilities/Errors';
 import MetaTitle from '../../Components/MetaTitle';
 import MyForm from '../../Components/MyForm';
-import { useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
+import { useNavigate } from 'react-router';
 
 export default function Register() {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const [row, setRow] = useState({});
+
 	const afterSubmitSuccess = (response) => {
 		if (response.user) {
 			Auth.login(response.user, response.token, response.user.remember);
-			window.location.href = process.env.PUBLIC_URL || '/';
+			window.location.href = CrudnickConfig.get('basePath');
 		} else {
-			history.push(`/?verify=1&email=${row.email}&username=${row.username}`);
+			navigate(`/?verify=1&email=${row.email}&username=${row.username}`);
 		}
 	};
 

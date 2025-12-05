@@ -1,12 +1,12 @@
 import { Alert, Api, Input } from '@jlbelanger/formosa';
-import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
-import { ReactComponent as ArrowIcon } from '../../svg/arrow.svg';
-import { ReactComponent as CheckIcon } from '../../svg/check.svg';
+import React, { useEffect, useState } from 'react';
+import ArrowIcon from '../../svg/arrow.svg?react'; // eslint-disable-line import/no-unresolved
+import CheckIcon from '../../svg/check.svg?react'; // eslint-disable-line import/no-unresolved
 import { cleanKey } from '../Utilities/String';
 import { errorMessageText } from '../Utilities/Errors';
 import { filterByKeys } from '../Utilities/Filter';
 import get from 'get-value';
-import { Link } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
+import { Link } from 'react-router';
 import MetaTitle from './MetaTitle';
 import PropTypes from 'prop-types';
 import { sortByKey } from '../Utilities/Sort';

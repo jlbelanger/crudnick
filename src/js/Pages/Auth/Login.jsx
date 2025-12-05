@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'; // eslint-disable-line import/no-unresolved
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
 import Auth from '../../Utilities/Auth';
 import { errorMessageText } from '../../Utilities/Errors';
 import { Form } from '@jlbelanger/formosa';
 import LoginForm from './LoginForm';
-import { useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 
 export default function Login() {
-	const history = useHistory();
+	const [urlSearchParams] = useSearchParams();
+	const navigate = useNavigate();
 	const [row, setRow] = useState({});
 	const [message, setMessage] = useState(null);
 	const [showVerificationButton, setShowVerificationButton] = useState(false);
@@ -22,36 +23,38 @@ export default function Login() {
 	};
 
 	const afterSubmitSuccess = (response) => {
-		const urlSearchParams = new URLSearchParams(history.location.search);
-		let redirect;
+		let redirectPath;
 		if (urlSearchParams.get('redirect') && urlSearchParams.get('redirect')[0] === '/') {
-			redirect = urlSearchParams.get('redirect');
+			redirectPath = urlSearchParams.get('redirect');
 		} else {
-			redirect = process.env.PUBLIC_URL || '/';
+			redirectPath = '/';
 		}
 		Auth.login(response.user, response.token, response.user.remember);
-		window.location.href = redirect;
+		window.location.href = redirectPath;
 	};
 
 	useEffect(() => {
-		const urlSearchParams = new URLSearchParams(history.location.search);
 		if (urlSearchParams.get('status') === '401') {
 			setMessage({
 				text: 'Your session has expired. Please log in again.',
 				type: 'warning',
 			});
-			history.replace({ search: '' });
+			navigate(window.location.pathname, { replace: true }); // Remove query param.
 		} else if (urlSearchParams.get('verify')) {
 			setMessage({
 				text: `Check your email (${urlSearchParams.get('email')}) to continue the registration process.`,
 				type: 'success',
 			});
 			setShowVerificationButton(urlSearchParams.get('username'));
-			history.replace({ search: '' });
+			navigate(window.location.pathname, { replace: true }); // Remove query param.
 		} else if (urlSearchParams.get('expired')) {
-			history.push('/forgot-password?expired=1');
+			navigate('/forgot-password?expired=1');
 		}
 	}, []);
+
+	if (Auth.isLoggedIn()) {
+		return null;
+	}
 
 	return (
 		<Form

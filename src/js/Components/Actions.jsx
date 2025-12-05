@@ -1,7 +1,8 @@
 import { Api, FormosaContext } from '@jlbelanger/formosa';
-import { NavLink, useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
-import React, { useContext, useEffect, useRef, useState } from 'react'; // eslint-disable-line import/no-unresolved
+import { NavLink, useNavigate } from 'react-router';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { capitalize } from '../Utilities/String';
+import CrudnickConfig from '../Utilities/Config';
 import { errorMessageText } from '../Utilities/Errors';
 import Modal from './Modal';
 import PropTypes from 'prop-types';
@@ -19,7 +20,7 @@ export default function Actions({
 	singular,
 	subpages = [],
 }) {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const { addToast, disableWarningPrompt, enableWarningPrompt } = useContext(FormosaContext);
 	const [showModal, setShowModal] = useState(false);
 	const submitRef = useRef(null);
@@ -57,10 +58,12 @@ export default function Actions({
 					return;
 				}
 				addToast(`${capitalize(singular)} deleted successfully.`, 'success');
-				history.push(`/${path}`);
+				navigate(`/${path}`);
 				enableWarningPrompt();
 			});
 	};
+
+	const frontendUrl = CrudnickConfig.get('frontendUrl');
 
 	return (
 		<ul className="crudnick-list">
@@ -110,11 +113,11 @@ export default function Actions({
 					)}
 				</li>
 			)}
-			{process.env.REACT_APP_FRONTEND_URL && row.url && (
+			{frontendUrl && row.url && (
 				<li>
 					<a
 						className="crudnick-list__button formosa-button crudnick-button--secondary"
-						href={`${process.env.REACT_APP_FRONTEND_URL}${row.url}`}
+						href={`${frontendUrl}${row.url}`}
 						rel="noreferrer"
 						target="_blank"
 					>

@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'; // eslint-disable-line import/no-unresolved
+import React, { useEffect, useRef, useState } from 'react';
 import { capitalize } from '../Utilities/String';
 import { errorMessageText } from '../Utilities/Errors';
 import { Field } from '@jlbelanger/formosa';
 import MetaTitle from './MetaTitle';
 import MyForm from './MyForm';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
+import { useNavigate } from 'react-router';
 
 export default function AddForm({
 	addAnotherText = 'Add another',
@@ -26,12 +26,12 @@ export default function AddForm({
 }) {
 	const [row, setRow] = useState(defaultRow);
 	const [addAnother, setAddAnother] = useState(false);
-	const history = useHistory();
+	const navigate = useNavigate();
 	const submitRef = useRef(null);
 
 	const afterSubmitSuccess = (response) => {
 		if (!addAnother) {
-			history.push(`/${path}/${response.id}`);
+			navigate(`/${path}/${response.id}`);
 		}
 	};
 

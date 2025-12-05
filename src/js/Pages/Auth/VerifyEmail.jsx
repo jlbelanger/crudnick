@@ -1,16 +1,16 @@
 import { Form, Submit } from '@jlbelanger/formosa';
-import React, { useEffect } from 'react'; // eslint-disable-line import/no-unresolved
+import React, { useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
 import { errorMessageText } from '../../Utilities/Errors';
 import MetaTitle from '../../Components/MetaTitle';
-import { useHistory } from 'react-router-dom'; // eslint-disable-line import/no-unresolved
 
 export default function VerifyEmail() {
-	const history = useHistory();
+	const [urlSearchParams] = useSearchParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		const urlSearchParams = new URLSearchParams(history.location.search);
 		if (urlSearchParams.get('expires') < Math.floor(Date.now() / 1000)) {
-			history.push('/?expired=1');
+			navigate('/?expired=1');
 		}
 	}, []);
 
@@ -20,7 +20,7 @@ export default function VerifyEmail() {
 
 			<Form
 				afterSubmitSuccess={() => {
-					history.push('/');
+					navigate('/');
 				}}
 				errorMessageText={errorMessageText}
 				method="POST"
