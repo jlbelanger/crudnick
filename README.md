@@ -178,7 +178,7 @@ import UserIndex from './Pages/Users/Index';
 export default createBrowserRouter(
 	[
 		{
-			path: '',
+			path: '/',
 			Component: Layout,
 			children: [
 				{
@@ -220,16 +220,19 @@ export default createBrowserRouter(
 Create a new file `src/Layout.jsx` containing the following:
 
 ``` jsx
-import { Layout } from '@jlbelanger/crudnick';
+import { Layout as CrudnickLayout } from '@jlbelanger/crudnick';
+import { Outlet } from 'react-router';
 import React from 'react';
 
 export default function MyLayout() {
 	return (
-		<Layout
+		<CrudnickLayout
 			nav={[
 				{ label: 'Users', path: '/users' },
 			]}
-		/>
+		>
+			<Outlet />
+		</CrudnickLayout>
 	);
 }
 ```
