@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import CrudnickConfig from './Config';
+import CrudnickConfig from './Config.js';
 
 export default class Auth {
 	static login(user, token, remember) {
@@ -53,6 +53,6 @@ export default class Auth {
 	}
 
 	static isLoggedIn() {
-		return !!Auth.user() && !!Auth.token();
+		return Boolean(Auth.user()) && Boolean(Auth.token());
 	}
 }

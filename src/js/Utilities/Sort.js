@@ -1,6 +1,6 @@
 import get from 'get-value';
 
-export const sortByKey = (records, key, dir) => ( // eslint-disable-line import/prefer-default-export
+export const sortByKey = (records, key, dir) => (
 	records.sort((a, b) => {
 		let aVal = get(a, key);
 		if (aVal === undefined || aVal === null) {

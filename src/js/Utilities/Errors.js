@@ -1,6 +1,6 @@
-import Auth from './Auth';
+import Auth from './Auth.js';
 
-export const errorMessageText = (response, logout = true) => { // eslint-disable-line import/prefer-default-export
+export const errorMessageText = (response, logout = true) => {
 	if (logout && response.status === 401) {
 		return Auth.logout(response.status);
 	}

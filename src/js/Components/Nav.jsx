@@ -1,7 +1,7 @@
 import { Api, FormosaContext } from '@jlbelanger/formosa';
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import Auth from '../Utilities/Auth';
-import { errorMessageText } from '../Utilities/Errors';
+import { useContext, useEffect, useRef, useState } from 'react';
+import Auth from '../Utilities/Auth.js';
+import { errorMessageText } from '../Utilities/Errors.js';
 import MenuIcon from '../../svg/menu.svg?react'; // eslint-disable-line import/no-unresolved
 import { NavLink } from 'react-router';
 import PropTypes from 'prop-types';
@@ -34,7 +34,7 @@ export default function Nav({ nav }) {
 
 	useEffect(() => {
 		if (showInlineNav) {
-			hideMenu(); // eslint-disable-line no-use-before-define
+			hideMenu();
 			onTransitionEnd();
 		}
 	}, [showInlineNav]);
@@ -81,7 +81,7 @@ export default function Nav({ nav }) {
 
 	return (
 		<nav id="crudnick-nav">
-			<Dialog id="crudnick-nav__dialog" ref={dialogRef} onCancel={onCancelDialog} onClick={onClickDialog}>
+			<Dialog id="crudnick-nav__dialog" onCancel={onCancelDialog} onClick={onClickDialog} ref={dialogRef}>
 				<button
 					aria-controls="crudnick-nav__dialog"
 					aria-expanded="false"

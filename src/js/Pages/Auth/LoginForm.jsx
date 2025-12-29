@@ -1,9 +1,9 @@
 import { Alert, Api, Field, FormAlert, FormContext, Submit } from '@jlbelanger/formosa';
-import React, { useContext } from 'react';
-import { errorMessageText } from '../../Utilities/Errors';
+import { errorMessageText } from '../../Utilities/Errors.js';
 import { Link } from 'react-router';
-import MetaTitle from '../../Components/MetaTitle';
+import MetaTitle from '../../Components/MetaTitle.jsx';
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
 
 export default function LoginForm({
 	message = null,

@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { capitalize } from '../Utilities/String';
-import { errorMessageText } from '../Utilities/Errors';
+import { useEffect, useRef, useState } from 'react';
+import { capitalize } from '../Utilities/String.js';
+import { errorMessageText } from '../Utilities/Errors.js';
 import { Field } from '@jlbelanger/formosa';
-import MetaTitle from './MetaTitle';
-import MyForm from './MyForm';
+import MetaTitle from './MetaTitle.jsx';
+import MyForm from './MyForm.jsx';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router';
 
@@ -63,8 +63,8 @@ export default function AddForm({
 					<li>
 						<button
 							className="formosa-button"
-							form="crudnick-add-form"
 							data-cy="save"
+							form="crudnick-add-form"
 							ref={submitRef}
 							type="submit"
 						>

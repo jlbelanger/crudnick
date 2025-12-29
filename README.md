@@ -241,12 +241,12 @@ Replace the contents of `src/index.jsx` with the following:
 
 ``` jsx
 import '@jlbelanger/crudnick/dist/index.css';
+import { createRoot } from 'react-dom/client';
 import { CrudnickConfig } from '@jlbelanger/crudnick';
 import { FormosaConfig } from '@jlbelanger/formosa';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router';
 import Routes from './Routes';
+import { StrictMode } from 'react';
 
 CrudnickConfig.init({
 	basePath: import.meta.env.VITE_BASE_PATH,
@@ -259,11 +259,11 @@ FormosaConfig.init({
 	apiPrefix: import.meta.env.VITE_API_URL,
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById('root'));
 root.render(
-	<React.StrictMode>
+	<StrictMode>
 		<RouterProvider router={Routes} />
-	</React.StrictMode>
+	</StrictMode>
 );
 ```
 

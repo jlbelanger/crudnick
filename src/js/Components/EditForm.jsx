@@ -1,16 +1,16 @@
 import { Alert, Api } from '@jlbelanger/formosa';
-import React, { useEffect, useState } from 'react';
-import Actions from './Actions';
-import { capitalize } from '../Utilities/String';
-import Error from './Error';
-import { errorMessageText } from '../Utilities/Errors';
+import { useEffect, useState } from 'react';
+import Actions from './Actions.jsx';
+import { capitalize } from '../Utilities/String.js';
+import Error from './Error.jsx';
+import { errorMessageText } from '../Utilities/Errors.js';
 import get from 'get-value';
-import MetaTitle from './MetaTitle';
-import MyForm from './MyForm';
+import MetaTitle from './MetaTitle.jsx';
+import MyForm from './MyForm.jsx';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 
-export default function EditForm({
+export default function EditForm({ // eslint-disable-line complexity
 	actions = null,
 	apiPath,
 	component,
@@ -79,8 +79,8 @@ export default function EditForm({
 						apiPath={apiPath}
 						currentPage="/"
 						path={path}
-						saveButtonText={saveButtonText}
 						row={row}
+						saveButtonText={saveButtonText}
 						setActionError={setActionError}
 						showDelete={showDelete}
 						showSave={showSave}
@@ -97,7 +97,10 @@ export default function EditForm({
 			{row && (
 				<MyForm
 					afterSubmitFailure={afterSubmitFailure}
-					beforeSubmit={() => { setActionError(false); return true; }}
+					beforeSubmit={() => {
+						setActionError(false);
+						return true;
+					}}
 					filterBody={filterBody}
 					filterValues={filterValues}
 					htmlId="crudnick-edit-form"

@@ -1,4 +1,4 @@
-import CrudnickConfig from '../Utilities/Config';
+import CrudnickConfig from '../Utilities/Config.js';
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 

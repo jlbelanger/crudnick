@@ -1,10 +1,10 @@
 import { Api, FormosaContext } from '@jlbelanger/formosa';
 import { NavLink, useNavigate } from 'react-router';
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { capitalize } from '../Utilities/String';
-import CrudnickConfig from '../Utilities/Config';
-import { errorMessageText } from '../Utilities/Errors';
-import Modal from './Modal';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { capitalize } from '../Utilities/String.js';
+import CrudnickConfig from '../Utilities/Config.js';
+import { errorMessageText } from '../Utilities/Errors.js';
+import Modal from './Modal.jsx';
 import PropTypes from 'prop-types';
 
 export default function Actions({
@@ -72,9 +72,9 @@ export default function Actions({
 					<button
 						className="crudnick-list__button formosa-button"
 						data-cy="save"
-						type="submit"
-						ref={submitRef}
 						form="crudnick-edit-form"
+						ref={submitRef}
+						type="submit"
 					>
 						{saveButtonText}
 					</button>
@@ -106,8 +106,10 @@ export default function Actions({
 							okButtonAttributes={{ 'data-cy': 'modal-delete' }}
 							okButtonClass="formosa-button--danger"
 							okButtonText="Delete"
+							onClickCancel={() => {
+								setShowModal(false);
+							}}
 							onClickOk={onDelete}
-							onClickCancel={() => { setShowModal(false); }}
 							text={`Are you sure you want to delete this ${singular}?`}
 						/>
 					)}
@@ -145,9 +147,9 @@ Actions.propTypes = {
 	children: PropTypes.node,
 	currentPage: PropTypes.string.isRequired,
 	path: PropTypes.string.isRequired,
+	row: PropTypes.object,
 	saveButtonText: PropTypes.string,
 	setActionError: PropTypes.func,
-	row: PropTypes.object,
 	showDelete: PropTypes.bool,
 	showSave: PropTypes.bool,
 	singular: PropTypes.string.isRequired,

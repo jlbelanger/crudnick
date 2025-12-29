@@ -1,11 +1,11 @@
 import { Field, Submit } from '@jlbelanger/formosa';
-import React, { useState } from 'react';
-import Auth from '../../Utilities/Auth';
-import CrudnickConfig from '../../Utilities/Config';
-import { errorMessageText } from '../../Utilities/Errors';
-import MetaTitle from '../../Components/MetaTitle';
-import MyForm from '../../Components/MyForm';
+import Auth from '../../Utilities/Auth.js';
+import CrudnickConfig from '../../Utilities/Config.js';
+import { errorMessageText } from '../../Utilities/Errors.js';
+import MetaTitle from '../../Components/MetaTitle.jsx';
+import MyForm from '../../Components/MyForm.jsx';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
 
 export default function Register() {
 	const navigate = useNavigate();

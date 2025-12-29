@@ -1,8 +1,7 @@
 import { Api, FormContainer } from '@jlbelanger/formosa';
-import Auth from './Utilities/Auth';
-import Nav from './Components/Nav';
+import Auth from './Utilities/Auth.js';
+import Nav from './Components/Nav.jsx';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 export default function Layout({
 	articleProps = null,

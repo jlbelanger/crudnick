@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
-import Auth from '../../Utilities/Auth';
-import { errorMessageText } from '../../Utilities/Errors';
+import Auth from '../../Utilities/Auth.js';
+import { errorMessageText } from '../../Utilities/Errors.js';
 import { Form } from '@jlbelanger/formosa';
-import LoginForm from './LoginForm';
+import LoginForm from './LoginForm.jsx';
 
 export default function Login() {
 	const [urlSearchParams] = useSearchParams();
@@ -73,8 +73,8 @@ export default function Login() {
 				message={message}
 				row={row}
 				setMessage={setMessage}
-				showVerificationButton={showVerificationButton}
 				setShowVerificationButton={setShowVerificationButton}
+				showVerificationButton={showVerificationButton}
 			/>
 		</Form>
 	);

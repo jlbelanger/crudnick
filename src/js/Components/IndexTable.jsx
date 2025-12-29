@@ -1,15 +1,15 @@
 import { Alert, Api, Input } from '@jlbelanger/formosa';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ArrowIcon from '../../svg/arrow.svg?react'; // eslint-disable-line import/no-unresolved
 import CheckIcon from '../../svg/check.svg?react'; // eslint-disable-line import/no-unresolved
-import { cleanKey } from '../Utilities/String';
-import { errorMessageText } from '../Utilities/Errors';
-import { filterByKeys } from '../Utilities/Filter';
+import { cleanKey } from '../Utilities/String.js';
+import { errorMessageText } from '../Utilities/Errors.js';
+import { filterByKeys } from '../Utilities/Filter.js';
 import get from 'get-value';
 import { Link } from 'react-router';
-import MetaTitle from './MetaTitle';
+import MetaTitle from './MetaTitle.jsx';
 import PropTypes from 'prop-types';
-import { sortByKey } from '../Utilities/Sort';
+import { sortByKey } from '../Utilities/Sort.js';
 
 export default function IndexTable({ columns, defaultOptions, path, title, url }) {
 	const [rows, setRows] = useState(null);
@@ -27,15 +27,15 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 	const api = Api.instance();
 
 	useEffect(() => {
-		if (Object.prototype.hasOwnProperty.call(defaultOptions, 'sortKey')) {
+		if (Object.hasOwn(defaultOptions, 'sortKey')) {
 			setSortKey(defaultOptions.sortKey);
 		}
 
-		if (Object.prototype.hasOwnProperty.call(defaultOptions, 'sortDir')) {
+		if (Object.hasOwn(defaultOptions, 'sortDir')) {
 			setSortDir(defaultOptions.sortDir);
 		}
 
-		if (Object.prototype.hasOwnProperty.call(defaultOptions, 'filters')) {
+		if (Object.hasOwn(defaultOptions, 'filters')) {
 			setFilters(defaultOptions.filters);
 		}
 
@@ -102,7 +102,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 				</h1>
 				<ul className="crudnick-list">
 					<li className="crudnick-list__item">
-						<Link data-cy="add" className="formosa-button crudnick-list__button" to={`/${path}/add`}>Add new</Link>
+						<Link className="formosa-button crudnick-list__button" data-cy="add" to={`/${path}/add`}>Add new</Link>
 					</li>
 				</ul>
 			</header>
@@ -166,24 +166,23 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 						</tr>
 					</thead>
 					<tbody>
-						{rows === null
-							? (
-								<tr>
-									<td colSpan={columns.length}>
-										<div className="formosa-spinner" role="status">
-											Loading...
-										</div>
+						{rows === null ? (
+							<tr>
+								<td colSpan={columns.length}>
+									<div className="formosa-spinner" role="status">
+										Loading...
+									</div>
+								</td>
+							</tr>
+						) : filteredRows.map((row) => (
+							<tr key={row.id}>
+								{columns.map(({ fn, key }) => (
+									<td className={`crudnick-cell--${key}`} key={key}>
+										{fn ? fn(row, get(row, cleanKey(key)), key) : get(row, cleanKey(key))}
 									</td>
-								</tr>
-							) : filteredRows.map((row) => (
-								<tr key={row.id}>
-									{columns.map(({ fn, key }) => (
-										<td className={`crudnick-cell--${key}`} key={key}>
-											{fn ? fn(row, get(row, cleanKey(key)), key) : get(row, cleanKey(key))}
-										</td>
-									))}
-								</tr>
-							))}
+								))}
+							</tr>
+						))}
 					</tbody>
 				</table>
 			)}

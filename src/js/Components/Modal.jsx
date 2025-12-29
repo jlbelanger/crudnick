@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 export default function Modal({
-	cancelable = true,
 	cancelButtonAttributes = null,
 	cancelButtonClass = 'crudnick-button--secondary',
 	cancelButtonText = 'Cancel',
+	cancelable = true,
 	children = null,
 	event,
 	okButtonAttributes = null,
@@ -88,10 +88,10 @@ export default function Modal({
 }
 
 Modal.propTypes = {
-	cancelable: PropTypes.bool,
 	cancelButtonAttributes: PropTypes.object,
 	cancelButtonClass: PropTypes.string,
 	cancelButtonText: PropTypes.string,
+	cancelable: PropTypes.bool,
 	children: PropTypes.node,
 	event: PropTypes.object.isRequired,
 	okButtonAttributes: PropTypes.object,

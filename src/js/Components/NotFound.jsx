@@ -1,6 +1,5 @@
 import { Alert } from '@jlbelanger/formosa';
-import Auth from '../Utilities/Auth';
-import React from 'react';
+import Auth from '../Utilities/Auth.js';
 
 export default function NotFound() {
 	if (!Auth.isLoggedIn()) {
