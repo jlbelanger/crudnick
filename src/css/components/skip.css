@@ -1,0 +1,27 @@
+#crudnick-skip {
+	background: var(--crudnick-skip-background-color);
+	border: 0;
+	border-radius: 0;
+	color: var(--crudnick-skip-color);
+	font-size: var(--crudnick-skip-font-size);
+	font-weight: var(--crudnick-skip-font-weight);
+	height: var(--crudnick-skip-height);
+	left: 50%;
+	line-height: var(--crudnick-skip-height);
+	margin-left: calc(var(--crudnick-skip-width) * -.5);
+	opacity: 0;
+	padding: 0;
+	position: absolute;
+	text-align: center;
+	text-decoration: none;
+	top: calc(var(--crudnick-skip-height) * -1);
+	width: var(--crudnick-skip-width);
+	z-index: 99999;
+
+	&:active,
+	&:focus {
+		box-shadow: var(--crudnick-skip-box-shadow), 0 0 0 var(--formosa-focus-border-width) var(--formosa-focus-box-shadow-color);
+		opacity: 1;
+		top: 0;
+	}
+}

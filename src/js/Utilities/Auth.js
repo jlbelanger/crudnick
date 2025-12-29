@@ -1,9 +1,11 @@
 import Cookies from 'js-cookie';
+import CrudnickConfig from './Config.js';
 
 export default class Auth {
 	static login(user, token, remember) {
-		Cookies.set(`${process.env.REACT_APP_COOKIE_PREFIX}_user`, JSON.stringify(user), Auth.attributes(remember));
-		Cookies.set(`${process.env.REACT_APP_COOKIE_PREFIX}_token`, token, Auth.attributes(remember));
+		const cookiePrefix = CrudnickConfig.get('cookiePrefix');
+		Cookies.set(`${cookiePrefix}_user`, JSON.stringify(user), Auth.attributes(remember));
+		Cookies.set(`${cookiePrefix}_token`, token, Auth.attributes(remember));
 	}
 
 	static refresh() {
@@ -28,9 +30,11 @@ export default class Auth {
 	}
 
 	static logout(status = '') {
-		Cookies.remove(`${process.env.REACT_APP_COOKIE_PREFIX}_user`);
-		Cookies.remove(`${process.env.REACT_APP_COOKIE_PREFIX}_token`);
-		window.location.href = `${process.env.PUBLIC_URL ? process.env.PUBLIC_URL : '/'}${status ? `?status=${status}` : ''}`;
+		const basePath = CrudnickConfig.get('basePath');
+		const cookiePrefix = CrudnickConfig.get('cookiePrefix');
+		Cookies.remove(`${cookiePrefix}_user`);
+		Cookies.remove(`${cookiePrefix}_token`);
+		window.location.href = `${basePath}${status ? `?status=${status}` : ''}`;
 	}
 
 	static id() {
@@ -39,14 +43,16 @@ export default class Auth {
 	}
 
 	static user() {
-		return Cookies.get(`${process.env.REACT_APP_COOKIE_PREFIX}_user`);
+		const cookiePrefix = CrudnickConfig.get('cookiePrefix');
+		return Cookies.get(`${cookiePrefix}_user`);
 	}
 
 	static token() {
-		return Cookies.get(`${process.env.REACT_APP_COOKIE_PREFIX}_token`);
+		const cookiePrefix = CrudnickConfig.get('cookiePrefix');
+		return Cookies.get(`${cookiePrefix}_token`);
 	}
 
 	static isLoggedIn() {
-		return !!Auth.user() && !!Auth.token();
+		return Boolean(Auth.user()) && Boolean(Auth.token());
 	}
 }

@@ -1,0 +1,33 @@
+.formosa-horizontal {
+	margin-top: var(--crudnick-margin);
+}
+
+.formosa-search-wrapper {
+	input[size] {
+		min-width: 100%;
+	}
+}
+
+.formosa-icon--search {
+	path {
+		fill: var(--crudnick-dark);
+	}
+}
+
+.formosa-field__note {
+	color: var(--crudnick-note-color);
+}
+
+.formosa-autocomplete__value {
+	padding-left: 0;
+	padding-right: calc(var(--formosa-autocomplete-value-height) - var(--formosa-autocomplete-value-padding-top));
+}
+
+.formosa-autocomplete__value--input {
+	margin: 0;
+}
+
+td > .formosa-spinner {
+	justify-content: center;
+	margin: 16px auto;
+}

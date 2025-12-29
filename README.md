@@ -32,10 +32,10 @@ npx create-react-app my-app
 cd my-app
 
 # With npm:
-npm install https://github.com/jlbelanger/crudnick react-router-dom@^5.3.0 --save
+npm install https://github.com/jlbelanger/crudnick --save
 
 # Or with yarn:
-yarn add https://github.com/jlbelanger/crudnick react-router-dom@^5.3.0
+yarn add https://github.com/jlbelanger/crudnick
 ```
 
 ## Setup
@@ -43,32 +43,32 @@ yarn add https://github.com/jlbelanger/crudnick react-router-dom@^5.3.0
 Create a new file `.env` containing the following (but replace the values):
 
 ```
-REACT_APP_API_URL=https://example.local/api
-REACT_APP_FRONTEND_URL=https://example.local
-REACT_APP_COOKIE_PREFIX=example
-REACT_APP_TITLE="Example"
+VITE_API_URL=https://example.local/api
+VITE_FRONTEND_URL=https://example.local
+VITE_COOKIE_PREFIX=example
+VITE_TITLE="Example"
 ```
 
-Update `public/index.html`:
+Update `index.html`:
 
 ``` html
 <!-- Replace: -->
 <title>React App</title>
 
 <!-- With: -->
-<title>%REACT_APP_TITLE%</title>
+<title>%VITE_TITLE%</title>
 ```
 
 Create a subfolder in the `src` folder named `Pages` and a subfolder in `Pages` named `Users`. (So in all, you should have `my-app/src/Pages/Users`.)
 
 Create four new files in the `Users` subfolder:
 
-- `my-app/src/Pages/Users/Add.js`
-- `my-app/src/Pages/Users/Edit.js`
-- `my-app/src/Pages/Users/Form.js`
-- `my-app/src/Pages/Users/Index.js`
+- `my-app/src/Pages/Users/Add.jsx`
+- `my-app/src/Pages/Users/Edit.jsx`
+- `my-app/src/Pages/Users/Form.jsx`
+- `my-app/src/Pages/Users/Index.jsx`
 
-Add the following to `src/Pages/Users/Add.js`:
+Add the following to `src/Pages/Users/Add.jsx`:
 
 ``` jsx
 import { AddForm } from '@jlbelanger/crudnick';
@@ -87,13 +87,13 @@ export default function Add() {
 }
 ```
 
-Add the following to `src/Pages/Users/Edit.js`:
+Add the following to `src/Pages/Users/Edit.jsx`:
 
 ``` jsx
 import { EditForm } from '@jlbelanger/crudnick';
 import Form from './Form';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 export default function Edit() {
 	const { id } = useParams();
@@ -111,7 +111,7 @@ export default function Edit() {
 }
 ```
 
-Add the following to `src/Pages/Users/Form.js`:
+Add the following to `src/Pages/Users/Form.jsx`:
 
 ``` jsx
 import { Field } from '@jlbelanger/formosa';
@@ -133,7 +133,7 @@ Form.propTypes = {
 };
 ```
 
-Add the following to `src/Pages/Users/Index.js`:
+Add the following to `src/Pages/Users/Index.jsx`:
 
 ``` jsx
 import { IndexTable } from '@jlbelanger/crudnick';
@@ -168,47 +168,102 @@ export default function Index() {
 Create a new file `src/Routes.js` containing the following:
 
 ``` jsx
-import { Route, Switch } from 'react-router-dom';
-import React from 'react';
+import { ForgotPassword, Login, NotFound, PrivateRoute, ResetPassword } from '@jlbelanger/crudnick';
+import { createBrowserRouter } from 'react-router';
+import Layout from './Layout';
 import UserAdd from './Pages/Users/Add';
 import UserEdit from './Pages/Users/Edit';
 import UserIndex from './Pages/Users/Index';
 
-export default function Routes() {
-	return (
-		<Switch>
-			<Route exact path="/" />
-
-			<Route exact path="/users"><UserIndex /></Route>
-			<Route exact path="/users/add"><UserAdd /></Route>
-			<Route exact path="/users/:id(\d+)"><UserEdit /></Route>
-
-			<Route>Page not found.</Route>
-		</Switch>
-	);
-}
+export default createBrowserRouter(
+	[
+		{
+			path: '/',
+			Component: Layout,
+			children: [
+				{
+					index: true,
+					Component: Login,
+				},
+				{
+					path: 'forgot-password',
+					Component: ForgotPassword,
+				},
+				{
+					path: 'reset-password/:token',
+					Component: ResetPassword,
+				},
+				{
+					path: '',
+					Component: PrivateRoute,
+					children: [
+						{
+							path: 'users',
+							children: [
+								{ index: true, Component: UserIndex },
+								{ path: 'add', Component: UserAdd },
+								{ path: ':id', Component: UserEdit },
+							],
+						},
+					],
+				},
+				{
+					path: '*',
+					Component: NotFound,
+				},
+			],
+		},
+	],
+);
 ```
 
-Replace the contents of `src/index.js` with the following:
+Create a new file `src/Layout.jsx` containing the following:
 
 ``` jsx
-import '@jlbelanger/crudnick/dist/index.css';
-import { App } from '@jlbelanger/crudnick';
+import { Layout as CrudnickLayout } from '@jlbelanger/crudnick';
+import { Outlet } from 'react-router';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import Routes from './Routes';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-	<React.StrictMode>
-		<App
+export default function MyLayout() {
+	return (
+		<CrudnickLayout
 			nav={[
 				{ label: 'Users', path: '/users' },
 			]}
 		>
-			<Routes />
-		</App>
-	</React.StrictMode>
+			<Outlet />
+		</CrudnickLayout>
+	);
+}
+```
+
+Replace the contents of `src/index.jsx` with the following:
+
+``` jsx
+import '@jlbelanger/crudnick/dist/index.css';
+import { createRoot } from 'react-dom/client';
+import { CrudnickConfig } from '@jlbelanger/crudnick';
+import { FormosaConfig } from '@jlbelanger/formosa';
+import { RouterProvider } from 'react-router';
+import Routes from './Routes';
+import { StrictMode } from 'react';
+
+CrudnickConfig.init({
+	basePath: import.meta.env.VITE_BASE_PATH,
+	cookiePrefix: import.meta.env.VITE_COOKIE_PREFIX,
+	frontendUrl: import.meta.env.VITE_FRONTEND_URL,
+	siteTitle: import.meta.env.VITE_TITLE,
+});
+
+FormosaConfig.init({
+	apiPrefix: import.meta.env.VITE_API_URL,
+});
+
+const root = createRoot(document.getElementById('root'));
+root.render(
+	<StrictMode>
+		<RouterProvider router={Routes} />
+	</StrictMode>
 );
 ```
 

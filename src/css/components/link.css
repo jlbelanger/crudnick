@@ -1,0 +1,22 @@
+a {
+	color: var(--crudnick-link-color);
+	text-decoration: underline;
+
+	&:hover,
+	&:active,
+	&:focus {
+		text-decoration: none;
+	}
+}
+
+.crudnick-link--table {
+	display: block;
+	margin: calc(var(--crudnick-table-cell-padding) * -1);
+	padding: var(--crudnick-table-cell-padding);
+
+	&:hover,
+	&:active,
+	&:focus {
+		background-color: var(--crudnick-table-link-background-color-hover);
+	}
+}

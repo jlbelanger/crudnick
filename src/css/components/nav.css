@@ -1,0 +1,142 @@
+@custom-media --crudnick-nav-breakpoint (width >= 1025px);
+
+#crudnick-nav__dialog {
+	background: none;
+	border: 0;
+	box-shadow: 0 0 0 100vh hsl(from var(--crudnick-black) h s l / 0%);
+	padding: 0;
+	transition: box-shadow .3s ease-in-out;
+	width: 100%;
+
+	&:focus {
+		box-shadow: inherit;
+	}
+
+	.show-nav.animate-nav & {
+		box-shadow: 0 0 0 100vh hsl(from var(--crudnick-black) h s l / 40%);
+		display: block;
+	}
+}
+
+#crudnick-nav__dialog::backdrop {
+	background: transparent;
+}
+
+#crudnick-nav {
+	background-color: var(--crudnick-nav-background-color);
+	display: flex;
+	justify-content: flex-end;
+	left: 0;
+	margin: 0 0 var(--crudnick-margin);
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 9998;
+
+	.crudnick-list__item {
+		flex: 0 0 auto;
+	}
+
+	.crudnick-list__button {
+		&:focus {
+			box-shadow: inset 0 0 0 var(--formosa-focus-border-width) var(--formosa-focus-box-shadow-color);
+		}
+	}
+
+	.active {
+		background-color: var(--crudnick-nav-active-background-color);
+		color: var(--crudnick-nav-active-color);
+	}
+
+	@media (--crudnick-nav-breakpoint) {
+		.crudnick-list__item {
+			flex: 1 1 auto;
+		}
+	}
+}
+
+#crudnick-nav__list {
+	background-color: var(--crudnick-nav-background-color);
+	bottom: 0;
+	margin: 0 auto;
+	max-width: var(--crudnick-content-width);
+	min-width: 200px;
+	overflow: auto;
+	padding: 0;
+	position: fixed;
+	right: 0;
+	top: var(--crudnick-button-height);
+	transform: translateX(200%);
+	transition: transform .3s ease-in-out;
+
+	a,
+	button {
+		height: var(--crudnick-button-height);
+		line-height: var(--crudnick-button-height);
+		margin: 0;
+		padding: 0 var(--crudnick-padding);
+		text-align: left;
+		width: 100%;
+	}
+
+	& > li {
+		margin: 0;
+	}
+
+	.show-nav.animate-nav & {
+		transform: translateX(0);
+	}
+
+	@media (--crudnick-nav-breakpoint) {
+		display: flex;
+		flex-direction: row;
+		min-width: 0;
+		padding: 0 var(--crudnick-margin);
+		position: static;
+		transform: none;
+		transition: none;
+		width: 100%;
+
+		a,
+		button {
+			display: block;
+			padding-left: 4px;
+			padding-right: 4px;
+			text-align: center;
+		}
+	}
+}
+
+.crudnick-menu-button {
+	background-size: 50%;
+	display: block;
+	font-size: 0;
+	height: var(--crudnick-button-height);
+	width: var(--crudnick-button-height);
+
+	&:focus {
+		box-shadow: inset 0 0 0 var(--formosa-focus-border-width) var(--formosa-focus-box-shadow-color);
+	}
+}
+
+#crudnick-menu-show-button {
+	.show-nav & {
+		visibility: hidden;
+	}
+
+	@media (--crudnick-nav-breakpoint) {
+		display: none;
+	}
+}
+
+#crudnick-menu-close-button {
+	background: transparent;
+	display: none;
+	position: fixed;
+	right: 0;
+	top: 0;
+
+	.show-nav & {
+		display: block;
+	}
+}

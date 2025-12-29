@@ -1,0 +1,45 @@
+.formosa-button {
+	text-decoration: none;
+	white-space: nowrap;
+
+	&:hover,
+	&:active,
+	&:focus {
+		text-decoration: underline;
+	}
+
+	&[disabled] {
+		&:hover,
+		&:active,
+		&:focus {
+			text-decoration: none;
+		}
+	}
+}
+
+.crudnick-button--secondary,
+.formosa-button.formosa-postfix {
+	background-color: var(--crudnick-button-secondary-background-color);
+	border-color: var(--crudnick-button-secondary-border-color);
+	color: var(--crudnick-button-secondary-color);
+
+	&:hover,
+	&:active,
+	&:focus {
+		background-color: var(--crudnick-button-secondary-background-color-hover);
+	}
+}
+
+.crudnick-button--link {
+	background-color: var(--crudnick-button-link-background-color);
+	border-color: var(--crudnick-button-link-border-color);
+	color: var(--crudnick-button-link-color);
+	text-decoration: underline;
+
+	&:hover,
+	&:active,
+	&:focus {
+		background-color: var(--crudnick-button-link-background-color-hover);
+		text-decoration: none;
+	}
+}

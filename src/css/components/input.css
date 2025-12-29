@@ -1,0 +1,20 @@
+input,
+textarea {
+	width: 100%;
+
+	&[size] {
+		width: auto;
+	}
+}
+
+.crudnick-textarea--large {
+	height: var(--crudnick-textarea-large-height);
+}
+
+.crudnick-textarea--medium {
+	height: var(--crudnick-textarea-medium-height);
+}
+
+::placeholder {
+	color: var(--crudnick-placeholder-color);
+}

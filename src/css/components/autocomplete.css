@@ -1,0 +1,10 @@
+.crudnick-autocomplete-link {
+	color: var(--crudnick-white);
+	display: block;
+	padding-left: var(--formosa-autocomplete-value-padding-top);
+	padding-right: var(--formosa-autocomplete-value-padding-top);
+
+	&:focus {
+		box-shadow: inset 0 0 0 var(--formosa-focus-border-width) var(--formosa-focus-box-shadow-color);
+	}
+}

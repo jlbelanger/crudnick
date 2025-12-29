@@ -7,7 +7,10 @@ const filterByKey = (records, key, value) => {
 	value = value.trim().toLowerCase();
 	const escapedValue = escapeRegExp(value);
 	records = records.filter((record) => {
-		const recordValue = (get(record, key) || '').toString().replace(/<[^>]+?>/g, '').toLowerCase();
+		const recordValue = (get(record, key) || '')
+			.toString()
+			.replace(/<[^>]+?>/g, '')
+			.toLowerCase();
 		return recordValue.match(new RegExp(`(^|[^a-z])${escapedValue}`));
 	});
 	records = records.sort((a, b) => {
@@ -26,7 +29,7 @@ const filterByKey = (records, key, value) => {
 	return records;
 };
 
-export const filterByKeys = (records, filters) => { // eslint-disable-line import/prefer-default-export
+export const filterByKeys = (records, filters) => {
 	Object.keys(filters).forEach((key) => {
 		records = filterByKey(records, key, filters[key]);
 	});
