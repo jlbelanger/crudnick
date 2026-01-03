@@ -30,12 +30,7 @@ In the terminal, run the following commands:
 ``` bash
 npx create-react-app my-app
 cd my-app
-
-# With npm:
-npm install https://github.com/jlbelanger/crudnick --save
-
-# Or with yarn:
-yarn add https://github.com/jlbelanger/crudnick
+npm install --save https://github.com/jlbelanger/crudnick
 ```
 
 ## Setup
@@ -270,11 +265,7 @@ root.render(
 In the terminal, still in the `my-app` folder, run the following command:
 
 ``` bash
-# With npm:
 npm start
-
-# Or with yarn:
-yarn start
 ```
 
 ## Examples
@@ -287,7 +278,7 @@ yarn start
 ### Requirements
 
 - [Git](https://git-scm.com/)
-- [Yarn](https://classic.yarnpkg.com/en/docs/install)
+- [Node](https://nodejs.org/)
 
 ### Setup
 
@@ -297,17 +288,17 @@ git clone https://github.com/jlbelanger/crudnick.git
 cd crudnick
 
 # Install dependencies
-yarn install
+npm install
 ```
 
 ### Run
 
 ``` bash
-yarn start
+npm start
 ```
 
 ### Lint
 
 ``` bash
-yarn lint
+npm run lint
 ```
