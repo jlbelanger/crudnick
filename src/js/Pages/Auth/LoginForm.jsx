@@ -42,14 +42,14 @@ export default function LoginForm({
 
 			<h1>Login</h1>
 
-			{message && (<Alert type={message.type}>{message.text}</Alert>)}
-			{showVerificationButton && (
+			{message ? <Alert type={message.type}>{message.text}</Alert> : null}
+			{showVerificationButton ? (
 				<p className={`formosa-alert formosa-alert--${showVerificationButton === true ? 'error' : 'success'} post-alert-button`}>
 					<button className="formosa-button button--secondary" onClick={resendVerificationEmail} type="button">
 						Resend verification email
 					</button>
 				</p>
-			)}
+			) : null}
 
 			<FormAlert />
 

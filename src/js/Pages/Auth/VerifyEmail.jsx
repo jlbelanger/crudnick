@@ -5,8 +5,8 @@ import MetaTitle from '../../Components/MetaTitle.jsx';
 import { useEffect } from 'react';
 
 export default function VerifyEmail() {
-	const [urlSearchParams] = useSearchParams();
 	const navigate = useNavigate();
+	const [urlSearchParams] = useSearchParams();
 
 	useEffect(() => {
 		if (urlSearchParams.get('expires') < Math.floor(Date.now() / 1000)) {
@@ -27,9 +27,7 @@ export default function VerifyEmail() {
 				path={`auth/verify-email${window.location.search}`}
 				successToastText="Email verified successfully."
 			>
-				<p>
-					Please click the verify button to complete the registration process.
-				</p>
+				<p>Please click the verify button to complete the registration process.</p>
 				<Submit data-cy="verify" label="Verify" />
 			</Form>
 		</>

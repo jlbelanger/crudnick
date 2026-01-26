@@ -85,7 +85,8 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 				</Link>
 			);
 		} else if (column.type === 'checkbox') {
-			column.fn = (_row, value) => (value ? (<CheckIcon aria-hidden="true" height={16} width={16} />) : null);
+			// eslint-disable-next-line @stylistic/no-extra-parens
+			column.fn = (_row, value) => (value ? <CheckIcon aria-hidden="true" height={16} width={16} /> : null);
 			column.size = 4;
 		}
 		return column;
@@ -102,20 +103,25 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 				</h1>
 				<ul className="crudnick-list">
 					<li className="crudnick-list__item">
-						<Link className="formosa-button crudnick-list__button" data-cy="add" to={`/${path}/add`}>Add new</Link>
+						<Link className="formosa-button crudnick-list__button" data-cy="add" to={`/${path}/add`}>
+							Add new
+						</Link>
 					</li>
 				</ul>
 			</header>
 
-			{rowsError ? (
-				<Alert type="error">{rowsError}</Alert>
-			) : (
+			{rowsError ? <Alert type="error">{rowsError}</Alert> : (
 				<table>
 					<thead>
 						<tr>
 							{columns.map((column) => (
-								<th className={column.size ? 'crudnick-column--shrink' : null} key={column.key} scope="col" {...column.thAttributes}>
-									{column.disableSort ? (column.shortLabel || column.label) : (
+								<th
+									className={column.size ? 'crudnick-column--shrink' : null}
+									key={column.key}
+									scope="col"
+									{...column.thAttributes}
+								>
+									{column.disableSort ? column.shortLabel || column.label : (
 										<button
 											aria-label={`Sort by ${column.label}`}
 											className="formosa-button"

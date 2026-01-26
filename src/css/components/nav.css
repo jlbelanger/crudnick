@@ -5,7 +5,7 @@
 	border: 0;
 	box-shadow: 0 0 0 100vh hsl(from var(--crudnick-black) h s l / 0%);
 	padding: 0;
-	transition: box-shadow .3s ease-in-out;
+	transition: box-shadow 0.3s ease-in-out;
 	width: 100%;
 
 	&:focus {
@@ -67,7 +67,7 @@
 	right: 0;
 	top: var(--crudnick-button-height);
 	transform: translateX(200%);
-	transition: transform .3s ease-in-out;
+	transition: transform 0.3s ease-in-out;
 
 	a,
 	button {

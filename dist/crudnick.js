@@ -1123,7 +1123,7 @@ function lr({
     });
   }, j = ee.get("frontendUrl");
   return /* @__PURE__ */ o.jsxs("ul", { className: "crudnick-list", children: [
-    v && /* @__PURE__ */ o.jsx("li", { children: /* @__PURE__ */ o.jsx(
+    v ? /* @__PURE__ */ o.jsx("li", { children: /* @__PURE__ */ o.jsx(
       "button",
       {
         className: "crudnick-list__button formosa-button",
@@ -1133,9 +1133,9 @@ function lr({
         type: "submit",
         children: s
       }
-    ) }),
+    ) }) : null,
     i !== "/" && /* @__PURE__ */ o.jsx("li", { children: /* @__PURE__ */ o.jsx($e, { className: "crudnick-list__button formosa-button", to: `/${l}/${a.id}`, children: "Edit" }) }),
-    f && /* @__PURE__ */ o.jsxs("li", { children: [
+    f ? /* @__PURE__ */ o.jsxs("li", { children: [
       /* @__PURE__ */ o.jsx(
         "button",
         {
@@ -1148,7 +1148,7 @@ function lr({
           children: "Delete"
         }
       ),
-      T && /* @__PURE__ */ o.jsx(
+      T ? /* @__PURE__ */ o.jsx(
         ur,
         {
           event: T,
@@ -1161,9 +1161,9 @@ function lr({
           onClickOk: N,
           text: `Are you sure you want to delete this ${h}?`
         }
-      )
-    ] }),
-    j && a.url && /* @__PURE__ */ o.jsx("li", { children: /* @__PURE__ */ o.jsx(
+      ) : null
+    ] }) : null,
+    j && a.url ? /* @__PURE__ */ o.jsx("li", { children: /* @__PURE__ */ o.jsx(
       "a",
       {
         className: "crudnick-list__button formosa-button crudnick-button--secondary",
@@ -1172,7 +1172,7 @@ function lr({
         target: "_blank",
         children: "View"
       }
-    ) }),
+    ) }) : null,
     y.map((n) => /* @__PURE__ */ o.jsx("li", { children: /* @__PURE__ */ o.jsx(
       $e,
       {
@@ -1218,7 +1218,7 @@ function Ye({ children: e, ...t }) {
   const { showWarningPrompt: i } = he(Ne);
   return /* @__PURE__ */ o.jsxs(Re, { ...t, children: [
     e,
-    i && /* @__PURE__ */ o.jsx(Ir, {})
+    i ? /* @__PURE__ */ o.jsx(Ir, {}) : null
   ] });
 }
 Ye.propTypes = {
@@ -1255,18 +1255,8 @@ function Nr({
     /* @__PURE__ */ o.jsxs("header", { className: "crudnick-header", children: [
       /* @__PURE__ */ o.jsx("h1", { "data-cy": "title", children: `${_} ${E}` }),
       /* @__PURE__ */ o.jsxs("ul", { className: "crudnick-list", children: [
-        /* @__PURE__ */ o.jsx("li", { children: /* @__PURE__ */ o.jsx(
-          "button",
-          {
-            className: "formosa-button",
-            "data-cy": "save",
-            form: "crudnick-add-form",
-            ref: j,
-            type: "submit",
-            children: y
-          }
-        ) }),
-        w && /* @__PURE__ */ o.jsx("li", { children: /* @__PURE__ */ o.jsx(
+        /* @__PURE__ */ o.jsx("li", { children: /* @__PURE__ */ o.jsx("button", { className: "formosa-button", "data-cy": "save", form: "crudnick-add-form", ref: j, type: "submit", children: y }) }),
+        w ? /* @__PURE__ */ o.jsx("li", { children: /* @__PURE__ */ o.jsx(
           te,
           {
             id: "crudnick-add-another",
@@ -1276,7 +1266,7 @@ function Nr({
             type: "checkbox",
             value: q
           }
-        ) })
+        ) }) : null
       ] })
     ] }),
     /* @__PURE__ */ o.jsx(
@@ -1366,7 +1356,6 @@ var Lr = Object.defineProperty, pe = (e, t) => Lr(e, "name", { value: t, configu
   return h === v ? e : i.default;
 }, "getValue"), ne = qr;
 function Dr({
-  // eslint-disable-line complexity
   actions: e = null,
   apiPath: t,
   component: i,
@@ -1405,7 +1394,7 @@ function Dr({
     /* @__PURE__ */ o.jsx(ie, { title: re }),
     /* @__PURE__ */ o.jsxs("header", { className: "crudnick-header", children: [
       /* @__PURE__ */ o.jsx("h1", { "data-cy": "title", children: `${T} ${_}` }),
-      j && /* @__PURE__ */ o.jsx(
+      j ? /* @__PURE__ */ o.jsx(
         lr,
         {
           apiPath: t,
@@ -1420,10 +1409,10 @@ function Dr({
           subpages: S,
           children: e ? e(j, n) : null
         }
-      )
+      ) : null
     ] }),
-    U && /* @__PURE__ */ o.jsx(de, { type: "error", children: U }),
-    j && /* @__PURE__ */ o.jsx(
+    U ? /* @__PURE__ */ o.jsx(de, { type: "error", children: U }) : null,
+    j ? /* @__PURE__ */ o.jsx(
       Ye,
       {
         afterSubmitFailure: J,
@@ -1442,7 +1431,7 @@ function Dr({
         ...Y,
         children: /* @__PURE__ */ o.jsx(Q, { row: j, setRow: n, ...l })
       }
-    ),
+    ) : null,
     j && a ? a(j) : null
   ] });
 }
@@ -1454,10 +1443,7 @@ Dr.propTypes = {
   extra: p.func,
   filterBody: p.func,
   filterValues: p.func,
-  name: p.oneOfType([
-    p.func,
-    p.string
-  ]),
+  name: p.oneOfType([p.func, p.string]),
   path: p.string.isRequired,
   relationshipNames: p.array,
   saveButtonText: p.string,
@@ -1475,7 +1461,7 @@ function Zr() {
     e.get("expired") && (s({
       text: "Error: This link has expired.",
       type: "error"
-    }), t(window.location.pathname, { replace: !0 }));
+    }), t("/forgot-password", { replace: !0 }));
   }, []), D.isLoggedIn() ? null : /* @__PURE__ */ o.jsxs(
     Re,
     {
@@ -1493,7 +1479,7 @@ function Zr() {
         /* @__PURE__ */ o.jsx(ie, { title: "Forgot your password?" }),
         /* @__PURE__ */ o.jsx("h1", { children: "Forgot your password?" }),
         /* @__PURE__ */ o.jsx(Le, {}),
-        a && /* @__PURE__ */ o.jsx(de, { type: a.type, children: a.text }),
+        a ? /* @__PURE__ */ o.jsx(de, { type: a.type, children: a.text }) : null,
         /* @__PURE__ */ o.jsx(
           te,
           {
@@ -1561,29 +1547,38 @@ function Wr({ columns: e, defaultOptions: t, path: i, title: l, url: a }) {
     ] }),
     h ? /* @__PURE__ */ o.jsx(de, { type: "error", children: h }) : /* @__PURE__ */ o.jsxs("table", { children: [
       /* @__PURE__ */ o.jsxs("thead", { children: [
-        /* @__PURE__ */ o.jsx("tr", { children: e.map((n) => /* @__PURE__ */ o.jsx("th", { className: n.size ? "crudnick-column--shrink" : null, scope: "col", ...n.thAttributes, children: n.disableSort ? n.shortLabel || n.label : /* @__PURE__ */ o.jsxs(
-          "button",
+        /* @__PURE__ */ o.jsx("tr", { children: e.map((n) => /* @__PURE__ */ o.jsx(
+          "th",
           {
-            "aria-label": `Sort by ${n.label}`,
-            className: "formosa-button",
-            "data-key": n.sortKey || ce(n.key),
-            disabled: s === null,
-            onClick: Y,
-            type: "button",
-            children: [
-              n.shortLabel || n.label,
-              w === (n.sortKey || ce(n.key)) ? /* @__PURE__ */ o.jsx(
-                Fr,
-                {
-                  "aria-hidden": "true",
-                  className: `crudnick-icon--caret ${_ === "desc" ? "flip" : ""}`,
-                  height: 12,
-                  width: 12
-                }
-              ) : null
-            ]
-          }
-        ) }, n.key)) }),
+            className: n.size ? "crudnick-column--shrink" : null,
+            scope: "col",
+            ...n.thAttributes,
+            children: n.disableSort ? n.shortLabel || n.label : /* @__PURE__ */ o.jsxs(
+              "button",
+              {
+                "aria-label": `Sort by ${n.label}`,
+                className: "formosa-button",
+                "data-key": n.sortKey || ce(n.key),
+                disabled: s === null,
+                onClick: Y,
+                type: "button",
+                children: [
+                  n.shortLabel || n.label,
+                  w === (n.sortKey || ce(n.key)) ? /* @__PURE__ */ o.jsx(
+                    Fr,
+                    {
+                      "aria-hidden": "true",
+                      className: `crudnick-icon--caret ${_ === "desc" ? "flip" : ""}`,
+                      height: 12,
+                      width: 12
+                    }
+                  ) : null
+                ]
+              }
+            )
+          },
+          n.key
+        )) }),
         /* @__PURE__ */ o.jsx("tr", { children: e.map(({ key: n, disableSearch: L, label: M, size: U }) => /* @__PURE__ */ o.jsx("td", { className: "formosa-input-wrapper--search", children: !L && /* @__PURE__ */ o.jsx(
           hr,
           {
@@ -1664,16 +1659,18 @@ function pr({ nav: e }) {
         }
       ),
       /* @__PURE__ */ o.jsxs("ul", { id: "crudnick-nav__list", children: [
-        e.map(({ label: S, path: T }) => /* @__PURE__ */ o.jsx("li", { className: "crudnick-list__item", children: /* @__PURE__ */ o.jsx(
-          $e,
+        e.map(({ label: S, path: T }) => /* @__PURE__ */ o.jsx("li", { className: "crudnick-list__item", children: /* @__PURE__ */ o.jsx($e, { className: "formosa-button crudnick-list__button", onClick: h, to: T, children: S }) }, T)),
+        /* @__PURE__ */ o.jsx("li", { className: "crudnick-list__item", children: /* @__PURE__ */ o.jsx(
+          "button",
           {
             className: "formosa-button crudnick-list__button",
-            onClick: h,
-            to: T,
-            children: S
+            "data-cy": "logout",
+            id: "crudnick-logout",
+            onClick: v,
+            type: "button",
+            children: "Logout"
           }
-        ) }, T)),
-        /* @__PURE__ */ o.jsx("li", { className: "crudnick-list__item", children: /* @__PURE__ */ o.jsx("button", { className: "formosa-button crudnick-list__button", "data-cy": "logout", id: "crudnick-logout", onClick: v, type: "button", children: "Logout" }) })
+        ) })
       ] })
     ] }),
     /* @__PURE__ */ o.jsxs(
@@ -1698,11 +1695,7 @@ function pr({ nav: e }) {
 pr.propTypes = {
   nav: p.array.isRequired
 };
-function Gr({
-  articleProps: e = null,
-  children: t,
-  nav: i
-}) {
+function Gr({ articleProps: e = null, children: t, nav: i }) {
   D.isLoggedIn() && !ue.getToken() && ue.setToken(D.token()), document.addEventListener("formosaApiRequest", () => {
     D.refresh();
   });
@@ -1750,8 +1743,8 @@ function mr({
   return /* @__PURE__ */ o.jsxs(o.Fragment, { children: [
     /* @__PURE__ */ o.jsx(ie, { title: "Login" }),
     /* @__PURE__ */ o.jsx("h1", { children: "Login" }),
-    e && /* @__PURE__ */ o.jsx(de, { type: e.type, children: e.text }),
-    a && /* @__PURE__ */ o.jsx("p", { className: `formosa-alert formosa-alert--${a === !0 ? "error" : "success"} post-alert-button`, children: /* @__PURE__ */ o.jsx("button", { className: "formosa-button button--secondary", onClick: c, type: "button", children: "Resend verification email" }) }),
+    e ? /* @__PURE__ */ o.jsx(de, { type: e.type, children: e.text }) : null,
+    a ? /* @__PURE__ */ o.jsx("p", { className: `formosa-alert formosa-alert--${a === !0 ? "error" : "success"} post-alert-button`, children: /* @__PURE__ */ o.jsx("button", { className: "formosa-button button--secondary", onClick: c, type: "button", children: "Resend verification email" }) }) : null,
     /* @__PURE__ */ o.jsx(Le, {}),
     /* @__PURE__ */ o.jsx(
       te,
@@ -1804,16 +1797,16 @@ function Qr() {
     f(w.errors[0].code === "auth.unverified");
   }, y = (w) => {
     let E;
-    e.get("redirect") && e.get("redirect")[0] === "/" ? E = e.get("redirect") : E = "/", D.login(w.user, w.token, w.user.remember), window.location.href = E;
+    e.get("redirect") && e.get("redirect")[0] === "/" ? E = e.get("redirect") : E = window.location.href.replace(/\/$/, ""), D.login(w.user, w.token, w.user.remember), window.location.href = E;
   };
   return K(() => {
     e.get("status") === "401" ? (s({
       text: "Your session has expired. Please log in again.",
       type: "warning"
-    }), t(window.location.pathname, { replace: !0 })) : e.get("verify") ? (s({
+    }), t("/", { replace: !0 })) : e.get("verify") ? (s({
       text: `Check your email (${e.get("email")}) to continue the registration process.`,
       type: "success"
-    }), f(e.get("username")), t(window.location.pathname, { replace: !0 })) : e.get("expired") && t("/forgot-password?expired=1");
+    }), f(e.get("username")), t("/", { replace: !0 })) : e.get("expired") && t("/forgot-password?expired=1");
   }, []), D.isLoggedIn() ? null : /* @__PURE__ */ o.jsx(
     Re,
     {

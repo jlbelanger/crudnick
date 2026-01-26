@@ -97,17 +97,19 @@ export default function Nav({ nav }) {
 				<ul id="crudnick-nav__list">
 					{nav.map(({ label, path }) => (
 						<li className="crudnick-list__item" key={path}>
-							<NavLink
-								className="formosa-button crudnick-list__button"
-								onClick={hideMenu}
-								to={path}
-							>
+							<NavLink className="formosa-button crudnick-list__button" onClick={hideMenu} to={path}>
 								{label}
 							</NavLink>
 						</li>
 					))}
 					<li className="crudnick-list__item">
-						<button className="formosa-button crudnick-list__button" data-cy="logout" id="crudnick-logout" onClick={logout} type="button">
+						<button
+							className="formosa-button crudnick-list__button"
+							data-cy="logout"
+							id="crudnick-logout"
+							onClick={logout}
+							type="button"
+						>
 							Logout
 						</button>
 					</li>

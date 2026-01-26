@@ -45,6 +45,8 @@ thead {
 		font-weight: bold;
 		justify-content: space-between;
 		margin: calc(var(--crudnick-padding) * -1);
+
+		/* prettier-ignore */
 		padding:
 			var(--crudnick-table-cell-padding)
 			calc(var(--crudnick-padding) + (var(--crudnick-table-arrow-width) * 2))
@@ -55,7 +57,7 @@ thead {
 		width: calc(100% + (var(--crudnick-padding) * 2));
 
 		svg {
-			margin-top: calc((var(--crudnick-table-arrow-width) * .5) * -1);
+			margin-top: calc((var(--crudnick-table-arrow-width) * 0.5) * -1);
 			position: absolute;
 			right: var(--crudnick-table-cell-padding);
 			top: 50%;

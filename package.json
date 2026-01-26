@@ -15,9 +15,10 @@
 	},
 	"scripts": {
 		"build": "vite build",
-		"lint": "npm run lint:css && npm run lint:js",
+		"lint": "npm run lint:css && npm run lint:js && npm run lint:prettier",
 		"lint:css": "npx stylelint 'src/css/**/*.css'",
 		"lint:js": "npx eslint .",
+		"lint:prettier": "npx prettier . --check",
 		"start": "npx update-browserslist-db && vite build --watch"
 	},
 	"dependencies": {
@@ -32,7 +33,7 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.39.2",
-		"@jlbelanger/formosa": "jlbelanger/formosa#99e1ad71849b821dea3957851b50a16ba3cbc798",
+		"@jlbelanger/formosa": "jlbelanger/formosa#76a276723cbce31a46b539a65097c41db360a039",
 		"@stylistic/eslint-plugin": "^5.6.1",
 		"@stylistic/stylelint-plugin": "^4.0.0",
 		"@vitejs/plugin-react": "^5.1.2",
@@ -42,6 +43,7 @@
 		"eslint-plugin-react": "^7.37.5",
 		"eslint-plugin-react-hooks": "^7.0.1",
 		"globals": "^16.5.0",
+		"prettier": "^3.7.4",
 		"react": "^19.2.3",
 		"react-dom": "^19.2.3",
 		"react-router": "^7.11.0",

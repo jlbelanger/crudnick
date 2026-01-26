@@ -10,7 +10,8 @@ import MyForm from './MyForm.jsx';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 
-export default function EditForm({ // eslint-disable-line complexity
+// eslint-disable-next-line complexity
+export default function EditForm({
 	actions = null,
 	apiPath,
 	component,
@@ -74,7 +75,7 @@ export default function EditForm({ // eslint-disable-line complexity
 
 			<header className="crudnick-header">
 				<h1 data-cy="title">{`${titlePrefixText} ${singular}`}</h1>
-				{row && (
+				{row ? (
 					<Actions
 						apiPath={apiPath}
 						currentPage="/"
@@ -89,12 +90,12 @@ export default function EditForm({ // eslint-disable-line complexity
 					>
 						{actions ? actions(row, setRow) : null}
 					</Actions>
-				)}
+				) : null}
 			</header>
 
-			{actionError && (<Alert type="error">{actionError}</Alert>)}
+			{actionError ? <Alert type="error">{actionError}</Alert> : null}
 
-			{row && (
+			{row ? (
 				<MyForm
 					afterSubmitFailure={afterSubmitFailure}
 					beforeSubmit={() => {
@@ -116,7 +117,7 @@ export default function EditForm({ // eslint-disable-line complexity
 				>
 					<FormComponent row={row} setRow={setRow} {...componentProps} />
 				</MyForm>
-			)}
+			) : null}
 
 			{row && extra ? extra(row) : null}
 		</>
@@ -131,10 +132,7 @@ EditForm.propTypes = {
 	extra: PropTypes.func,
 	filterBody: PropTypes.func,
 	filterValues: PropTypes.func,
-	name: PropTypes.oneOfType([
-		PropTypes.func,
-		PropTypes.string,
-	]),
+	name: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 	path: PropTypes.string.isRequired,
 	relationshipNames: PropTypes.array,
 	saveButtonText: PropTypes.string,

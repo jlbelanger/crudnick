@@ -17,7 +17,7 @@ export default function ForgotPassword() {
 				text: 'Error: This link has expired.',
 				type: 'error',
 			});
-			navigate(window.location.pathname, { replace: true }); // Remove query param.
+			navigate('/forgot-password', { replace: true }); // Remove query param.
 		}
 	}, []);
 
@@ -46,7 +46,7 @@ export default function ForgotPassword() {
 			<h1>Forgot your password?</h1>
 
 			<FormAlert />
-			{message && (<Alert type={message.type}>{message.text}</Alert>)}
+			{message ? <Alert type={message.type}>{message.text}</Alert> : null}
 
 			<Field
 				autoComplete="email"

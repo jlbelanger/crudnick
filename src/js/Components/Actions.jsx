@@ -67,7 +67,7 @@ export default function Actions({
 
 	return (
 		<ul className="crudnick-list">
-			{showSave && (
+			{showSave ? (
 				<li>
 					<button
 						className="crudnick-list__button formosa-button"
@@ -79,13 +79,15 @@ export default function Actions({
 						{saveButtonText}
 					</button>
 				</li>
-			)}
+			) : null}
 			{currentPage !== '/' && (
 				<li>
-					<NavLink className="crudnick-list__button formosa-button" to={`/${path}/${row.id}`}>Edit</NavLink>
+					<NavLink className="crudnick-list__button formosa-button" to={`/${path}/${row.id}`}>
+						Edit
+					</NavLink>
 				</li>
 			)}
-			{showDelete && (
+			{showDelete ? (
 				<li>
 					<button
 						className="crudnick-list__button formosa-button formosa-button--danger"
@@ -100,7 +102,7 @@ export default function Actions({
 					>
 						Delete
 					</button>
-					{showModal && (
+					{showModal ? (
 						<Modal
 							event={showModal}
 							okButtonAttributes={{ 'data-cy': 'modal-delete' }}
@@ -112,10 +114,10 @@ export default function Actions({
 							onClickOk={onDelete}
 							text={`Are you sure you want to delete this ${singular}?`}
 						/>
-					)}
+					) : null}
 				</li>
-			)}
-			{frontendUrl && row.url && (
+			) : null}
+			{frontendUrl && row.url ? (
 				<li>
 					<a
 						className="crudnick-list__button formosa-button crudnick-button--secondary"
@@ -126,7 +128,7 @@ export default function Actions({
 						View
 					</a>
 				</li>
-			)}
+			) : null}
 			{subpages.map((page) => (
 				<li key={page}>
 					<NavLink

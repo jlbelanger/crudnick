@@ -27,7 +27,7 @@ export default function Login() {
 		if (urlSearchParams.get('redirect') && urlSearchParams.get('redirect')[0] === '/') {
 			redirectPath = urlSearchParams.get('redirect');
 		} else {
-			redirectPath = '/';
+			redirectPath = window.location.href.replace(/\/$/, '');
 		}
 		Auth.login(response.user, response.token, response.user.remember);
 		window.location.href = redirectPath;
@@ -39,14 +39,14 @@ export default function Login() {
 				text: 'Your session has expired. Please log in again.',
 				type: 'warning',
 			});
-			navigate(window.location.pathname, { replace: true }); // Remove query param.
+			navigate('/', { replace: true }); // Remove query param.
 		} else if (urlSearchParams.get('verify')) {
 			setMessage({
 				text: `Check your email (${urlSearchParams.get('email')}) to continue the registration process.`,
 				type: 'success',
 			});
 			setShowVerificationButton(urlSearchParams.get('username'));
-			navigate(window.location.pathname, { replace: true }); // Remove query param.
+			navigate('/', { replace: true }); // Remove query param.
 		} else if (urlSearchParams.get('expired')) {
 			navigate('/forgot-password?expired=1');
 		}
@@ -62,7 +62,7 @@ export default function Login() {
 			afterSubmitSuccess={afterSubmitSuccess}
 			beforeSubmit={beforeSubmit}
 			className="crudnick-auth-form"
-			errorMessageText={(response) => (errorMessageText(response, false))}
+			errorMessageText={(response) => errorMessageText(response, false)}
 			method="POST"
 			path="auth/login"
 			row={row}

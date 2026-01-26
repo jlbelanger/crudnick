@@ -5,16 +5,16 @@ Crudnick is a framework for creating an admin backend CMS with [React](https://w
 ## Features
 
 - Authentication
-	- Login
-	- Log out
-	- Request password reset
-	- Reset password
-	- List/add/edit/delete users
+  - Login
+  - Log out
+  - Request password reset
+  - Reset password
+  - List/add/edit/delete users
 - Index pages
-	- Search
-	- Sort
+  - Search
+  - Sort
 - Add/edit pages
-	- Delete records
+  - Delete records
 
 ## Requirements
 
@@ -27,7 +27,7 @@ Crudnick is a framework for creating an admin backend CMS with [React](https://w
 
 In the terminal, run the following commands:
 
-``` bash
+```bash
 npx create-react-app my-app
 cd my-app
 npm install --save https://github.com/jlbelanger/crudnick
@@ -46,7 +46,7 @@ VITE_TITLE="Example"
 
 Update `index.html`:
 
-``` html
+```html
 <!-- Replace: -->
 <title>React App</title>
 
@@ -65,26 +65,19 @@ Create four new files in the `Users` subfolder:
 
 Add the following to `src/Pages/Users/Add.jsx`:
 
-``` jsx
+```jsx
 import { AddForm } from '@jlbelanger/crudnick';
 import Form from './Form';
 import React from 'react';
 
 export default function Add() {
-	return (
-		<AddForm
-			apiPath="users"
-			component={Form}
-			path="users"
-			singular="user"
-		/>
-	);
+	return <AddForm apiPath="users" component={Form} path="users" singular="user" />;
 }
 ```
 
 Add the following to `src/Pages/Users/Edit.jsx`:
 
-``` jsx
+```jsx
 import { EditForm } from '@jlbelanger/crudnick';
 import Form from './Form';
 import React from 'react';
@@ -93,22 +86,13 @@ import { useParams } from 'react-router';
 export default function Edit() {
 	const { id } = useParams();
 
-	return (
-		<EditForm
-			apiPath="users"
-			component={Form}
-			name="username"
-			path="users"
-			singular="user"
-			url={`users/${id}`}
-		/>
-	);
+	return <EditForm apiPath="users" component={Form} name="username" path="users" singular="user" url={`users/${id}`} />;
 }
 ```
 
 Add the following to `src/Pages/Users/Form.jsx`:
 
-``` jsx
+```jsx
 import { Field } from '@jlbelanger/formosa';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -130,7 +114,7 @@ Form.propTypes = {
 
 Add the following to `src/Pages/Users/Index.jsx`:
 
-``` jsx
+```jsx
 import { IndexTable } from '@jlbelanger/crudnick';
 import React from 'react';
 
@@ -162,7 +146,7 @@ export default function Index() {
 
 Create a new file `src/Routes.js` containing the following:
 
-``` jsx
+```jsx
 import { ForgotPassword, Login, NotFound, PrivateRoute, ResetPassword } from '@jlbelanger/crudnick';
 import { createBrowserRouter } from 'react-router';
 import Layout from './Layout';
@@ -170,62 +154,57 @@ import UserAdd from './Pages/Users/Add';
 import UserEdit from './Pages/Users/Edit';
 import UserIndex from './Pages/Users/Index';
 
-export default createBrowserRouter(
-	[
-		{
-			path: '/',
-			Component: Layout,
-			children: [
-				{
-					index: true,
-					Component: Login,
-				},
-				{
-					path: 'forgot-password',
-					Component: ForgotPassword,
-				},
-				{
-					path: 'reset-password/:token',
-					Component: ResetPassword,
-				},
-				{
-					path: '',
-					Component: PrivateRoute,
-					children: [
-						{
-							path: 'users',
-							children: [
-								{ index: true, Component: UserIndex },
-								{ path: 'add', Component: UserAdd },
-								{ path: ':id', Component: UserEdit },
-							],
-						},
-					],
-				},
-				{
-					path: '*',
-					Component: NotFound,
-				},
-			],
-		},
-	],
-);
+export default createBrowserRouter([
+	{
+		path: '/',
+		Component: Layout,
+		children: [
+			{
+				index: true,
+				Component: Login,
+			},
+			{
+				path: 'forgot-password',
+				Component: ForgotPassword,
+			},
+			{
+				path: 'reset-password/:token',
+				Component: ResetPassword,
+			},
+			{
+				path: '',
+				Component: PrivateRoute,
+				children: [
+					{
+						path: 'users',
+						children: [
+							{ index: true, Component: UserIndex },
+							{ path: 'add', Component: UserAdd },
+							{ path: ':id', Component: UserEdit },
+						],
+					},
+				],
+			},
+			{
+				path: '*',
+				Component: NotFound,
+			},
+		],
+	},
+]);
 ```
 
 Create a new file `src/Layout.jsx` containing the following:
 
-``` jsx
+```jsx
 import { Layout as CrudnickLayout } from '@jlbelanger/crudnick';
 import { Outlet } from 'react-router';
 import React from 'react';
 
 export default function MyLayout() {
+	const nav = [{ label: 'Users', path: '/users' }];
 	return (
-		<CrudnickLayout
-			nav={[
-				{ label: 'Users', path: '/users' },
-			]}
-		>
+		<CrudnickLayout nav={nav}>
 			<Outlet />
 		</CrudnickLayout>
 	);
@@ -234,7 +213,7 @@ export default function MyLayout() {
 
 Replace the contents of `src/index.jsx` with the following:
 
-``` jsx
+```jsx
 import '@jlbelanger/crudnick/dist/index.css';
 import { createRoot } from 'react-dom/client';
 import { CrudnickConfig } from '@jlbelanger/crudnick';
@@ -258,13 +237,13 @@ const root = createRoot(document.getElementById('root'));
 root.render(
 	<StrictMode>
 		<RouterProvider router={Routes} />
-	</StrictMode>
+	</StrictMode>,
 );
 ```
 
 In the terminal, still in the `my-app` folder, run the following command:
 
-``` bash
+```bash
 npm start
 ```
 
@@ -282,7 +261,7 @@ npm start
 
 ### Setup
 
-``` bash
+```bash
 # Clone the repo
 git clone https://github.com/jlbelanger/crudnick.git
 cd crudnick
@@ -293,12 +272,12 @@ npm install
 
 ### Run
 
-``` bash
+```bash
 npm start
 ```
 
 ### Lint
 
-``` bash
+```bash
 npm run lint
 ```

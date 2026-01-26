@@ -3,11 +3,7 @@ import Auth from './Utilities/Auth.js';
 import Nav from './Components/Nav.jsx';
 import PropTypes from 'prop-types';
 
-export default function Layout({
-	articleProps = null,
-	children,
-	nav,
-}) {
+export default function Layout({ articleProps = null, children, nav }) {
 	if (Auth.isLoggedIn() && !Api.getToken()) {
 		Api.setToken(Auth.token());
 	}
@@ -30,7 +26,9 @@ export default function Layout({
 
 	return (
 		<>
-			<a href="#crudnick-article" id="crudnick-skip" onClick={onClick}>Skip to content</a>
+			<a href="#crudnick-article" id="crudnick-skip" onClick={onClick}>
+				Skip to content
+			</a>
 			<FormContainer>
 				{Auth.isLoggedIn() && <Nav nav={nav} />}
 				<article id="crudnick-article" {...articleProps}>

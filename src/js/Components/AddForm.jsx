@@ -61,17 +61,11 @@ export default function AddForm({
 				<h1 data-cy="title">{`${titlePrefixText} ${singular}`}</h1>
 				<ul className="crudnick-list">
 					<li>
-						<button
-							className="formosa-button"
-							data-cy="save"
-							form="crudnick-add-form"
-							ref={submitRef}
-							type="submit"
-						>
+						<button className="formosa-button" data-cy="save" form="crudnick-add-form" ref={submitRef} type="submit">
 							{saveButtonText}
 						</button>
 					</li>
-					{showAddAnother && (
+					{showAddAnother ? (
 						<li>
 							<Field
 								id="crudnick-add-another"
@@ -82,7 +76,7 @@ export default function AddForm({
 								value={addAnother}
 							/>
 						</li>
-					)}
+					) : null}
 				</ul>
 			</header>
 

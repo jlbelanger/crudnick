@@ -63,7 +63,7 @@ export default function Modal({
 	return (
 		<dialog className="crudnick-modal" ref={dialogRef} tabIndex={-1}>
 			<div className="crudnick-modal__box">
-				{children || (<p className="crudnick-modal__text">{text}</p>)}
+				{children || <p className="crudnick-modal__text">{text}</p>}
 				<p className="crudnick-modal__options">
 					<button
 						className={`formosa-button ${okButtonClass}`.trim()}

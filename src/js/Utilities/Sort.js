@@ -1,6 +1,6 @@
 import get from 'get-value';
 
-export const sortByKey = (records, key, dir) => (
+export const sortByKey = (records, key, dir) =>
 	records.sort((a, b) => {
 		let aVal = get(a, key);
 		if (aVal === undefined || aVal === null) {
@@ -30,5 +30,4 @@ export const sortByKey = (records, key, dir) => (
 		aVal = aVal.toString();
 		bVal = bVal.toString();
 		return dir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
-	})
-);
+	});

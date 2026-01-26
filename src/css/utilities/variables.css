@@ -7,10 +7,10 @@
 	--crudnick-lightest: hsl(from var(--crudnick-primary) h s calc(l * 3.22));
 	--crudnick-lighter: hsl(from var(--crudnick-primary) h s calc(l * 2.63));
 	--crudnick-light: hsl(from var(--crudnick-primary) h s calc(l * 1.7));
-	--crudnick-dark: hsl(from var(--crudnick-primary) h s calc(l * .5));
-	--crudnick-darker: hsl(from var(--crudnick-primary) h s calc(l * .3));
-	--crudnick-darkerer: hsl(from var(--crudnick-primary) h s calc(l * .214));
-	--crudnick-darkest: hsl(from var(--crudnick-primary) h s calc(l * .05));
+	--crudnick-dark: hsl(from var(--crudnick-primary) h s calc(l * 0.5));
+	--crudnick-darker: hsl(from var(--crudnick-primary) h s calc(l * 0.3));
+	--crudnick-darkerer: hsl(from var(--crudnick-primary) h s calc(l * 0.214));
+	--crudnick-darkest: hsl(from var(--crudnick-primary) h s calc(l * 0.05));
 
 	/* Typography. */
 	--crudnick-font-family: 'Helvetica Neue', helvetica, arial, sans-serif;
@@ -33,7 +33,9 @@
 
 	/* Buttons - secondary. */
 	--crudnick-button-secondary-background-color: var(--crudnick-darker);
-	--crudnick-button-secondary-background-color-hover: hsl(from var(--crudnick-button-secondary-background-color) h s calc(l * .86));
+
+	/* prettier-ignore */
+	--crudnick-button-secondary-background-color-hover: hsl(from var(--crudnick-button-secondary-background-color) h s calc(l * 0.86));
 	--crudnick-button-secondary-border-color: transparent;
 	--crudnick-button-secondary-color: var(--crudnick-lighter);
 
@@ -47,7 +49,7 @@
 	--crudnick-content-width: 2000px;
 
 	/* Disabled. */
-	--crudnick-disabled-opacity: .3;
+	--crudnick-disabled-opacity: 0.3;
 
 	/* Headings. */
 	--crudnick-heading-margin: 16px 0;
@@ -64,6 +66,8 @@
 	--crudnick-input-border-color: var(--crudnick-darker);
 	--crudnick-input-border-width: 2px;
 	--crudnick-input-padding: 12px;
+
+	/* prettier-ignore */
 	--crudnick-input-height: calc((var(--crudnick-input-padding) + var(--crudnick-input-border-width)) * 2 + var(--crudnick-font-size));
 
 	/* Placeholders. */
@@ -101,7 +105,7 @@
 
 	/* Tables. */
 	--crudnick-table-arrow-width: 12px;
-	--crudnick-table-cell-padding: calc(var(--crudnick-margin) * .5);
+	--crudnick-table-cell-padding: calc(var(--crudnick-margin) * 0.5);
 	--crudnick-table-link-background-color-hover: var(--crudnick-darkerer);
 
 	/* Textareas. */
