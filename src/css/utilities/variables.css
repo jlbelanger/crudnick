@@ -121,7 +121,7 @@
 	--crudnick-textarea-medium-height: 30vh;
 
 	/* Formosa overrides. */
-	--formosa-autocomplete-clear-color: hsla(from var(--formosa-input-color) h s l / 65%);
+	--formosa-autocomplete-clear-color: hsl(from var(--formosa-input-color) h s l / 65%);
 	--formosa-autocomplete-clear-color-hover: var(--formosa-input-color);
 	--formosa-checkbox-padding: 20px;
 	--formosa-checkbox-size: 43px;
