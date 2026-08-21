@@ -1557,7 +1557,7 @@ function Wr({ columns: e, defaultOptions: t, path: i, title: l, url: a }) {
               "button",
               {
                 "aria-label": `Sort by ${n.label}`,
-                className: "formosa-button",
+                className: "formosa-button crudnick-column__button",
                 "data-key": n.sortKey || ce(n.key),
                 disabled: s === null,
                 onClick: Y,

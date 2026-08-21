@@ -10,7 +10,7 @@ th {
 
 th,
 td {
-	border-color: var(--crudnick-darker);
+	border-color: var(--crudnick-table-border-color);
 	border-style: solid;
 	border-width: 0 0 1px;
 	padding: var(--crudnick-table-cell-padding);
@@ -63,6 +63,10 @@ thead {
 			top: 50%;
 		}
 
+		path {
+			fill: var(--crudnick-table-button-color);
+		}
+
 		.flip {
 			transform: scaleY(-1);
 		}
@@ -85,4 +89,8 @@ thead {
 
 .crudnick-column--shrink {
 	width: 0;
+}
+
+.crudnick-column__button {
+	color: var(--crudnick-table-button-color);
 }

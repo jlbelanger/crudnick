@@ -3,7 +3,7 @@
 #crudnick-nav__dialog {
 	background: none;
 	border: 0;
-	box-shadow: 0 0 0 100vh hsl(from var(--crudnick-black) h s l / 0%);
+	box-shadow: 0 0 0 100vh hsl(from var(--crudnick-nav-shadow-background-color) h s l / 0%);
 	padding: 0;
 	transition: box-shadow 0.3s ease-in-out;
 	width: 100%;
@@ -13,7 +13,7 @@
 	}
 
 	.show-nav.animate-nav & {
-		box-shadow: 0 0 0 100vh hsl(from var(--crudnick-black) h s l / 40%);
+		box-shadow: 0 0 0 100vh hsl(from var(--crudnick-nav-shadow-background-color) h s l / 40%);
 		display: block;
 	}
 }
@@ -38,6 +38,8 @@
 	}
 
 	.crudnick-list__button {
+		background-color: var(--crudnick-primary);
+
 		&:focus {
 			box-shadow: inset 0 0 0 var(--formosa-focus-border-width) var(--formosa-focus-box-shadow-color);
 		}

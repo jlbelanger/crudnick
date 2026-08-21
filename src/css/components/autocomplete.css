@@ -1,5 +1,5 @@
 .crudnick-autocomplete-link {
-	color: var(--crudnick-white);
+	color: var(--crudnick-autocomplete-link-color);
 	display: block;
 	padding-left: var(--formosa-autocomplete-value-padding-top);
 	padding-right: var(--formosa-autocomplete-value-padding-top);

@@ -124,7 +124,7 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 									{column.disableSort ? column.shortLabel || column.label : (
 										<button
 											aria-label={`Sort by ${column.label}`}
-											className="formosa-button"
+											className="formosa-button crudnick-column__button"
 											data-key={column.sortKey || cleanKey(column.key)}
 											disabled={rows === null}
 											onClick={sort}

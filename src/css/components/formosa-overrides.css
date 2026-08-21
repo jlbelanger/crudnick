@@ -10,7 +10,7 @@
 
 .formosa-icon--search {
 	path {
-		fill: var(--crudnick-dark);
+		fill: var(--crudnick-input-icon-color);
 	}
 }
 
