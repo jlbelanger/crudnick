@@ -21,7 +21,7 @@
 .crudnick-pagination__link {
 	border-style: solid;
 	border-width: 1px;
-	color: var(--crudnick-primary);
+	color: var(--crudnick-pagination-color);
 	display: block;
 	height: var(--crudnick-button-height);
 	line-height: var(--crudnick-button-height);
@@ -32,20 +32,23 @@
 	&:hover,
 	&:active,
 	&:focus {
-		background: var(--crudnick-lightish);
+		background: var(--crudnick-pagination-background-color-hover);
 	}
 }
 
 .crudnick-pagination__link--dots {
-	opacity: 0.5;
+	color: var(--crudnick-pagination-disabled-color);
 	pointer-events: none;
+	position: relative;
+	z-index: -1;
 }
 
 .crudnick-pagination__link[aria-current='page'] {
 	background: transparent;
-	color: var(--crudnick-gray);
+	color: var(--crudnick-pagination-disabled-color);
 	pointer-events: none;
 	position: relative;
+	z-index: -1;
 }
 
 .crudnick-pagination__link[disabled] {

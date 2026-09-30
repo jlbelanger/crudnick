@@ -23,7 +23,8 @@ export default function Pagination({ currentPage, numPages, setCurrentPage }) {
 
 	const goToPage = (e) => {
 		const url = e.target.getAttribute('href');
-		const newPage = url.substr(url.lastIndexOf('=') + 1);
+		const pos = url.lastIndexOf('=');
+		const newPage = pos < 0 ? 1 : url.substr(pos + 1);
 		setCurrentPage(parseInt(newPage, 10));
 	};
 
@@ -41,8 +42,8 @@ export default function Pagination({ currentPage, numPages, setCurrentPage }) {
 						&lsaquo;
 					</Link>
 				</li>
-				{pages.map((p) => (
-					<li className="crudnick-pagination__item" key={p}>
+				{pages.map((p, i) => (
+					<li className="crudnick-pagination__item" key={p === '...' ? `${p}-${i}` : p}>
 						{p === '...' ? (
 							<span className="crudnick-pagination__link crudnick-pagination__link--dots">
 								&hellip;

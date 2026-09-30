@@ -78,7 +78,7 @@ export default function IndexTable({ columns, defaultOptions, path, perPage = 10
 			Object.keys(activeFilters).forEach((key) => {
 				const value = activeFilters[key];
 				if (value !== '') {
-					output += `&filter[${key}][like]=%${value}%`;
+					output += `&filter[${key}][like]=%25${value}%25`;
 				}
 			});
 		}
@@ -90,6 +90,9 @@ export default function IndexTable({ columns, defaultOptions, path, perPage = 10
 	}, [requestUrl]);
 
 	const fetchRows = () => {
+		if (rows !== null) {
+			setRows(null);
+		}
 		api(requestUrl, false)
 			.catch((response) => {
 				setRowsError(errorMessageText(response));
@@ -121,7 +124,7 @@ export default function IndexTable({ columns, defaultOptions, path, perPage = 10
 	};
 
 	const sort = (e) => {
-		const newSortKey = e.target.getAttribute('data-key');
+		const newSortKey = e.target.getAttribute('data-crudnick-sort');
 		let newSortDir;
 		if (sortKey === newSortKey) {
 			newSortDir = sortDir === 'asc' ? 'desc' : 'asc';
@@ -172,7 +175,7 @@ export default function IndexTable({ columns, defaultOptions, path, perPage = 10
 			<header className="crudnick-header">
 				<h1>
 					<span data-cy="title">{title}</span>
-					<small data-cy="num-results">{rows ? numResults : null}</small>
+					{rows === null ? null : <small data-cy="num-results">{numResults}</small>}
 				</h1>
 				<ul className="crudnick-list">
 					<li className="crudnick-list__item">
@@ -204,7 +207,7 @@ export default function IndexTable({ columns, defaultOptions, path, perPage = 10
 										<button
 											aria-label={`Sort by ${column.label}`}
 											className="formosa-button crudnick-column__button"
-											data-key={column.sortKey || cleanKey(column.key)}
+											data-crudnick-sort={column.sortKey || cleanKey(column.key)}
 											disabled={rows === null}
 											onClick={sort}
 											type="button"
@@ -231,6 +234,7 @@ export default function IndexTable({ columns, defaultOptions, path, perPage = 10
 											<Input
 												aria-label={`Search ${label}`}
 												className="formosa-field__input"
+												data-crudnick-filter={cleanKey(key)}
 												disabled={rows === null}
 												form={isPaginated ? 'crudnick-pagination' : null}
 												setValue={(newValue) => {
@@ -256,6 +260,7 @@ export default function IndexTable({ columns, defaultOptions, path, perPage = 10
 											{isPaginated && filters[cleanKey(key)] ? (
 												<button
 													className="crudnick__filter-button crudnick__filter-button--clear"
+													data-crudnick-filter-clear={cleanKey(key)}
 													onClick={() => {
 														const newFilters = {
 															...filters,
@@ -273,6 +278,7 @@ export default function IndexTable({ columns, defaultOptions, path, perPage = 10
 											{isPaginated ? (
 												<button
 													className="crudnick__filter-button crudnick__filter-button--submit"
+													data-crudnick-filter-submit={cleanKey(key)}
 													form="crudnick-pagination"
 													type="submit"
 												>

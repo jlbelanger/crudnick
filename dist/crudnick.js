@@ -1,5 +1,5 @@
 import * as ce from "react";
-import hr, { useRef as Ee, useEffect as X, useContext as ve, useState as q, useMemo as vr } from "react";
+import hr, { useRef as Ee, useEffect as H, useContext as ve, useState as q, useMemo as vr } from "react";
 import { FormosaContext as Le, Api as fe, FormContext as ir, Form as Te, Field as ae, Alert as pe, FormAlert as Me, Submit as qe, Input as br, FormContainer as gr } from "@jlbelanger/formosa";
 import { useNavigate as be, NavLink as Ne, unstable_usePrompt as xr, useParams as ar, useSearchParams as Re, Link as le, useLocation as wr, Outlet as _r, Navigate as jr } from "react-router";
 function Er(e) {
@@ -48,7 +48,7 @@ function Rr() {
           return "Suspense";
         case V:
           return "SuspenseList";
-        case H:
+        case Z:
           return "Activity";
       }
       if (typeof r == "object")
@@ -114,7 +114,7 @@ function Rr() {
       return Error("react-stack-top-frame");
     }
     function l(r) {
-      if (Q.call(r, "key")) {
+      if (ee.call(r, "key")) {
         var c = Object.getOwnPropertyDescriptor(r, "key").get;
         if (c && c.isReactWarning) return !1;
       }
@@ -184,7 +184,7 @@ function Rr() {
               "React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead."
             );
         else x(w);
-      if (Q.call(c, "key")) {
+      if (ee.call(c, "key")) {
         w = e(r);
         var P = Object.keys(c).filter(function(O) {
           return O !== "key";
@@ -225,7 +225,7 @@ React keys must be passed directly to JSX without using spread:
     function _(r) {
       return typeof r == "object" && r !== null && r.$$typeof === S;
     }
-    var k = hr, S = /* @__PURE__ */ Symbol.for("react.transitional.element"), j = /* @__PURE__ */ Symbol.for("react.portal"), C = /* @__PURE__ */ Symbol.for("react.fragment"), I = /* @__PURE__ */ Symbol.for("react.strict_mode"), D = /* @__PURE__ */ Symbol.for("react.profiler"), L = /* @__PURE__ */ Symbol.for("react.consumer"), T = /* @__PURE__ */ Symbol.for("react.context"), u = /* @__PURE__ */ Symbol.for("react.forward_ref"), U = /* @__PURE__ */ Symbol.for("react.suspense"), V = /* @__PURE__ */ Symbol.for("react.suspense_list"), B = /* @__PURE__ */ Symbol.for("react.memo"), Y = /* @__PURE__ */ Symbol.for("react.lazy"), H = /* @__PURE__ */ Symbol.for("react.activity"), W = /* @__PURE__ */ Symbol.for("react.client.reference"), G = k.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, Q = Object.prototype.hasOwnProperty, M = Array.isArray, ee = console.createTask ? console.createTask : function() {
+    var k = hr, S = /* @__PURE__ */ Symbol.for("react.transitional.element"), j = /* @__PURE__ */ Symbol.for("react.portal"), C = /* @__PURE__ */ Symbol.for("react.fragment"), I = /* @__PURE__ */ Symbol.for("react.strict_mode"), D = /* @__PURE__ */ Symbol.for("react.profiler"), L = /* @__PURE__ */ Symbol.for("react.consumer"), T = /* @__PURE__ */ Symbol.for("react.context"), u = /* @__PURE__ */ Symbol.for("react.forward_ref"), U = /* @__PURE__ */ Symbol.for("react.suspense"), V = /* @__PURE__ */ Symbol.for("react.suspense_list"), B = /* @__PURE__ */ Symbol.for("react.memo"), Y = /* @__PURE__ */ Symbol.for("react.lazy"), Z = /* @__PURE__ */ Symbol.for("react.activity"), W = /* @__PURE__ */ Symbol.for("react.client.reference"), G = k.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ee = Object.prototype.hasOwnProperty, M = Array.isArray, re = console.createTask ? console.createTask : function() {
       return null;
     };
     k = {
@@ -233,10 +233,10 @@ React keys must be passed directly to JSX without using spread:
         return r();
       }
     };
-    var z, J = {}, Z = k.react_stack_bottom_frame.bind(
+    var z, J = {}, Q = k.react_stack_bottom_frame.bind(
       k,
       s
-    )(), ie = ee(f(s)), t = {};
+    )(), ie = re(f(s)), t = {};
     he.Fragment = C, he.jsx = function(r, c, g) {
       var b = 1e4 > G.recentlyCreatedOwnerStacks++;
       return y(
@@ -244,8 +244,8 @@ React keys must be passed directly to JSX without using spread:
         c,
         g,
         !1,
-        b ? Error("react-stack-top-frame") : Z,
-        b ? ee(f(r)) : ie
+        b ? Error("react-stack-top-frame") : Q,
+        b ? re(f(r)) : ie
       );
     }, he.jsxs = function(r, c, g) {
       var b = 1e4 > G.recentlyCreatedOwnerStacks++;
@@ -254,8 +254,8 @@ React keys must be passed directly to JSX without using spread:
         c,
         g,
         !0,
-        b ? Error("react-stack-top-frame") : Z,
-        b ? ee(f(r)) : ie
+        b ? Error("react-stack-top-frame") : Q,
+        b ? re(f(r)) : ie
       );
     };
   })()), he;
@@ -265,7 +265,7 @@ function kr() {
   return ze || (ze = 1, process.env.NODE_ENV === "production" ? xe.exports = Tr() : xe.exports = Rr()), xe.exports;
 }
 var o = kr();
-const Fe = (e) => e.replace(/(?:^|\s)\S/g, (n) => n.toUpperCase()), ne = (e) => e.replace(/^relationships\./, "");
+const Fe = (e) => e.replace(/(?:^|\s)\S/g, (n) => n.toUpperCase()), X = (e) => e.replace(/^relationships\./, "");
 class oe {
   static init(n = {}) {
     window.CRUDNICK_CONFIG = {
@@ -390,7 +390,7 @@ class F {
     return !!F.user() && !!F.token();
   }
 }
-const te = (e, n = !0) => n && e.status === 401 ? F.logout(e.status) : `Error: ${e.errors.map((i) => i.title).join(" ")}`;
+const ne = (e, n = !0) => n && e.status === 401 ? F.logout(e.status) : `Error: ${e.errors.map((i) => i.title).join(" ")}`;
 var _e = { exports: {} }, je = { exports: {} }, A = {};
 var We;
 function Pr() {
@@ -469,8 +469,8 @@ function Cr() {
     }
     function T(v) {
       if (typeof v == "object" && v !== null) {
-        var re = v.$$typeof;
-        switch (re) {
+        var te = v.$$typeof;
+        switch (te) {
           case n:
             var ge = v.type;
             switch (ge) {
@@ -491,17 +491,17 @@ function Cr() {
                   case l:
                     return Ue;
                   default:
-                    return re;
+                    return te;
                 }
             }
           case i:
-            return re;
+            return te;
         }
       }
     }
-    var u = m, U = h, V = d, B = l, Y = n, H = y, W = f, G = S, Q = k, M = i, ee = s, z = a, J = x, Z = !1;
+    var u = m, U = h, V = d, B = l, Y = n, Z = y, W = f, G = S, ee = k, M = i, re = s, z = a, J = x, Q = !1;
     function ie(v) {
-      return Z || (Z = !0, console.warn("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.")), t(v) || T(v) === m;
+      return Q || (Q = !0, console.warn("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.")), t(v) || T(v) === m;
     }
     function t(v) {
       return T(v) === h;
@@ -539,7 +539,7 @@ function Cr() {
     function K(v) {
       return T(v) === x;
     }
-    N.AsyncMode = u, N.ConcurrentMode = U, N.ContextConsumer = V, N.ContextProvider = B, N.Element = Y, N.ForwardRef = H, N.Fragment = W, N.Lazy = G, N.Memo = Q, N.Portal = M, N.Profiler = ee, N.StrictMode = z, N.Suspense = J, N.isAsyncMode = ie, N.isConcurrentMode = t, N.isContextConsumer = r, N.isContextProvider = c, N.isElement = g, N.isForwardRef = b, N.isFragment = R, N.isLazy = E, N.isMemo = w, N.isPortal = P, N.isProfiler = $, N.isStrictMode = O, N.isSuspense = K, N.isValidElementType = L, N.typeOf = T;
+    N.AsyncMode = u, N.ConcurrentMode = U, N.ContextConsumer = V, N.ContextProvider = B, N.Element = Y, N.ForwardRef = Z, N.Fragment = W, N.Lazy = G, N.Memo = ee, N.Portal = M, N.Profiler = re, N.StrictMode = z, N.Suspense = J, N.isAsyncMode = ie, N.isConcurrentMode = t, N.isContextConsumer = r, N.isContextProvider = c, N.isElement = g, N.isForwardRef = b, N.isFragment = R, N.isLazy = E, N.isMemo = w, N.isPortal = P, N.isProfiler = $, N.isStrictMode = O, N.isSuspense = K, N.isValidElementType = L, N.typeOf = T;
   })()), N;
 }
 var Ge;
@@ -690,12 +690,12 @@ function Ar() {
       element: T(),
       elementType: u(),
       instanceOf: U,
-      node: H(),
+      node: Z(),
       objectOf: B,
       oneOf: V,
       oneOfType: Y,
       shape: G,
-      exact: Q
+      exact: ee
     };
     function S(t, r) {
       return t === r ? t !== 0 || 1 / t === 1 / r : t !== t && r !== r;
@@ -715,11 +715,11 @@ function Ar() {
             );
             throw v.name = "Invariant Violation", v;
           } else if (process.env.NODE_ENV !== "production" && typeof console < "u") {
-            var re = P + ":" + w;
-            !r[re] && // Avoid spamming the console because they are often not actionable except for lib authors
+            var te = P + ":" + w;
+            !r[te] && // Avoid spamming the console because they are often not actionable except for lib authors
             c < 3 && (s(
               "You are manually calling a React.PropTypes validation function for the `" + O + "` prop on `" + P + "`. This is deprecated and will throw in the standalone `prop-types` package. You may be seeing this warning due to a third-party PropTypes library. See https://fb.me/react-warning-dont-call-proptypes for details."
-            ), r[re] = !0, c++);
+            ), r[te] = !0, c++);
           }
         }
         return E[w] == null ? R ? E[w] === null ? new j("The " + $ + " `" + O + "` is marked as required " + ("in `" + P + "`, but its value is `null`.")) : new j("The " + $ + " `" + O + "` is marked as required in " + ("`" + P + "`, but its value is `undefined`.")) : null : t(E, w, P, $, O);
@@ -804,8 +804,8 @@ function Ar() {
           if (S(w, t[P]))
             return null;
         var $ = JSON.stringify(t, function(K, v) {
-          var re = J(v);
-          return re === "symbol" ? String(v) : v;
+          var te = J(v);
+          return te === "symbol" ? String(v) : v;
         });
         return new j("Invalid " + R + " `" + E + "` of value `" + String(w) + "` " + ("supplied to `" + b + "`, expected one of " + $ + "."));
       }
@@ -835,7 +835,7 @@ function Ar() {
         var c = t[r];
         if (typeof c != "function")
           return s(
-            "Invalid argument supplied to oneOfType. Expected an array of check functions, but received " + Z(c) + " at index " + r + "."
+            "Invalid argument supplied to oneOfType. Expected an array of check functions, but received " + Q(c) + " at index " + r + "."
           ), l;
       }
       function g(b, R, E, w, P) {
@@ -845,12 +845,12 @@ function Ar() {
             return null;
           v.data && f(v.data, "expectedType") && $.push(v.data.expectedType);
         }
-        var re = $.length > 0 ? ", expected one of type [" + $.join(", ") + "]" : "";
-        return new j("Invalid " + w + " `" + P + "` supplied to " + ("`" + E + "`" + re + "."));
+        var te = $.length > 0 ? ", expected one of type [" + $.join(", ") + "]" : "";
+        return new j("Invalid " + w + " `" + P + "` supplied to " + ("`" + E + "`" + te + "."));
       }
       return C(g);
     }
-    function H() {
+    function Z() {
       function t(r, c, g, b, R) {
         return M(r[c]) ? null : new j("Invalid " + b + " `" + R + "` supplied to " + ("`" + g + "`, expected a ReactNode."));
       }
@@ -878,7 +878,7 @@ function Ar() {
       }
       return C(r);
     }
-    function Q(t) {
+    function ee(t) {
       function r(c, g, b, R, E) {
         var w = c[g], P = z(w);
         if (P !== "object")
@@ -934,12 +934,12 @@ Valid keys: ` + JSON.stringify(Object.keys(t), null, "  ")
           return !1;
       }
     }
-    function ee(t, r) {
+    function re(t, r) {
       return t === "symbol" ? !0 : r ? r["@@toStringTag"] === "Symbol" || typeof Symbol == "function" && r instanceof Symbol : !1;
     }
     function z(t) {
       var r = typeof t;
-      return Array.isArray(t) ? "array" : t instanceof RegExp ? "object" : ee(r, t) ? "symbol" : r;
+      return Array.isArray(t) ? "array" : t instanceof RegExp ? "object" : re(r, t) ? "symbol" : r;
     }
     function J(t) {
       if (typeof t > "u" || t === null)
@@ -953,7 +953,7 @@ Valid keys: ` + JSON.stringify(Object.keys(t), null, "  ")
       }
       return r;
     }
-    function Z(t) {
+    function Q(t) {
       var r = J(t);
       switch (r) {
         case "array":
@@ -1052,9 +1052,9 @@ function ur({
   }, S = (j) => {
     j.target.tagName === "DIALOG" && h && h();
   };
-  return X(() => (document.body.classList.add("crudnick-modal-open"), f && document.addEventListener("keydown", k), () => {
+  return H(() => (document.body.classList.add("crudnick-modal-open"), f && document.addEventListener("keydown", k), () => {
     document.body.classList.remove("crudnick-modal-open"), f && document.removeEventListener("keydown", k), s.target && s.target.focus();
-  }), []), X(() => {
+  }), []), H(() => {
     _ && _.current && _.current.getAttribute("open") === null && (_.current.showModal(), _.current.focus(), f && _.current.addEventListener("click", S));
   }, [_]), /* @__PURE__ */ o.jsx("dialog", { className: "crudnick-modal", ref: _, tabIndex: -1, children: /* @__PURE__ */ o.jsxs("div", { className: "crudnick-modal__box", children: [
     a || /* @__PURE__ */ o.jsx("p", { className: "crudnick-modal__text", children: x }),
@@ -1112,12 +1112,12 @@ function lr({
   const x = be(), { addToast: _, disableWarningPrompt: k, enableWarningPrompt: S } = ve(Le), [j, C] = q(!1), I = Ee(null), D = (u) => {
     u.key === "s" && u.metaKey && I && I.current && (u.preventDefault(), I.current.click());
   };
-  X(() => (window.addEventListener("keydown", D), () => {
+  H(() => (window.addEventListener("keydown", D), () => {
     window.removeEventListener("keydown", D);
   }), []);
   const L = () => {
     C(!1), k(), fe.delete(`${e}/${a.id}`).catch((u) => {
-      l ? l(te(u)) : _(te(u), "error", 1e4), S();
+      l ? l(ne(u)) : _(ne(u), "error", 1e4), S();
     }).then((u) => {
       u && (_(`${Fe(h)} deleted successfully.`, "success"), x(`/${f}`), S());
     });
@@ -1198,7 +1198,7 @@ lr.propTypes = {
   subpages: p.array
 };
 function ue({ title: e = "" }) {
-  return X(() => {
+  return H(() => {
     let n = e;
     const i = oe.get("siteTitle");
     i && (n && (n += " | "), n += i), document.querySelector("title").innerText = n;
@@ -1248,7 +1248,7 @@ function qr({
   const V = (B) => {
     B.key === "s" && B.metaKey && T && T.current && (B.preventDefault(), T.current.click());
   };
-  return X(() => (window.addEventListener("keydown", V), () => {
+  return H(() => (window.addEventListener("keydown", V), () => {
     window.removeEventListener("keydown", V);
   }), []), /* @__PURE__ */ o.jsxs(o.Fragment, { children: [
     /* @__PURE__ */ o.jsx(ue, { title: `${k} ${_}` }),
@@ -1275,7 +1275,7 @@ function qr({
         afterSubmitSuccess: u,
         clearOnSubmit: !0,
         defaultRow: a,
-        errorMessageText: te,
+        errorMessageText: ne,
         filterBody: l,
         filterValues: d,
         htmlId: "crudnick-add-form",
@@ -1376,9 +1376,9 @@ function Ur({
   url: I,
   ...D
 }) {
-  const { id: L } = ar(), [T, u] = q(null), [U, V] = q(!1), [B, Y] = q(!1), H = fe.instance();
-  if (X(() => {
-    H(I).catch((M) => {
+  const { id: L } = ar(), [T, u] = q(null), [U, V] = q(!1), [B, Y] = q(!1), Z = fe.instance();
+  if (H(() => {
+    Z(I).catch((M) => {
       V(M);
     }).then((M) => {
       M && u(C ? C(M) : M);
@@ -1386,12 +1386,12 @@ function Ur({
   }, [I]), U)
     return /* @__PURE__ */ o.jsx(fr, { error: U });
   const W = (M) => {
-    Y(te(M));
+    Y(ne(M));
   }, G = i;
   f.formType = "edit";
-  const Q = T ? `${j} ${typeof d == "function" ? d(T) : se(T, d)}` : "";
+  const ee = T ? `${j} ${typeof d == "function" ? d(T) : se(T, d)}` : "";
   return /* @__PURE__ */ o.jsxs(o.Fragment, { children: [
-    /* @__PURE__ */ o.jsx(ue, { title: Q }),
+    /* @__PURE__ */ o.jsx(ue, { title: ee }),
     /* @__PURE__ */ o.jsxs("header", { className: "crudnick-header", children: [
       /* @__PURE__ */ o.jsx("h1", { "data-cy": "title", children: `${j} ${k}` }),
       T ? /* @__PURE__ */ o.jsx(
@@ -1457,7 +1457,7 @@ Ur.propTypes = {
 };
 function rt() {
   const [e] = Re(), n = be(), [i, f] = q({}), [a, s] = q(!1);
-  return X(() => {
+  return H(() => {
     e.get("expired") && (s({
       text: "Error: This link has expired.",
       type: "error"
@@ -1468,7 +1468,7 @@ function rt() {
       beforeSubmit: () => (s(!1), !0),
       className: "crudnick-auth-form",
       clearOnSubmit: !0,
-      errorMessageText: te,
+      errorMessageText: ne,
       method: "POST",
       path: "auth/forgot-password",
       row: i,
@@ -1513,8 +1513,8 @@ const Br = (e) => /* @__PURE__ */ ce.createElement("svg", { xmlns: "http://www.w
 }), e);
 function pr({ currentPage: e, numPages: n, setCurrentPage: i }) {
   const f = wr(), a = (m, h = 1) => Array.from({ length: m }, (y, x) => h + x), l = n <= 7 ? a(n) : e <= 4 ? [1, 2, 3, 4, 5, "...", n] : e > n - 4 ? [1, "..."].concat(a(5, n - 4)) : [1, "...", e - 1, e, e + 1, "...", n], d = (m) => {
-    const h = m.target.getAttribute("href"), y = h.substr(h.lastIndexOf("=") + 1);
-    i(parseInt(y, 10));
+    const h = m.target.getAttribute("href"), y = h.lastIndexOf("="), x = y < 0 ? 1 : h.substr(y + 1);
+    i(parseInt(x, 10));
   };
   return /* @__PURE__ */ o.jsx("nav", { "aria-label": "Pagination", className: "crudnick-pagination", children: /* @__PURE__ */ o.jsxs("ul", { className: "crudnick-pagination__list", children: [
     /* @__PURE__ */ o.jsx("li", { className: "crudnick-pagination__item", children: /* @__PURE__ */ o.jsx(
@@ -1528,7 +1528,7 @@ function pr({ currentPage: e, numPages: n, setCurrentPage: i }) {
         children: "‹"
       }
     ) }),
-    l.map((m) => /* @__PURE__ */ o.jsx("li", { className: "crudnick-pagination__item", children: m === "..." ? /* @__PURE__ */ o.jsx("span", { className: "crudnick-pagination__link crudnick-pagination__link--dots", children: "…" }) : /* @__PURE__ */ o.jsx(
+    l.map((m, h) => /* @__PURE__ */ o.jsx("li", { className: "crudnick-pagination__item", children: m === "..." ? /* @__PURE__ */ o.jsx("span", { className: "crudnick-pagination__link crudnick-pagination__link--dots", children: "…" }) : /* @__PURE__ */ o.jsx(
       le,
       {
         "aria-current": m === e ? "page" : null,
@@ -1538,7 +1538,7 @@ function pr({ currentPage: e, numPages: n, setCurrentPage: i }) {
         to: `${f.pathname}${m > 1 ? `?page=${m}` : ""}`,
         children: m
       }
-    ) }, m)),
+    ) }, m === "..." ? `${m}-${h}` : m)),
     /* @__PURE__ */ o.jsx("li", { className: "crudnick-pagination__item", children: /* @__PURE__ */ o.jsx(
       le,
       {
@@ -1571,45 +1571,45 @@ function Gr({ columns: e, defaultOptions: n, path: i, perPage: f = 10, title: a,
         return t;
     }
     return 1;
-  }), [I, D] = q([]), [L, T] = q(!1), [u, U] = q(() => Object.hasOwn(n, "sortKey") ? n.sortKey : "name"), [V, B] = q(() => Object.hasOwn(n, "sortDir") ? n.sortDir : "asc"), [Y, H] = q(() => {
+  }), [I, D] = q([]), [L, T] = q(!1), [u, U] = q(() => Object.hasOwn(n, "sortKey") ? n.sortKey : "name"), [V, B] = q(() => Object.hasOwn(n, "sortDir") ? n.sortDir : "asc"), [Y, Z] = q(() => {
     const t = {};
     return e.forEach((r) => {
-      const c = ne(r.key);
+      const c = X(r.key);
       let g = "";
       Object.hasOwn(n, "filters") && Object.hasOwn(n.filters, c) && (g = n.filters[c]), t[c] = g;
     }), t;
-  }), [W, G] = q({ ...Y }), Q = fe.instance(), M = f !== null, ee = vr(() => {
+  }), [W, G] = q({ ...Y }), ee = fe.instance(), M = f !== null, re = vr(() => {
     let t = s;
     return M && (t.includes("?") ? t += "&" : t += "?", t += `page[size]=${f}&page[number]=${j}`, u && (t += `&sort=${V === "desc" ? "-" : ""}${u}`), Y && Object.keys(Y).forEach((r) => {
       const c = Y[r];
-      c !== "" && (t += `&filter[${r}][like]=%${c}%`);
+      c !== "" && (t += `&filter[${r}][like]=%25${c}%25`);
     })), t;
   }, [s, j, u, V, Y]);
-  X(() => {
+  H(() => {
     z();
-  }, [ee]);
+  }, [re]);
   const z = () => {
-    Q(ee, !1).catch((t) => {
-      T(te(t)), m(null), D([]), S(0);
+    d !== null && m(null), ee(re, !1).catch((t) => {
+      T(ne(t)), m(null), D([]), S(0);
     }).then((t) => {
       t && (M ? (m(t.data || []), D(t.data || []), _(t.meta.page.total), S(t.meta.page.total), y(t.meta.page.total_pages), t.meta.page.total_pages > 0 && j > t.meta.page.total_pages && C(t.meta.page.total_pages)) : (m(t), D(t), _(t.length), S(t.length), y(1)));
     });
   }, J = (t) => {
-    const r = t.target.getAttribute("data-key");
+    const r = t.target.getAttribute("data-crudnick-sort");
     let c;
     u === r ? c = V === "asc" ? "desc" : "asc" : c = "asc", U(r), B(c), M || (m(or(d, r, c)), D(or(I, r, c)));
   };
-  let Z = ` (${k.toLocaleString()}`;
-  k !== x && (Z += ` of ${x.toLocaleString()}`), Z += ` result${x === 1 ? "" : "s"})`, e = e.map((t) => (t.link ? t.fn = (r, c) => /* @__PURE__ */ o.jsx(le, { className: "crudnick-link--table", to: `/${i}/${r.id}`, children: c }) : t.type === "checkbox" && (t.fn = (r, c) => c ? /* @__PURE__ */ o.jsx(Vr, { "aria-hidden": "true", height: 16, width: 16 }) : null, t.size = 4), t));
+  let Q = ` (${k.toLocaleString()}`;
+  k !== x && (Q += ` of ${x.toLocaleString()}`), Q += ` result${x === 1 ? "" : "s"})`, e = e.map((t) => (t.link ? t.fn = (r, c) => /* @__PURE__ */ o.jsx(le, { className: "crudnick-link--table", to: `/${i}/${r.id}`, children: c }) : t.type === "checkbox" && (t.fn = (r, c) => c ? /* @__PURE__ */ o.jsx(Vr, { "aria-hidden": "true", height: 16, width: 16 }) : null, t.size = 4), t));
   const ie = (t) => {
-    t.preventDefault(), C(1), H({ ...W });
+    t.preventDefault(), C(1), Z({ ...W });
   };
   return /* @__PURE__ */ o.jsxs(o.Fragment, { children: [
     /* @__PURE__ */ o.jsx(ue, { title: a }),
     /* @__PURE__ */ o.jsxs("header", { className: "crudnick-header", children: [
       /* @__PURE__ */ o.jsxs("h1", { children: [
         /* @__PURE__ */ o.jsx("span", { "data-cy": "title", children: a }),
-        /* @__PURE__ */ o.jsx("small", { "data-cy": "num-results", children: d ? Z : null })
+        d === null ? null : /* @__PURE__ */ o.jsx("small", { "data-cy": "num-results", children: Q })
       ] }),
       /* @__PURE__ */ o.jsx("ul", { className: "crudnick-list", children: /* @__PURE__ */ o.jsx("li", { className: "crudnick-list__item", children: /* @__PURE__ */ o.jsx(le, { className: "formosa-button crudnick-list__button", "data-cy": "add", to: `/${i}/add`, children: "Add new" }) }) })
     ] }),
@@ -1627,13 +1627,13 @@ function Gr({ columns: e, defaultOptions: n, path: i, perPage: f = 10, title: a,
               {
                 "aria-label": `Sort by ${t.label}`,
                 className: "formosa-button crudnick-column__button",
-                "data-key": t.sortKey || ne(t.key),
+                "data-crudnick-sort": t.sortKey || X(t.key),
                 disabled: d === null,
                 onClick: J,
                 type: "button",
                 children: [
                   t.shortLabel || t.label,
-                  u === (t.sortKey || ne(t.key)) ? /* @__PURE__ */ o.jsx(
+                  u === (t.sortKey || X(t.key)) ? /* @__PURE__ */ o.jsx(
                     Br,
                     {
                       "aria-hidden": "true",
@@ -1654,34 +1654,36 @@ function Gr({ columns: e, defaultOptions: n, path: i, perPage: f = 10, title: a,
             {
               "aria-label": `Search ${c}`,
               className: "formosa-field__input",
+              "data-crudnick-filter": X(t),
               disabled: d === null,
               form: M ? "crudnick-pagination" : null,
               setValue: (b) => {
                 const R = {
                   ...W,
-                  [ne(t)]: b
+                  [X(t)]: b
                 };
                 if (G(R), !M) {
-                  C(1), H(R);
+                  C(1), Z(R);
                   const E = Kr(d, R);
                   D(E), S(E.length);
                 }
               },
               size: g,
               type: "search",
-              value: W[ne(t)]
+              value: W[X(t)]
             }
           ),
-          M && W[ne(t)] ? /* @__PURE__ */ o.jsx(
+          M && W[X(t)] ? /* @__PURE__ */ o.jsx(
             "button",
             {
               className: "crudnick__filter-button crudnick__filter-button--clear",
+              "data-crudnick-filter-clear": X(t),
               onClick: () => {
                 const b = {
                   ...W,
-                  [ne(t)]: ""
+                  [X(t)]: ""
                 };
-                G(b), H({ ...b }), C(1);
+                G(b), Z({ ...b }), C(1);
               },
               type: "button",
               children: `Clear ${c} filter`
@@ -1691,6 +1693,7 @@ function Gr({ columns: e, defaultOptions: n, path: i, perPage: f = 10, title: a,
             "button",
             {
               className: "crudnick__filter-button crudnick__filter-button--submit",
+              "data-crudnick-filter-submit": X(t),
               form: "crudnick-pagination",
               type: "submit",
               children: `Filter by ${c}`
@@ -1698,7 +1701,7 @@ function Gr({ columns: e, defaultOptions: n, path: i, perPage: f = 10, title: a,
           ) : null
         ] }) }, t)) })
       ] }),
-      /* @__PURE__ */ o.jsx("tbody", { children: d === null ? /* @__PURE__ */ o.jsx("tr", { children: /* @__PURE__ */ o.jsx("td", { colSpan: e.length, children: /* @__PURE__ */ o.jsx("div", { className: "formosa-spinner", role: "status", children: "Loading..." }) }) }) : I.map((t) => /* @__PURE__ */ o.jsx("tr", { children: e.map(({ fn: r, key: c }) => /* @__PURE__ */ o.jsx("td", { className: `crudnick-cell--${c}`, children: r ? r(t, se(t, ne(c)), c) : se(t, ne(c)) }, c)) }, t.id)) })
+      /* @__PURE__ */ o.jsx("tbody", { children: d === null ? /* @__PURE__ */ o.jsx("tr", { children: /* @__PURE__ */ o.jsx("td", { colSpan: e.length, children: /* @__PURE__ */ o.jsx("div", { className: "formosa-spinner", role: "status", children: "Loading..." }) }) }) : I.map((t) => /* @__PURE__ */ o.jsx("tr", { children: e.map(({ fn: r, key: c }) => /* @__PURE__ */ o.jsx("td", { className: `crudnick-cell--${c}`, children: r ? r(t, se(t, X(c)), c) : se(t, X(c)) }, c)) }, t.id)) })
     ] })
   ] });
 }
@@ -1717,14 +1720,14 @@ function mr({ nav: e }) {
   }, d = () => {
     s(window.innerWidth >= f);
   };
-  X(() => (window.addEventListener("resize", d), () => {
+  H(() => (window.addEventListener("resize", d), () => {
     window.removeEventListener("resize", d);
-  }), []), X(() => {
+  }), []), H(() => {
     a && (h(), l());
   }, [a]);
   const m = () => {
     fe.delete("auth/logout").catch((S) => {
-      S.status !== 401 && n(te(S), "error");
+      S.status !== 401 && n(ne(S), "error");
     }).then(() => {
       F.logout();
     });
@@ -1831,7 +1834,7 @@ function yr({
       username: n.username || a
     };
     fe.post("auth/resend-verification", JSON.stringify(d)).catch((m) => {
-      i(te(m));
+      i(ne(m));
     }).then((m) => {
       m && i({
         text: "Check your email to continue the registration process.",
@@ -1898,7 +1901,7 @@ function tt() {
     let _;
     e.get("redirect") && e.get("redirect")[0] === "/" ? _ = e.get("redirect") : _ = window.location.href.replace(/\/$/, ""), F.login(x.user, x.token, x.user.remember), window.location.href = _;
   };
-  return X(() => {
+  return H(() => {
     e.get("status") === "401" ? (s({
       text: "Your session has expired. Please log in again.",
       type: "warning"
@@ -1913,7 +1916,7 @@ function tt() {
       afterSubmitSuccess: y,
       beforeSubmit: m,
       className: "crudnick-auth-form",
-      errorMessageText: (x) => te(x, !1),
+      errorMessageText: (x) => ne(x, !1),
       method: "POST",
       path: "auth/login",
       row: i,
@@ -1940,7 +1943,7 @@ function ot() {
 }
 function it() {
   const [e, n] = q({}), { token: i } = ar(), [f] = Re(), a = be();
-  return X(() => {
+  return H(() => {
     f.get("expires") < Math.floor(Date.now() / 1e3) && a("/forgot-password?expired=1");
   }, []), F.isLoggedIn() ? null : /* @__PURE__ */ o.jsxs(
     Te,
@@ -1949,7 +1952,7 @@ function it() {
         a("/");
       },
       className: "crudnick-auth-form",
-      errorMessageText: te,
+      errorMessageText: ne,
       method: "PUT",
       path: `auth/reset-password/${i}${window.location.search}`,
       row: e,
@@ -2013,5 +2016,5 @@ export {
   nt as NotFound,
   ot as PrivateRoute,
   it as ResetPassword,
-  te as errorMessageText
+  ne as errorMessageText
 };
