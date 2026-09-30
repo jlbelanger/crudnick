@@ -1,58 +1,124 @@
 import { Alert, Api, Input } from '@jlbelanger/formosa';
-import { useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router';
+import { useEffect, useMemo, useState } from 'react';
 import ArrowIcon from '../../svg/arrow.svg?react'; // eslint-disable-line import/no-unresolved
 import CheckIcon from '../../svg/check.svg?react'; // eslint-disable-line import/no-unresolved
 import { cleanKey } from '../Utilities/String.js';
 import { errorMessageText } from '../Utilities/Errors.js';
 import { filterByKeys } from '../Utilities/Filter.js';
 import get from 'get-value';
-import { Link } from 'react-router';
 import MetaTitle from './MetaTitle.jsx';
+import Pagination from './Pagination.jsx';
 import PropTypes from 'prop-types';
 import { sortByKey } from '../Utilities/Sort.js';
 
-export default function IndexTable({ columns, defaultOptions, path, title, url }) {
+export default function IndexTable({ columns, defaultOptions, path, perPage = 10, title, url }) {
+	const [urlSearchParams] = useSearchParams();
 	const [rows, setRows] = useState(null);
+	const [numPages, setNumPages] = useState(null);
+	const [numRows, setNumRows] = useState(0);
+	const [numFilteredRows, setNumFilteredRows] = useState(0);
+	const [currentPage, setCurrentPage] = useState(() => {
+		if (urlSearchParams.get('page')) {
+			const page = parseInt(urlSearchParams.get('page'), 10);
+			if (page > 0) {
+				return page;
+			}
+		}
+		return 1;
+	});
 	const [filteredRows, setFilteredRows] = useState([]);
 	const [rowsError, setRowsError] = useState(false);
-	const [sortKey, setSortKey] = useState('name');
-	const [sortDir, setSortDir] = useState('asc');
-	const [filters, setFilters] = useState(() => {
+	const [sortKey, setSortKey] = useState(() => {
+		if (Object.hasOwn(defaultOptions, 'sortKey')) {
+			return defaultOptions.sortKey;
+		}
+		return 'name';
+	});
+	const [sortDir, setSortDir] = useState(() => {
+		if (Object.hasOwn(defaultOptions, 'sortDir')) {
+			return defaultOptions.sortDir;
+		}
+		return 'asc';
+	});
+	const [activeFilters, setActiveFilters] = useState(() => {
 		const output = {};
 		columns.forEach((column) => {
-			output[cleanKey(column.key)] = '';
+			const key = cleanKey(column.key);
+			let value = '';
+			if (Object.hasOwn(defaultOptions, 'filters') && Object.hasOwn(defaultOptions.filters, key)) {
+				value = defaultOptions.filters[key];
+			}
+			output[key] = value;
 		});
 		return output;
 	});
+	const [filters, setFilters] = useState({ ...activeFilters });
 	const api = Api.instance();
+	const isPaginated = perPage !== null;
+	const requestUrl = useMemo(() => {
+		let output = url;
+		if (!isPaginated) {
+			return output;
+		}
+
+		if (output.includes('?')) {
+			output += '&';
+		} else {
+			output += '?';
+		}
+
+		output += `page[size]=${perPage}&page[number]=${currentPage}`;
+
+		if (sortKey) {
+			output += `&sort=${sortDir === 'desc' ? '-' : ''}${sortKey}`;
+		}
+
+		if (activeFilters) {
+			Object.keys(activeFilters).forEach((key) => {
+				const value = activeFilters[key];
+				if (value !== '') {
+					output += `&filter[${key}][like]=%${value}%`;
+				}
+			});
+		}
+		return output;
+	}, [url, currentPage, sortKey, sortDir, activeFilters]);
 
 	useEffect(() => {
-		if (Object.hasOwn(defaultOptions, 'sortKey')) {
-			setSortKey(defaultOptions.sortKey);
-		}
+		fetchRows();
+	}, [requestUrl]);
 
-		if (Object.hasOwn(defaultOptions, 'sortDir')) {
-			setSortDir(defaultOptions.sortDir);
-		}
-
-		if (Object.hasOwn(defaultOptions, 'filters')) {
-			setFilters(defaultOptions.filters);
-		}
-
-		api(url, false)
+	const fetchRows = () => {
+		api(requestUrl, false)
 			.catch((response) => {
 				setRowsError(errorMessageText(response));
 				setRows(null);
 				setFilteredRows([]);
+				setNumFilteredRows(0);
 			})
 			.then((response) => {
 				if (!response) {
 					return;
 				}
-				setRows(response);
-				setFilteredRows(response);
+				if (isPaginated) {
+					setRows(response.data || []);
+					setFilteredRows(response.data || []);
+					setNumRows(response.meta.page.total);
+					setNumFilteredRows(response.meta.page.total);
+					setNumPages(response.meta.page.total_pages);
+					if (response.meta.page.total_pages > 0 && currentPage > response.meta.page.total_pages) {
+						setCurrentPage(response.meta.page.total_pages);
+					}
+				} else {
+					setRows(response);
+					setFilteredRows(response);
+					setNumRows(response.length);
+					setNumFilteredRows(response.length);
+					setNumPages(1);
+				}
 			});
-	}, [url]);
+	};
 
 	const sort = (e) => {
 		const newSortKey = e.target.getAttribute('data-key');
@@ -66,13 +132,14 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 		setSortKey(newSortKey);
 		setSortDir(newSortDir);
 
-		setRows(sortByKey(rows, newSortKey, newSortDir));
-		setFilteredRows(sortByKey(filteredRows, newSortKey, newSortDir));
+		if (!isPaginated) {
+			setRows(sortByKey(rows, newSortKey, newSortDir));
+			setFilteredRows(sortByKey(filteredRows, newSortKey, newSortDir));
+		}
 	};
 
-	const numRows = rows ? rows.length : 0;
-	let numResults = ` (${filteredRows.length.toLocaleString()}`;
-	if (filteredRows.length !== numRows) {
+	let numResults = ` (${numFilteredRows.toLocaleString()}`;
+	if (numFilteredRows !== numRows) {
 		numResults += ` of ${numRows.toLocaleString()}`;
 	}
 	numResults += ` result${numRows === 1 ? '' : 's'})`;
@@ -92,6 +159,12 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 		return column;
 	});
 
+	const onSubmitPaginationForm = (e) => {
+		e.preventDefault();
+		setCurrentPage(1);
+		setActiveFilters({ ...filters });
+	};
+
 	return (
 		<>
 			<MetaTitle title={title} />
@@ -109,6 +182,12 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 					</li>
 				</ul>
 			</header>
+
+			{isPaginated ? (
+				<form id="crudnick-pagination" onSubmit={onSubmitPaginationForm}>
+					<Pagination currentPage={currentPage} numPages={numPages} setCurrentPage={setCurrentPage} />
+				</form>
+			) : null}
 
 			{rowsError ? <Alert type="error">{rowsError}</Alert> : (
 				<table>
@@ -146,26 +225,61 @@ export default function IndexTable({ columns, defaultOptions, path, title, url }
 						</tr>
 						<tr>
 							{columns.map(({ key, disableSearch, label, size }) => (
-								<td className="formosa-input-wrapper--search" key={key}>
+								<td className={`formosa-input-wrapper--search${isPaginated ? ' crudnick__filter' : ''}`} key={key}>
 									{!disableSearch && (
-										<Input
-											aria-label={`Search ${label}`}
-											className="formosa-field__input"
-											disabled={rows === null}
-											setValue={(newValue) => {
-												const newFilters = {
-													...filters,
-													[cleanKey(key)]: newValue,
-												};
-												setFilters(newFilters);
+										<>
+											<Input
+												aria-label={`Search ${label}`}
+												className="formosa-field__input"
+												disabled={rows === null}
+												form={isPaginated ? 'crudnick-pagination' : null}
+												setValue={(newValue) => {
+													const newFilters = {
+														...filters,
+														[cleanKey(key)]: newValue,
+													};
+													setFilters(newFilters);
 
-												const newRows = filterByKeys(rows, newFilters);
-												setFilteredRows(newRows);
-											}}
-											size={size}
-											type="search"
-											value={filters[cleanKey(key)]}
-										/>
+													if (!isPaginated) {
+														setCurrentPage(1);
+														setActiveFilters(newFilters);
+
+														const newRows = filterByKeys(rows, newFilters);
+														setFilteredRows(newRows);
+														setNumFilteredRows(newRows.length);
+													}
+												}}
+												size={size}
+												type="search"
+												value={filters[cleanKey(key)]}
+											/>
+											{isPaginated && filters[cleanKey(key)] ? (
+												<button
+													className="crudnick__filter-button crudnick__filter-button--clear"
+													onClick={() => {
+														const newFilters = {
+															...filters,
+															[cleanKey(key)]: '',
+														};
+														setFilters(newFilters);
+														setActiveFilters({ ...newFilters });
+														setCurrentPage(1);
+													}}
+													type="button"
+												>
+													{`Clear ${label} filter`}
+												</button>
+											) : null}
+											{isPaginated ? (
+												<button
+													className="crudnick__filter-button crudnick__filter-button--submit"
+													form="crudnick-pagination"
+													type="submit"
+												>
+													{`Filter by ${label}`}
+												</button>
+											) : null}
+										</>
 									)}
 								</td>
 							))}
@@ -200,6 +314,7 @@ IndexTable.propTypes = {
 	columns: PropTypes.array.isRequired,
 	defaultOptions: PropTypes.object.isRequired,
 	path: PropTypes.string.isRequired,
+	perPage: PropTypes.number,
 	title: PropTypes.string.isRequired,
 	url: PropTypes.string.isRequired,
 };
