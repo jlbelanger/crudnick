@@ -1,0 +1,27 @@
+.crudnick__filter {
+	position: relative;
+}
+
+.crudnick__filter-button {
+	appearance: none;
+	background: transparent;
+	border: 0;
+	cursor: pointer;
+	font-size: 0;
+	height: var(--crudnick-button-height);
+	position: absolute;
+	right: var(--crudnick-table-cell-padding);
+	top: var(--crudnick-table-cell-padding);
+	width: var(--crudnick-button-height);
+}
+
+.crudnick__filter-button--clear {
+	margin-right: var(--crudnick-button-height);
+
+	&::after {
+		content: '\00d7'; /* &times; */
+		display: block;
+		font-size: 18px;
+		line-height: 1;
+	}
+}

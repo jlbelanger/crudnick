@@ -4,6 +4,7 @@
 @import url('css/components/autocomplete');
 @import url('css/components/button');
 @import url('css/components/formosa-overrides');
+@import url('css/components/filter');
 @import url('css/components/header');
 @import url('css/components/heading');
 @import url('css/components/input');
@@ -12,6 +13,7 @@
 @import url('css/components/list');
 @import url('css/components/modal');
 @import url('css/components/nav');
+@import url('css/components/pagination');
 @import url('css/components/paragraph');
 @import url('css/components/skip');
 @import url('css/components/svg');

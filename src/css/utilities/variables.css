@@ -75,6 +75,11 @@
 	/* prettier-ignore */
 	--crudnick-input-height: calc((var(--crudnick-input-padding) + var(--crudnick-input-border-width)) * 2 + var(--crudnick-font-size));
 
+	/* Pagination. */
+	--crudnick-pagination-background-color-hover: var(--crudnick-darkerer);
+	--crudnick-pagination-color: var(--crudnick-light);
+	--crudnick-pagination-disabled-color: var(--crudnick-dark);
+
 	/* Placeholders. */
 	--crudnick-placeholder-color: var(--crudnick-gray);
 
@@ -147,4 +152,7 @@
 	--crudnick-table-link-background-color-hover: var(--crudnick-lightish);
 	--crudnick-input-background-color: #fff;
 	--formosa-input-color: var(--crudnick-body-color);
+	--crudnick-pagination-background-color-hover: var(--crudnick-lightish);
+	--crudnick-pagination-color: var(--crudnick-primary);
+	--crudnick-pagination-disabled-color: var(--crudnick-light);
 }

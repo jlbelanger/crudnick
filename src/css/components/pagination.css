@@ -1,0 +1,64 @@
+#crudnick-pagination + table {
+	margin-top: 1rem;
+}
+
+.crudnick-pagination__list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+.crudnick-pagination__item {
+	flex: 1 1 auto;
+	margin-left: -1px;
+	max-width: var(--crudnick-button-height);
+}
+
+.crudnick-pagination__link {
+	border-style: solid;
+	border-width: 1px;
+	color: var(--crudnick-pagination-color);
+	display: block;
+	height: var(--crudnick-button-height);
+	line-height: var(--crudnick-button-height);
+	text-decoration: none;
+	transition: background 150ms ease-in-out;
+	width: var(--crudnick-button-height);
+
+	&:hover,
+	&:active,
+	&:focus {
+		background: var(--crudnick-pagination-background-color-hover);
+	}
+}
+
+.crudnick-pagination__link--dots {
+	color: var(--crudnick-pagination-disabled-color);
+	pointer-events: none;
+	position: relative;
+	z-index: -1;
+}
+
+.crudnick-pagination__link[aria-current='page'] {
+	background: transparent;
+	color: var(--crudnick-pagination-disabled-color);
+	pointer-events: none;
+	position: relative;
+	z-index: -1;
+}
+
+.crudnick-pagination__link[disabled] {
+	visibility: hidden;
+}
+
+.crudnick-pagination__link--prev {
+	border-left-width: 1px;
+}
+
+.crudnick-pagination__link--next {
+	border-right-width: 1px;
+}
