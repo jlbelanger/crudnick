@@ -121,7 +121,7 @@ export default function Actions({
 				<li>
 					<a
 						className="crudnick-list__button formosa-button crudnick-button--secondary"
-						href={`${frontendUrl}${row.url}`}
+						href={row.url.startsWith('http') ? row.url : `${frontendUrl}${row.url}`}
 						rel="noreferrer"
 						target="_blank"
 					>
